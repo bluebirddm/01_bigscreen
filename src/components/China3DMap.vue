@@ -181,10 +181,10 @@ onMounted(async () => {
 
     // 地图加载成功后设置option
     option.value = {
-      backgroundColor: "#003366",
+      // backgroundColor: "#003366",
       title: {
         show: true,
-        text: "项目分布图",
+        text: "",
         x: 'center',
         top: "10",
         textStyle: {

@@ -25,21 +25,7 @@
       </div>
       
       <div class="center-panel">
-        <div class="info-bar">
-          <div class="info-counter">
-            <span class="counter-label">信息系统总数</span>
-            <span class="counter-number">
-              <span
-                v-for="(digit, index) in animatedTotal.toString().split('')"
-                :key="index"
-                class="digit-wrapper"
-              >
-                <span class="digit-text">{{ digit }}</span>
-              </span>
-            </span>
-            <span class="counter-label">个</span>
-          </div>
-        </div>
+        <InfoCounter />
         <China3DMap />
       </div>
       
@@ -64,44 +50,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import InfoSystemStatus from './components/InfoSystemStatus.vue'
 import ProvinceRanking from './components/ProvinceRanking.vue'
 import SystemRanking from './components/SystemRanking.vue'
 import China3DMap from './components/China3DMap.vue'
 import SystemLayout from './components/SystemLayout.vue'
 import ArchitectureDistribution from './components/ArchitectureDistribution.vue'
+import InfoCounter from './components/InfoCounter.vue'
 
-const totalSystems = ref(115552)
-const animatedTotal = ref(0)
 
-onMounted(() => {
-  // 数字滚动动画
-  const duration = 2000
-  const stepTime = 50
-  const steps = duration / stepTime
-  const increment = totalSystems.value / steps
-  
-  let current = 0
-  const timer = setInterval(() => {
-    current += increment
-    if (current >= totalSystems.value) {
-      animatedTotal.value = totalSystems.value
-      clearInterval(timer)
-    } else {
-      animatedTotal.value = Math.floor(current)
-    }
-  }, stepTime)
-})
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'DigitalDisplay';
-  src: url('./assets/font/digital display tfb.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+
 
 .dashboard {
   width: 1920px;
@@ -152,73 +113,6 @@ onMounted(() => {
   position: relative;
   width: 1162px;
   height: 636px;
-}
-
-.info-bar {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.info-counter {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 25px 40px;
-  /* background-image: url('./assets/totoal_counter.png'); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%;
-  width: 350px;
-  height: 100px;
-  gap: 20px;
-}
-
-.counter-number {
-  font-size: 50px;
-  font-weight: bold;
-  font-family: 'DigitalDisplay', 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.digit-wrapper {
-  display: inline-block;
-  width: 60px;
-  height: 70px;
-  background-image: url('./assets/digit_bg.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center;
-  color: transparent;
-  background-clip: padding-box;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.digit-wrapper .digit-text {
-  background: linear-gradient(to bottom, #ffffff 0%, #00bfff 50%, #0080ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
-  position: relative;
-  z-index: 1;
-}
-
-.counter-label {
-  font-size: 16px;
-  color: #E5F2F9;
-  font-weight: 500;
-  letter-spacing: 1px;
-  white-space: nowrap;
 }
 
 .panel-section {
@@ -293,14 +187,15 @@ onMounted(() => {
 .section-title {
   font-size: 18px;
   color: #E5F2F9;
-  margin-bottom: 20px;
   text-align: left;
   position: relative;
+  text-indent: 30px;
   background-image: url('./assets/little_title_bg.png');
   background-repeat: no-repeat;
   background-position: left center;
   background-size: contain;
-  padding: 10px 20px;
+  padding: 25px 20px 15px 20px;
+  height: 60px;
 }
 
 </style>
