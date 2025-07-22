@@ -47,7 +47,7 @@
       
       <div class="chart-section system-type-section">
         <h3 class="section-title">各系统类型分布情况</h3>
-        <SystemType3DNew />
+        <SystemType3D />
       </div>
     </div>
   </div>

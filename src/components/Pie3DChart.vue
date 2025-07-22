@@ -69,7 +69,8 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      hoveredIndex: -1 // 当前悬停的扇形索引，-1表示没有悬停
     }
   },
   mounted() {
@@ -113,7 +114,7 @@ export default {
       let offsetY = isSelected ? Math.sin(midRadian) * 0.1 : 0;
 
       // 计算高亮效果的放大比例（未高亮，则比例为 1）
-      let hoverRate = isHovered ? 1.05 : 1;
+      let hoverRate = isHovered ? 1.1 : 1;
 
       // 返回曲面参数方程
       return {
@@ -227,7 +228,7 @@ export default {
           series[i].pieData.startRatio,
           series[i].pieData.endRatio,
           false,
-          false,
+          this.hoveredIndex === i, // 根据hoveredIndex判断是否处于悬停状态
           k,
           series[i].pieData.value
         );
@@ -349,6 +350,9 @@ export default {
         this.chart = echarts.init(this.$refs.chartContainer);
         this.updateChart();
 
+        // 添加鼠标事件监听
+        this.setupEventListeners();
+
         // 监听窗口大小变化
         window.addEventListener('resize', this.handleResize);
       }
@@ -366,6 +370,46 @@ export default {
     handleResize() {
       if (this.chart) {
         this.chart.resize();
+      }
+    },
+
+    // 设置鼠标事件监听器
+    setupEventListeners() {
+      if (!this.chart) return;
+
+      // 鼠标悬停事件
+      this.chart.on('mouseover', (params) => {
+        // 排除2D饼图系列的干扰，只处理3D扇形
+        if (params.seriesName !== 'pie2d' && params.seriesIndex < this.data.length) {
+          if (this.hoveredIndex !== params.seriesIndex) {
+            this.hoveredIndex = params.seriesIndex;
+            this.updateHoverState();
+          }
+        }
+      });
+
+      // 鼠标离开事件
+      this.chart.on('mouseout', () => {
+        if (this.hoveredIndex !== -1) {
+          this.hoveredIndex = -1;
+          this.updateHoverState();
+        }
+      });
+
+      // 全局鼠标离开事件
+      this.chart.on('globalout', () => {
+        if (this.hoveredIndex !== -1) {
+          this.hoveredIndex = -1;
+          this.updateHoverState();
+        }
+      });
+    },
+
+    // 更新hover状态并重绘图表
+    updateHoverState() {
+      if (this.chart) {
+        const option = this.generateOption();
+        this.chart.setOption(option, false);
       }
     }
   }
