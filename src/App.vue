@@ -6,22 +6,20 @@
     
     <main class="dashboard-main">
       <div class="left-panel">
-        <div class="panel-section">
+        <div class="panel-section system-status-section">
           <h3 class="section-title">信息系统实况情况</h3>
           <InfoSystemStatus />
         </div>
         
-
+        <div class="panel-section province-ranking-section">
+          <h3 class="section-title">各省份数据排行TOP10</h3>
+          <ProvinceRanking />
+        </div>
         
-        <div class="panel-section">
+        <div class="panel-section unit-ranking-section">
           <h3 class="section-title">各单位数据排行TOP10</h3>
           <SystemRanking />
         </div>
-      </div>
-
-      <div class="panel-section">
-          <h3 class="section-title">各省份数据排行TOP10</h3>
-          <ProvinceRanking />
       </div>
       
       <div class="center-panel">
@@ -35,17 +33,22 @@
       </div>
       
       <div class="right-panel">
-        <div class="panel-section">
-          <h3 class="section-title">各板块分布情况</h3>
-          <SystemLayout />
-        </div>
-        
-        <div class="panel-section">
-          <h3 class="section-title">各系统类型分布情况</h3>
-          <ArchitectureDistribution />
-        </div>
+        <!-- 右侧面板暂时空置 -->
       </div>
     </main>
+    
+    <!-- 底部分布图表区域 -->
+    <div class="bottom-charts">
+      <div class="chart-section layout-distribution-section">
+        <h3 class="section-title">各板块分布情况</h3>
+        <SystemLayout />
+      </div>
+      
+      <div class="chart-section system-type-section">
+        <h3 class="section-title">各系统类型分布情况</h3>
+        <ArchitectureDistribution />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -89,6 +92,7 @@ onMounted(() => {
   flex-direction: column;
   background: linear-gradient(135deg, #0c1622 0%, #1a2337 50%, #0c1622 100%);
   position: relative;
+  overflow: hidden;
 }
 
 .dashboard-header {
@@ -108,11 +112,11 @@ onMounted(() => {
 }
 
 .dashboard-main {
-  flex: 1;
+  height: 696px;
   display: grid;
-  grid-template-columns: 638px 1fr 380px;
+  grid-template-columns: 638px 1162px 1fr;
   gap: 30px;
-  padding: 0 30px 30px;
+  padding: 0 30px 0;
 }
 
 .left-panel,
@@ -126,6 +130,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 1162px;
+  height: 636px;
 }
 
 .info-bar {
@@ -170,16 +176,59 @@ onMounted(() => {
   min-height: 0;
 }
 
-.panel-section:first-child {
+/* 信息系统实况情况 */
+.system-status-section {
   width: 638px;
   height: 280px;
   flex: none;
 }
 
-.panel-section:nth-child(2) {
+/* 各省份数据排行TOP10 - 左边中间 */
+.province-ranking-section {
   width: 500px;
   height: 323px;
   flex: none;
+}
+
+/* 各单位数据排行TOP10 - 左下角 */
+.unit-ranking-section {
+  width: 500px;
+  height: 323px;
+  flex: none;
+}
+
+/* 底部图表区域 */
+.bottom-charts {
+  height: 322px;
+  display: flex;
+  gap: 30px;
+  padding: 30px 30px 30px 30px;
+  justify-content: flex-start;
+  position: absolute;
+  top: 743px;
+  left: 0;
+  right: 0;
+}
+
+.chart-section {
+  background: rgba(0, 20, 40, 0.6);
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 各板块分布情况 - 底部中间 */
+.layout-distribution-section {
+  width: 636px;
+  height: 282px;
+  margin-left: 530px;
+}
+
+/* 各系统类型分布情况 - 底部右下 */
+.system-type-section {
+  width: 636px;
+  height: 282px;
 }
 
 .section-title {
