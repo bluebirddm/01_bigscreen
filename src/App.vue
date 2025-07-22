@@ -29,7 +29,7 @@
             <span class="counter-label">信息系统总数</span>
           </div>
         </div>
-        <ChinaMap />
+        <China3DMap />
       </div>
       
       <div class="right-panel">
@@ -57,7 +57,7 @@ import { ref, onMounted } from 'vue'
 import InfoSystemStatus from './components/InfoSystemStatus.vue'
 import ProvinceRanking from './components/ProvinceRanking.vue'
 import SystemRanking from './components/SystemRanking.vue'
-import ChinaMap from './components/ChinaMap.vue'
+import China3DMap from './components/China3DMap.vue'
 import SystemLayout from './components/SystemLayout.vue'
 import ArchitectureDistribution from './components/ArchitectureDistribution.vue'
 
