@@ -26,17 +26,13 @@ use([
 
 const chartOption = ref({})
 
-const data = [
-  { name: '深圳市', value: 468 },
-  { name: '北京市', value: 384 },
-  { name: '上海市', value: 302 },
-  { name: '广州市', value: 268 },
-  { name: '杭州市', value: 194 },
-  { name: '成都市', value: 165 },
-  { name: '苏州市', value: 134 },
-  { name: '南京市', value: 90 },
-  { name: '武汉市', value: 71 },
-  { name: '西安市', value: 48 }
+const categories = ['深圳市', '北京市', '上海市', '广州市', '杭州市', '成都市', '苏州市', '南京市', '武汉市', '西安市']
+const seriesData = [
+  { name: '一级', data: [120, 98, 80, 70, 50, 42, 35, 25, 20, 15], color: '#00bfff' },
+  { name: '二级', data: [200, 180, 150, 120, 90, 80, 65, 45, 35, 25], color: '#4ecdc4' },
+  { name: '三级', data: [100, 80, 60, 60, 40, 35, 25, 15, 12, 6], color: '#45b7d1' },
+  { name: '四级', data: [30, 20, 10, 15, 12, 6, 7, 4, 3, 2], color: '#ffd700' },
+  { name: '未定级', data: [18, 6, 2, 3, 2, 2, 2, 1, 1, 0], color: '#ff6b6b' }
 ]
 
 onMounted(() => {
@@ -51,64 +47,90 @@ onMounted(() => {
         color: '#fff'
       }
     },
+    legend: {
+      data: seriesData.map(item => item.name),
+      textStyle: {
+        color: '#8cc8ff',
+        fontSize: 10
+      },
+      top: 5,
+      left: 'center',
+      itemGap: 15
+    },
     grid: {
-      left: '5%',
+      left: '8%',
       right: '5%',
-      bottom: '5%',
-      top: '5%',
+      bottom: '15%',
+      top: '25%',
       containLabel: true
     },
     xAxis: {
-      type: 'value',
-      show: false
-    },
-    yAxis: {
       type: 'category',
-      data: data.map(item => item.name),
+      data: categories,
       axisLabel: {
         color: '#8cc8ff',
-        fontSize: 10
+        fontSize: 11,
+        rotate: 0
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#00bfff'
+        }
+      },
+      axisTick: {
+        show: false
+      }
+    },
+    yAxis: {
+      type: 'value',
+      max: 500,
+      interval: 50,
+      axisLabel: {
+        color: '#8cc8ff',
+        fontSize: 11
       },
       axisLine: {
         show: false
       },
       axisTick: {
         show: false
-      }
-    },
-    series: [
-      {
-        type: 'bar',
-        data: data.map(item => item.value),
-        barWidth: '60%',
-        itemStyle: {
-          color: function(params) {
-            const colorList = [
-              '#ff6b6b', '#4ecdc4', '#45b7d1', 
-              '#96ceb4', '#ffeaa7', '#dda0dd',
-              '#98d8c8', '#f7dc6f', '#bb8fce', 
-              '#85c1e9'
-            ]
-            return colorList[params.dataIndex % colorList.length]
-          },
-          borderRadius: [0, 4, 4, 0]
-        },
-        label: {
-          show: true,
-          position: 'right',
-          color: '#fff',
-          fontSize: 10,
-          formatter: '{c}'
-        },
-        animationDelay: function(idx) {
-          return idx * 100
+      },
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(0, 191, 255, 0.1)',
+          type: 'dashed'
         }
       }
-    ],
-    animationEasing: 'elasticOut',
-    animationDelayUpdate: function(idx) {
-      return idx * 5
-    }
+    },
+    series: seriesData.map((item, index) => ({
+      name: item.name,
+      type: 'bar',
+      stack: 'total',
+      data: item.data,
+      barWidth: '50%',
+      itemStyle: {
+        color: item.color
+      },
+      label: {
+        show: index === seriesData.length - 1,
+        position: 'top',
+        formatter: function(params) {
+          // 计算总和
+          let total = 0;
+          seriesData.forEach(series => {
+            total += series.data[params.dataIndex] || 0;
+          });
+          return total;
+        },
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: 'bold'
+      },
+      animationDelay: function(idx) {
+        return idx * 100 + index * 50
+      }
+    })),
+    animationEasing: 'elasticOut'
   }
 })
 </script>

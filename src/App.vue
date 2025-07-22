@@ -11,15 +11,17 @@
           <InfoSystemStatus />
         </div>
         
+        <div class="panel-section unit-ranking-section">
+          <h3 class="section-title">各单位数据排行TOP10</h3>
+          <SystemRanking />
+        </div>
+
         <div class="panel-section province-ranking-section">
           <h3 class="section-title">各省份数据排行TOP10</h3>
           <ProvinceRanking />
         </div>
         
-        <div class="panel-section unit-ranking-section">
-          <h3 class="section-title">各单位数据排行TOP10</h3>
-          <SystemRanking />
-        </div>
+
       </div>
       
       <div class="center-panel">
@@ -202,10 +204,10 @@ onMounted(() => {
   height: 322px;
   display: flex;
   gap: 30px;
-  padding: 30px 30px 30px 30px;
+  padding: 0px 30px 30px 30px;
   justify-content: flex-start;
   position: absolute;
-  top: 743px;
+  top: 744px;
   left: 0;
   right: 0;
 }
@@ -221,7 +223,7 @@ onMounted(() => {
 /* 各板块分布情况 - 底部中间 */
 .layout-distribution-section {
   width: 636px;
-  height: 282px;
+  height: 323px;
   margin-left: 530px;
 }
 
