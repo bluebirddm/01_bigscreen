@@ -25,8 +25,12 @@
       </div>
       
       <div class="center-panel">
-        <InfoCounter />
-        <China3DMap />
+        <div class="info-counter-wrapper">
+          <InfoCounter />
+        </div>
+        <div class="china-3d-map-wrapper">
+          <China3DMap />
+        </div>
       </div>
       
       <div class="right-panel">
@@ -113,6 +117,20 @@ import InfoCounter from './components/InfoCounter.vue'
   position: relative;
   width: 1162px;
   height: 636px;
+}
+
+/* InfoCounter 浮动在 China3DMap 上方 */
+.center-panel .info-counter-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.center-panel .china-3d-map-wrapper {
+  width: 100%;
+  height: 100%;
 }
 
 .panel-section {

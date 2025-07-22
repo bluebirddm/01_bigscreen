@@ -60,8 +60,8 @@ const data = [
   { name: '宁夏', value: 110 },
   { name: '新疆', value: 32 },
   { name: '广东', value: 10 },
-  { name: '广西', value: 100 }
-  // 注意：已排除海南省数据
+  { name: '广西', value: 100 },
+  { name: '海南', value: 40 },
 ]
 
 // 工具提示数据
@@ -108,8 +108,8 @@ const geoCoordMap = {
   "广东": [113.12244, 23.009505],
   "广西": [108.479, 23.1152],
   "台湾": [120.702967, 24.123621],
-  '上海': [121.4648, 31.2891]
-  // 注意：已排除海南省坐标
+  '上海': [121.4648, 31.2891],
+  "海南": [110.3893, 19.8516],
 }
 
 // 数据转换函数
@@ -148,32 +148,15 @@ const option = ref({})
 // 动态加载中国地图数据
 onMounted(async () => {
   try {
-    const response = await fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
+    // 从本地文件加载中国地图数据
+    const response = await fetch('/src/assets/map/china.json')
     const chinaJson = await response.json()
-
-    // 过滤掉海南省和南海诸岛
-    if (chinaJson.features) {
-      chinaJson.features = chinaJson.features.filter(feature => {
-        const name = feature.properties?.name || ''
-        const adcode = feature.properties?.adcode || ''
-
-        // 过滤掉海南省（行政区划代码460000）和南海诸岛相关区域
-        return !name.includes('海南') &&
-               !name.includes('南海') &&
-               !name.includes('西沙') &&
-               !name.includes('中沙') &&
-               !name.includes('南沙') &&
-               adcode !== '460000' &&
-               adcode !== '469001' &&
-               adcode !== '469002' &&
-               adcode !== '469003'
-      })
-    }
 
     echarts.registerMap(mapName, chinaJson)
 
     // 获取地图特征并更新坐标
     const mapFeatures = echarts.getMap(mapName).geoJson.features
+
     mapFeatures.forEach(function (v) {
       const name = v.properties.name
       geoCoordMap[name] = v.properties.cp
