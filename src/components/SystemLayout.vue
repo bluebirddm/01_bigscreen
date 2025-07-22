@@ -160,21 +160,24 @@ onMounted(() => {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(5, 1fr);
-  gap: 8px;
+  gap: 12px 16px;
   padding: 10px 0;
+  align-content: start;
 }
 
 .info-card {
+  width: 150px;
+  height: 30px;
   background: rgba(0, 191, 255, 0.1);
   border: 1px solid rgba(0, 191, 255, 0.3);
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  padding: 4px 8px;
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
+  box-sizing: border-box;
 }
 
 .info-card:hover {
