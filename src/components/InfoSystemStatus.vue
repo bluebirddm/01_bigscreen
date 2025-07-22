@@ -6,12 +6,11 @@
            :key="index">
         <div class="status-icon">
           <div class="icon-circle">
-            <i class="icon" :class="item.icon"></i>
           </div>
         </div>
         <div class="status-content">
-          <div class="status-value">{{ item.value }}</div>
           <div class="status-label">{{ item.label }}</div>
+          <div class="status-value">{{ item.value }}</div>
         </div>
       </div>
     </div>
@@ -94,10 +93,11 @@ const statusData = ref([
 }
 
 .icon-circle {
-  width: 30px;
-  height: 30px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00bfff, #0080ff);
+  background: url('../assets/sys_icon.png') no-repeat center center;
+  background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,29 +105,23 @@ const statusData = ref([
   flex-shrink: 0;
 }
 
-.icon-circle::before {
-  content: '✓';
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-}
-
 .status-content {
   flex: 1;
 }
 
 .status-value {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  color: #00bfff;
+  color: #E5F2F9;
   margin-bottom: 2px;
   line-height: 1;
 }
 
 .status-label {
   font-size: 11px;
-  color: #8cc8ff;
+  color: #9EA6C0;
   line-height: 1;
+  margin-bottom: 8px;
 }
 
 </style>

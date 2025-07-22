@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="dashboard-header">
-      <h1 class="title">信息系统智慧可视化大屏</h1>
+      <img src="./assets/head_content.png" alt="信息系统智慧可视化大屏" class="header-content" />
     </header>
     
     <main class="dashboard-main">
@@ -27,8 +27,8 @@
       <div class="center-panel">
         <div class="info-bar">
           <div class="info-counter">
-            <span class="counter-number">{{ animatedTotal.toLocaleString() }}</span>
             <span class="counter-label">信息系统总数</span>
+            <span class="counter-number">{{ animatedTotal }}</span>
           </div>
         </div>
         <China3DMap />
@@ -87,12 +87,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'DigitalDisplay';
+  src: url('./assets/font/digital display tfb.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .dashboard {
   width: 1920px;
   height: 1080px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0c1622 0%, #1a2337 50%, #0c1622 100%);
+  background: url('./assets/backgroud.png') no-repeat center center;
+  background-size: cover;
   position: relative;
   overflow: hidden;
 }
@@ -103,14 +111,15 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
+  background: url('./assets/head_bg.png') no-repeat center center;
+  background-size: cover;
 }
 
-.title {
-  font-size: 42px;
-  font-weight: bold;
-  color: #00bfff;
-  text-shadow: 0 0 30px rgba(0, 191, 255, 0.8);
-  letter-spacing: 3px;
+.header-content {
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+  transform: translateY(-17px);
 }
 
 .dashboard-main {
@@ -146,34 +155,48 @@ onMounted(() => {
 
 .info-counter {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 15px 50px;
-  background: rgba(0, 191, 255, 0.1);
-  border: 1px solid rgba(0, 191, 255, 0.3);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
+  justify-content: center;
+  padding: 20px 60px;
+  background-image: url('./assets/totoal_counter.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-width: 300px;
+  min-height: 120px;
+  gap: 15px;
 }
 
 .counter-number {
-  font-size: 36px;
+  font-size: 50px;
   font-weight: bold;
-  color: #00bfff;
+  font-family: 'DigitalDisplay', 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+  background: linear-gradient(to bottom, #ffffff 0%, #00bfff 50%, #0080ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+  letter-spacing: 24px;
 }
 
 .counter-label {
-  font-size: 16px;
-  color: #8cc8ff;
-  margin-top: 6px;
+  font-size: 18px;
+  color: #E5F2F9;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .panel-section {
-  background: rgba(0, 20, 40, 0.6);
+  /* background: rgba(0, 20, 40, 0.6); 
   border: 1px solid rgba(0, 191, 255, 0.2);
   border-radius: 12px;
   padding: 20px;
   backdrop-filter: blur(10px);
+  flex: 1;
+  min-height: 0;*/
+  padding: 20px;
   flex: 1;
   min-height: 0;
 }
@@ -213,11 +236,12 @@ onMounted(() => {
 }
 
 .chart-section {
-  background: rgba(0, 20, 40, 0.6);
+  /* background: rgba(0, 20, 40, 0.6); 
   border: 1px solid rgba(0, 191, 255, 0.2);
   border-radius: 12px;
   padding: 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);*/
+  padding: 20px;
 }
 
 /* 各板块分布情况 - 底部中间 */
@@ -235,33 +259,15 @@ onMounted(() => {
 
 .section-title {
   font-size: 18px;
-  color: #00bfff;
+  color: #E5F2F9;
   margin-bottom: 20px;
-  text-align: center;
+  text-align: left;
   position: relative;
+  background-image: url('./assets/little_title_bg.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+  padding: 10px 20px;
 }
 
-.section-title:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  background: #00bfff;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-
-.section-title:after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  background: #00bfff;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
 </style>
