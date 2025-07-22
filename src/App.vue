@@ -47,7 +47,7 @@
       
       <div class="chart-section system-type-section">
         <h3 class="section-title">各系统类型分布情况</h3>
-        <SystemType3D />
+        <SystemType3DNew />
       </div>
     </div>
   </div>
@@ -61,6 +61,7 @@ import China3DMap from './components/China3DMap.vue'
 import SystemLayout from './components/SystemLayout.vue'
 import ArchitectureDistribution from './components/ArchitectureDistribution.vue'
 import SystemType3D from './components/SystemType3D.vue'
+import SystemType3DNew from './components/SystemType3DNew.vue'
 import InfoCounter from './components/InfoCounter.vue'
 
 
