@@ -26,12 +26,13 @@ use([
 
 const chartOption = ref({})
 
-const categories = ['深圳市', '北京市', '上海市', '广州市', '杭州市', '成都市', '苏州市', '南京市', '武汉市', '西安市']
+const categories = ['龙源电力', '国华', '国电', '宁夏', '国神', '湖北', '江苏', '广东', '山西']
 const seriesData = [
-  { name: '一级', data: [261, 258, 177, 177, 172, 135, 127, 93, 84, 80] },
-  { name: '二级', data: [159, 172, 127, 106, 135, 162, 127, 93, 84, 71] },
-  { name: '三级', data: [174, 140, 102, 81, 123, 142, 108, 66, 55, 48] },
-  { name: '四级', data: [185, 190, 157, 129, 98, 87, 98, 71, 66, 40] }
+  { name: '一级', data: [98, 46, 51, 12, 13, 14, 20, 21, 8], color: '#00bfff' },
+  { name: '二级', data: [500, 300, 200, 60, 50, 40, 35, 30, 25], color: '#4ecdc4' },
+  { name: '三级', data: [100, 100, 100, 30, 30, 30, 25, 20, 15], color: '#45b7d1' },
+  { name: '四级', data: [0, 0, 30, 0, 0, 0, 0, 0, 0], color: '#ffd700' },
+  { name: '未定级', data: [0, 0, 0, 0, 0, 0, 0, 0, 0], color: '#ff6b6b' }
 ]
 
 onMounted(() => {
@@ -52,14 +53,15 @@ onMounted(() => {
         color: '#8cc8ff',
         fontSize: 10
       },
-      top: 0,
-      left: 'center'
+      top: 5,
+      left: 'center',
+      itemGap: 15
     },
     grid: {
-      left: '5%',
+      left: '8%',
       right: '5%',
-      bottom: '10%',
-      top: '20%',
+      bottom: '15%',
+      top: '25%',
       containLabel: true
     },
     xAxis: {
@@ -67,8 +69,8 @@ onMounted(() => {
       data: categories,
       axisLabel: {
         color: '#8cc8ff',
-        fontSize: 9,
-        rotate: 45
+        fontSize: 11,
+        rotate: 0
       },
       axisLine: {
         lineStyle: {
@@ -81,9 +83,11 @@ onMounted(() => {
     },
     yAxis: {
       type: 'value',
+      max: 800,
+      interval: 100,
       axisLabel: {
         color: '#8cc8ff',
-        fontSize: 10
+        fontSize: 11
       },
       axisLine: {
         show: false
@@ -93,21 +97,37 @@ onMounted(() => {
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(0, 191, 255, 0.1)'
+          color: 'rgba(0, 191, 255, 0.1)',
+          type: 'dashed'
         }
       }
     },
     series: seriesData.map((item, index) => ({
       name: item.name,
       type: 'bar',
+      stack: 'total',
       data: item.data,
-      barWidth: '15%',
+      barWidth: '50%',
       itemStyle: {
-        color: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index],
-        borderRadius: [2, 2, 0, 0]
+        color: item.color
+      },
+      label: {
+        show: index === seriesData.length - 1,
+        position: 'top',
+        formatter: function(params) {
+          // 计算总和
+          let total = 0;
+          seriesData.forEach(series => {
+            total += series.data[params.dataIndex] || 0;
+          });
+          return total;
+        },
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: 'bold'
       },
       animationDelay: function(idx) {
-        return idx * 50 + index * 100
+        return idx * 100 + index * 50
       }
     })),
     animationEasing: 'elasticOut'

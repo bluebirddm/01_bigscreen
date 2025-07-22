@@ -11,15 +11,17 @@
           <InfoSystemStatus />
         </div>
         
-        <div class="panel-section">
-          <h3 class="section-title">各省位数据排行TOP10</h3>
-          <ProvinceRanking />
-        </div>
+
         
         <div class="panel-section">
-          <h3 class="section-title">各省位数据排行TOP10</h3>
+          <h3 class="section-title">各单位数据排行TOP10</h3>
           <SystemRanking />
         </div>
+      </div>
+
+      <div class="panel-section">
+          <h3 class="section-title">各省份数据排行TOP10</h3>
+          <ProvinceRanking />
       </div>
       
       <div class="center-panel">
@@ -34,12 +36,12 @@
       
       <div class="right-panel">
         <div class="panel-section">
-          <h3 class="section-title">各级体系布局情况</h3>
+          <h3 class="section-title">各板块分布情况</h3>
           <SystemLayout />
         </div>
         
         <div class="panel-section">
-          <h3 class="section-title">各系统架构分布情况</h3>
+          <h3 class="section-title">各系统类型分布情况</h3>
           <ArchitectureDistribution />
         </div>
       </div>
@@ -108,10 +110,9 @@ onMounted(() => {
 .dashboard-main {
   flex: 1;
   display: grid;
-  grid-template-columns: 380px 1fr 380px;
+  grid-template-columns: 638px 1fr 380px;
   gap: 30px;
   padding: 0 30px 30px;
-  overflow: hidden;
 }
 
 .left-panel,
@@ -167,6 +168,18 @@ onMounted(() => {
   backdrop-filter: blur(10px);
   flex: 1;
   min-height: 0;
+}
+
+.panel-section:first-child {
+  width: 638px;
+  height: 280px;
+  flex: none;
+}
+
+.panel-section:nth-child(2) {
+  width: 500px;
+  height: 323px;
+  flex: none;
 }
 
 .section-title {

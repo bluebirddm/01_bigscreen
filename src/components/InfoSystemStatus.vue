@@ -1,7 +1,9 @@
 <template>
   <div class="info-system-status">
     <div class="status-grid">
-      <div class="status-card" v-for="(item, index) in statusData" :key="index">
+      <div class="status-card" 
+           v-for="(item, index) in statusData" 
+           :key="index">
         <div class="status-icon">
           <div class="icon-circle">
             <i class="icon" :class="item.icon"></i>
@@ -44,6 +46,11 @@ const statusData = ref([
     label: '未定级系统',
     value: '194个',
     icon: 'undefined-level'
+  },
+  {
+    label: '核心系统',
+    value: '82个',
+    icon: 'core-system'
   }
 ])
 </script>
@@ -54,21 +61,26 @@ const statusData = ref([
 }
 
 .status-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 15px;
+  height: calc(100% - 40px);
+  align-content: center;
 }
 
 .status-card {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 12px;
   background: rgba(0, 191, 255, 0.05);
   border: 1px solid rgba(0, 191, 255, 0.2);
   border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
+  width: 173px;
+  height: 77px;
+  justify-self: center;
 }
 
 .status-card:hover {
@@ -78,24 +90,25 @@ const statusData = ref([
 }
 
 .status-icon {
-  margin-right: 16px;
+  margin-right: 10px;
 }
 
 .icon-circle {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: linear-gradient(135deg, #00bfff, #0080ff);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
 }
 
 .icon-circle::before {
   content: '✓';
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -104,14 +117,17 @@ const statusData = ref([
 }
 
 .status-value {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: #00bfff;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  line-height: 1;
 }
 
 .status-label {
-  font-size: 14px;
+  font-size: 11px;
   color: #8cc8ff;
+  line-height: 1;
 }
+
 </style>

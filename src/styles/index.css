@@ -8,7 +8,6 @@ body {
   font-family: 'Microsoft YaHei', Arial, sans-serif;
   background: linear-gradient(135deg, #0c1622 0%, #1a2337 50%, #0c1622 100%);
   color: #fff;
-  overflow: hidden;
   zoom: calc(100vw / 1920);
   transform-origin: left top;
 }
