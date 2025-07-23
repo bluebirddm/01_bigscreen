@@ -55,7 +55,8 @@ onMounted(() => {
       },
       top: 5,
       left: 'center',
-      itemGap: 15
+      itemGap: 15,
+      selectedMode: false
     },
     grid: {
       left: '8%',

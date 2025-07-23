@@ -3,8 +3,9 @@
     <StackedBarChart 
       :data="provinceChartData" 
       legend-position="top"
-      :bar-width="30"
+      :bar-width="20"
       :diamond-height="12"
+      :auto-fit-container="true"
     />
   </div>
 </template>
@@ -37,6 +38,8 @@ const provinceChartData = computed(() => ({
 .province-ranking-enhanced {
   height: 100%;
   width: 100%;
+  /* max-height: 260px; */
+  /* 323px容器高度 - 80px顶部间距 = 243px 确保完全包含 */
   overflow: hidden;
   box-sizing: border-box;
 }

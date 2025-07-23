@@ -61,6 +61,10 @@ const props = defineProps({
   diamondHeight: {
     type: Number,
     default: 12
+  },
+  autoFitContainer: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -90,6 +94,37 @@ const DIAMOND_SIZE = computed(() => [
   props.diamondWidth || props.barWidth, 
   props.diamondHeight
 ])
+
+// 计算菱形装饰所需的额外空间
+const diamondPadding = computed(() => {
+  // 菱形的symbolOffset为±50%，所以需要预留菱形高度的一半
+  return Math.ceil(props.diamondHeight / 2)
+})
+
+// 智能布局配置
+const layoutConfig = computed(() => {
+  if (!props.autoFitContainer) {
+    // 如果不启用自动适配，使用原始配置
+    return {
+      gridTop: props.legendPosition === 'top' ? '25%' : '15%',
+      gridBottom: props.legendPosition === 'top' ? '10%' : '20%'
+    }
+  }
+  
+  const padding = diamondPadding.value
+  
+  if (props.legendPosition === 'top') {
+    return {
+      gridTop: `calc(25% + ${padding + 8}px)`,
+      gridBottom: `${25 + padding}px`
+    }
+  } else {
+    return {
+      gridTop: `${25 + padding}px`, 
+      gridBottom: `calc(25% + ${padding + 5}px)`
+    }
+  }
+})
 
 // 生成系列数据
 const series = computed(() => {
@@ -171,11 +206,49 @@ onMounted(() => {
     backgroundColor: 'transparent',
     tooltip: { 
       trigger: "axis",
+      axisPointer: {
+        type: 'shadow'
+      },
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
       borderColor: '#00bfff',
       borderWidth: 1,
       textStyle: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: 12
+      },
+      padding: [8, 12],
+      confine: true,
+      formatter: function(params) {
+        let result = `<div style="margin-bottom: 5px; font-weight: bold; color: #00bfff;">${params[0].axisValue}</div>`
+        let total = 0
+        
+        // 只处理柱状图数据，过滤掉装饰元素
+        const barData = params.filter(item => item.seriesType === 'bar')
+        
+        // 计算总计
+        barData.forEach(item => {
+          total += item.value
+        })
+        
+        // 显示各系列数据
+        barData.forEach((item, index) => {
+          const percent = total > 0 ? ((item.value / total) * 100).toFixed(1) : 0
+          result += `<div style="margin: 3px 0; display: flex; align-items: center;">
+            <span style="display: inline-block; width: 10px; height: 10px; background: ${item.color}; border-radius: 2px; margin-right: 6px;"></span>
+            <span style="color: #8cc8ff; margin-right: 8px;">${item.seriesName}:</span>
+            <span style="color: #fff; font-weight: bold; margin-right: 8px;">${item.value}</span>
+            <span style="color: #4ecdc4; font-size: 11px;">(${percent}%)</span>
+          </div>`
+        })
+        
+        // 显示总计
+        if (total > 0) {
+          result += `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(0, 191, 255, 0.3); color: #00bfff; font-weight: bold;">
+            总计: ${total}
+          </div>`
+        }
+        
+        return result
       }
     },
     legend: {
@@ -194,10 +267,11 @@ onMounted(() => {
       selectedMode: false,
     },
     grid: { 
-      top: props.legendPosition === 'top' ? '25%' : '15%', 
+      top: '20%', 
       left: '10%', 
       right: '5%', 
-      bottom: props.legendPosition === 'top' ? '10%' : '20%'
+      bottom: '20%',
+      containLabel: true // 确保标签不会溢出
     },
     xAxis: { 
       type: 'category',

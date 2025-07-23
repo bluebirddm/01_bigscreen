@@ -57,6 +57,7 @@ const statusData = ref([
 <style scoped>
 .info-system-status {
   height: 100%;
+  padding: 25px;
 }
 
 .status-grid {

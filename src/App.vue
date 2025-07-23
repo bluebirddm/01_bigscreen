@@ -160,6 +160,8 @@ import InfoCounter from './components/InfoCounter.vue'
   width: 500px;
   height: 323px;
   flex: none;
+  z-index: 5;
+  position: relative;
 }
 
 /* 各单位数据排行TOP10 - 左下角 */
@@ -178,7 +180,7 @@ import InfoCounter from './components/InfoCounter.vue'
   justify-content: flex-start;
   position: absolute;
   top: 744px;
-  left: 0;
+  left: 586px;
   right: 0;
 }
 
@@ -195,7 +197,7 @@ import InfoCounter from './components/InfoCounter.vue'
 .layout-distribution-section {
   width: 636px;
   height: 323px;
-  margin-left: 530px;
+  margin-left: 30px;
 }
 
 /* 各系统类型分布情况 - 底部右下 */
@@ -214,7 +216,7 @@ import InfoCounter from './components/InfoCounter.vue'
   background-repeat: no-repeat;
   background-position: left center;
   background-size: contain;
-  padding: 25px 20px 15px 20px;
+  padding: 25px 20px 25px 20px;
   height: 60px;
 }
 

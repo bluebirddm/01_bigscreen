@@ -1,0 +1,27 @@
+
+> bigscreen-dashboard@1.0.0 dev
+> vite
+
+Port 3000 is in use, trying another one...
+
+  VITE v5.4.19  ready in 602 ms
+
+  ➜  Local:   http://localhost:3001/
+  ➜  Network: use --host to expose
+16:59:28 [vite] hmr update /src/components/StackedBarChart.vue
+16:59:35 [vite] hmr update /src/components/StackedBarChart.vue
+17:00:25 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:14 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:30 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:32 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:35 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:37 [vite] hmr update /src/components/StackedBarChart.vue
+17:12:59 [vite] hmr update /src/components/StackedBarChart.vue
+17:13:13 [vite] hmr update /src/components/StackedBarChart.vue
+17:13:15 [vite] hmr update /src/components/StackedBarChart.vue
+17:18:37 [vite] page reload src/main.js
+17:18:43 [vite] page reload src/main.js
+17:25:18 [vite] hmr update /src/App.vue?vue&type=style&index=0&scoped=7a7a37b1&lang.css
+17:28:49 [vite] hmr update /src/App.vue?vue&type=style&index=0&scoped=7a7a37b1&lang.css
+17:33:42 [vite] hmr update /src/App.vue?vue&type=style&index=0&scoped=7a7a37b1&lang.css
+17:35:43 [vite] hmr update /src/components/SystemRanking.vue
