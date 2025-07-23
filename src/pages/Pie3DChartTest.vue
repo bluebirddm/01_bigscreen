@@ -15,6 +15,7 @@
             width="600px" 
             height="400px"
             :internalDiameterRatio="0.59"
+            unit="个"
           />
         </div>
         <div class="controls">

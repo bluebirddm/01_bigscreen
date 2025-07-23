@@ -67,6 +67,10 @@ const props = defineProps({
   internalDiameterRatio: {
     type: Number,
     default: 0.59
+  },
+  unit: {
+    type: String,
+    default: ''
   }
 })
 
@@ -217,16 +221,13 @@ function getPie3D(pieData, internalDiameterRatio) {
     
     // let posZ = 3.5; // 新代码：固定值，确保在饼图上方
     // 为每个扇形单独设置 posZ 值
-    let posZ;
-    if (pieData[i].name === '达标天数') {
-      posZ = 1.4; // 达标天数的指示线起点高度
-    } else {
-      posZ = 3.4; // 未达标天数的指示线起点高度
-    }
+    let posZ =1;
+
   
     //let flag = ((midRadian >= 0 && midRadian <= Math.PI / 2) || (midRadian >= 3 * Math.PI / 2 && midRadian <= Math.PI * 2)) ? 1 : -1;
     // 改动：根据索引决定方向，偶数索引向右，奇数索引向左
     let flag = i % 2 === 0 ? -1 : 1; // 偶数向右，奇数向左
+    flag = 0;
     
     //分别设置左右指示线的 水平方向长度    1是左边  0.7是右边
     let flaglevellength = i % 2 === 0 ? 1 : 0.8; // 偶数向右，奇数向左
@@ -237,14 +238,14 @@ function getPie3D(pieData, internalDiameterRatio) {
     let color = pieData[i].itemStyle.color;
     
     // 改动：调整转折点和终点的位置计算
-    let turningPosArr = [posX + (0.3 * flag), posY, (posZ + 8) * flagverticallength]; // 水平转折
-    let endPosArr = [posX + (2.8 * flag * flaglevellength), posY, (posZ + 8) * flagverticallength]; // 终点位置
+    // let turningPosArr = [posX + (0.3 * flag), posY, (posZ + 8) * flagverticallength]; // 水平转折
+    // let endPosArr = [posX + (2.8 * flag * flaglevellength), posY, (posZ + 8) * flagverticallength]; // 终点位置
     
     // 改动：调整转折点和终点的Z坐标，确保它们也在饼图上方
-    // let turningPosArr = [posX * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (2)]; // 原代码
+    let turningPosArr = [posX * (1.5) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (2)]; // 原代码
     //let turningPosArr = [posX * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 2]; // 新代码
     
-    // let endPosArr = [posX * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (6)]; // 原代码
+    let endPosArr = [posX * (1.6) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (6)]; // 原代码
     //let endPosArr = [posX * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 4]; // 新代码
     
     // 添加指示线起点的圆点
@@ -315,11 +316,12 @@ function getPie3D(pieData, internalDiameterRatio) {
           },
           // 使用富文本标签格式化内容
           formatter: function(params) {
-            return `{value|${series[i].pieData.value}}{unit|(天)}\n{name|${series[i].name}}`;
+            const unitText = props.unit ? `{unit|(${props.unit})}` : '';
+            return `{value|${series[i].pieData.value}}${unitText}\n{name|${series[i].name}}`;
           },
         },
       symbolSize: 0,
-      data: [{ name: series[i].pieData.value + '(天)' + '\n' + series[i].name, value: endPosArr }]
+      data: [{ name: props.unit ? series[i].pieData.value + `(${props.unit})` + '\n' + series[i].name : series[i].pieData.value + '\n' + series[i].name, value: endPosArr }]
     });
 
 

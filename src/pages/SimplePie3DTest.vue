@@ -10,6 +10,7 @@
           width="600px" 
           height="400px"
           :internalDiameterRatio="0.59"
+          unit="件"
         />
       </div>
       
