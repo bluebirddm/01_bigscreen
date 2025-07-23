@@ -1,6 +1,6 @@
 <template>
   <div class="system-type-3d">
-    <Pie3DChart 
+    <Pie3DChartV1 
       :data="chartData"
       :width="'100%'"
       :height="'100%'"
@@ -14,6 +14,7 @@
 <script setup>
 import { ref } from 'vue'
 import Pie3DChart from './Pie3DChart.vue'
+import Pie3DChartV1 from './Pie3DChartV1.vue'
 
 const chartData = ref([
   {

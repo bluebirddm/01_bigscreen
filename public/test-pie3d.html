@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie3DChartV1组件测试</title>
+    <script type="module" src="/src/main.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0E3567;
+            font-family: Arial, sans-serif;
+        }
+        .test-container {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+            background-color: #1a4480;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Pie3DChartV1 组件测试</h1>
+        <div class="test-container">
+            <pie3-d-chart-v1 
+                :data="testData"
+                width="100%"
+                height="500px"
+                :internal-diameter-ratio="0.6"
+            ></pie3-d-chart-v1>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createApp } from 'vue'
+        import Pie3DChartV1 from './src/components/Pie3DChartV1.vue'
+
+        const app = createApp({
+            components: {
+                Pie3DChartV1
+            },
+            data() {
+                return {
+                    testData: [
+                        {
+                            name: '分类A',
+                            value: 36,
+                            itemStyle: {
+                                color: '#F6B357',
+                            },
+                        },
+                        {
+                            name: '分类B',
+                            value: 52,
+                            itemStyle: {
+                                color: '#f77b66',
+                            },
+                        },
+                        {
+                            name: '分类C',
+                            value: 44,
+                            itemStyle: {
+                                color: '#3edce0',
+                            },
+                        },
+                        {
+                            name: '分类D',
+                            value: 32,
+                            itemStyle: {
+                                color: '#f94e76',
+                            },
+                        },
+                        {
+                            name: '分类E',
+                            value: 16,
+                            itemStyle: {
+                                color: '#018ef1',
+                            },
+                        },
+                        {
+                            name: '分类F',
+                            value: 23,
+                            itemStyle: {
+                                color: '#9e60f9',
+                            },
+                        },
+                    ]
+                }
+            }
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+</html>
