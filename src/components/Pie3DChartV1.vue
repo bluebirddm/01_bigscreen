@@ -224,28 +224,28 @@ function getPie3D(pieData, internalDiameterRatio) {
     let posZ =1;
 
   
-    //let flag = ((midRadian >= 0 && midRadian <= Math.PI / 2) || (midRadian >= 3 * Math.PI / 2 && midRadian <= Math.PI * 2)) ? 1 : -1;
+    let flag = ((midRadian >= 0 && midRadian <= Math.PI / 2) || (midRadian >= 3 * Math.PI / 2 && midRadian <= Math.PI * 2)) ? 1 : -1;
+    let verticalflag = (midRadian >= 0 && midRadian <= Math.PI) ? 1 : -1;
     // 改动：根据索引决定方向，偶数索引向右，奇数索引向左
-    let flag = i % 2 === 0 ? -1 : 1; // 偶数向右，奇数向左
-    flag = 0;
+    // let flag = i % 2 === 0 ? -1 : 1; // 偶数向右，奇数向左
     
     //分别设置左右指示线的 水平方向长度    1是左边  0.7是右边
-    let flaglevellength = i % 2 === 0 ? 1 : 0.8; // 偶数向右，奇数向左
+    let flaglevellength = flag == 1 ? 1.2 : 1.4; // 偶数向右，奇数向左
     
     //分别设置左右指示线的 垂直方向长度    1是左边   0.9是右边
-    let flagverticallength = i % 2 === 0 ? 1 : 0.85; // 偶数向右，奇数向左
+    let flagverticallength = flag == 1 ? 1 : 0.9; // 偶数向右，奇数向左
     
     let color = pieData[i].itemStyle.color;
     
     // 改动：调整转折点和终点的位置计算
-    // let turningPosArr = [posX + (0.3 * flag), posY, (posZ + 8) * flagverticallength]; // 水平转折
-    // let endPosArr = [posX + (2.8 * flag * flaglevellength), posY, (posZ + 8) * flagverticallength]; // 终点位置
+    let turningPosArr = [posX + (0.3 * flag), posY, (posZ + 8) * flagverticallength*verticalflag]; // 水平转折
+    let endPosArr = [posX + (0.6 * flag * flaglevellength), posY, (posZ + 8) * flagverticallength*verticalflag]; // 终点位置
     
     // 改动：调整转折点和终点的Z坐标，确保它们也在饼图上方
-    let turningPosArr = [posX * (1.5) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (2)]; // 原代码
+    // let turningPosArr = [posX * (1.2) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (2)]; // 原代码
     //let turningPosArr = [posX * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 2]; // 新代码
     
-    let endPosArr = [posX * (1.6) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (6)]; // 原代码
+    // let endPosArr = [posX * (1.3) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (6)]; // 原代码
     //let endPosArr = [posX * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 4]; // 新代码
     
     // 添加指示线起点的圆点
@@ -286,14 +286,13 @@ function getPie3D(pieData, internalDiameterRatio) {
       type: 'scatter3D',
       label: {
           show: true,
-          distance:-10,
-          position:  flag > 0 ? 'left' : 'right',
+          position:  flag < 0 ? 'left' : 'right',
           textStyle: {
               color: '#fff',
               backgroundColor: 'transparent',  // 去掉背景颜色
               borderWidth: 0,  // 去掉边框
               fontSize: 16,
-              padding: [0, 20, 40, 10],
+              padding: [0, 0, 0, 0],
               borderRadius: 4,
           },
           rich: {
@@ -371,9 +370,10 @@ function getPie3D(pieData, internalDiameterRatio) {
     legend: {
       data: legendData,
       orient: 'vertical',
-      right: '10%',
+      right: '0%',
       top: 'center',
       itemGap: 20,
+      align: 'left',
       textStyle: {
         fontSize: 14,
         color: '#EBEAEA'
@@ -403,6 +403,7 @@ function getPie3D(pieData, internalDiameterRatio) {
       boxHeight: 10,
       viewControl: {
         alpha: 40,
+        beta: 0,
         rotateSensitivity: 0,
         zoomSensitivity: 0,
         panSensitivity: 0,

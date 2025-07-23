@@ -1,12 +1,19 @@
 <template>
   <div class="system-type-3d">
-    <Pie3DChartV1 
+    <!-- <Pie3DChartV1 
       :data="chartData"
       :width="'100%'"
       :height="'100%'"
       :backgroundColor="'transparent'"
       :autoRotate="false"
       :internalDiameterRatio="0.4"
+    /> -->
+    <Pie3DChartV1 
+      :data="chartData"
+      width="'100%'"
+      height="'100%'"
+      :internalDiameterRatio="0.4"
+      unit="件"
     />
   </div>
 </template>

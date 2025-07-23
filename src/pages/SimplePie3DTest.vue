@@ -7,7 +7,7 @@
       <div class="chart-wrapper">
         <Pie3DChartV1 
           :data="testData" 
-          width="600px" 
+          width="800px" 
           height="400px"
           :internalDiameterRatio="0.59"
           unit="件"
