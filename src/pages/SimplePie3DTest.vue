@@ -98,31 +98,38 @@ function resetData() {
   max-width: 1000px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  background: #1a1a1a;
+  min-height: 100vh;
+  color: #ffffff;
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .test-container {
-  background: white;
+  background: #2d2d2d;
   border-radius: 10px;
   padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid #4a4a4a;
 }
 
 h2 {
-  color: #2c3e50;
+  color: #ffffff;
   margin-bottom: 20px;
+  border-bottom: 2px solid #5b9bd5;
+  padding-bottom: 10px;
 }
 
 .chart-wrapper {
-  border: 2px dashed #bdc3c7;
+  border: 2px dashed #6a6a6a;
   border-radius: 8px;
   padding: 20px;
-  background: #f8f9fa;
+  background: #3a3a3a;
   margin-bottom: 20px;
 }
 
@@ -134,28 +141,30 @@ h2 {
 .controls button {
   margin: 0 10px;
   padding: 10px 20px;
-  background: #3498db;
+  background: #5b9bd5;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s;
 }
 
 .controls button:hover {
-  background: #2980b9;
+  background: #4a8bc2;
 }
 
 .data-display {
   margin-top: 20px;
   padding: 15px;
-  background: #f4f4f4;
+  background: #3a3a3a;
   border-radius: 8px;
+  border-left: 4px solid #5b9bd5;
 }
 
 .data-display h3 {
   margin: 0 0 10px 0;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 .data-display pre {

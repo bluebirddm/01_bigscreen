@@ -250,15 +250,19 @@ function resetBasicData() {
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Arial', sans-serif;
+  background: #1a1a1a;
+  min-height: 100vh;
+  color: #ffffff;
 }
 
 .header {
   text-align: center;
   margin-bottom: 40px;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4a6cf7 0%, #6366f1 100%);
   color: white;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .header h1 {
@@ -279,45 +283,46 @@ function resetBasicData() {
 }
 
 .test-section {
-  background: white;
+  background: #2d2d2d;
   border-radius: 10px;
   padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e1e5e9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid #4a4a4a;
 }
 
 .test-section h2 {
   margin: 0 0 20px 0;
-  color: #2c3e50;
+  color: #ffffff;
   font-size: 1.8em;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid #5b9bd5;
   padding-bottom: 10px;
 }
 
 .chart-wrapper {
   margin: 20px 0;
-  border: 2px dashed #bdc3c7;
+  border: 2px dashed #6a6a6a;
   border-radius: 8px;
   padding: 20px;
-  background: #f8f9fa;
+  background: #3a3a3a;
 }
 
 .controls, .size-controls, .ratio-controls, .data-controls {
   margin: 20px 0;
   padding: 15px;
-  background: #ecf0f1;
+  background: #3a3a3a;
   border-radius: 8px;
+  border: 1px solid #4a4a4a;
 }
 
 .controls h3 {
   margin: 0 0 15px 0;
-  color: #34495e;
+  color: #e0e0e0;
 }
 
 .controls button, .data-controls button {
   margin: 5px;
   padding: 10px 20px;
-  background: #3498db;
+  background: #5b9bd5;
   color: white;
   border: none;
   border-radius: 5px;
@@ -327,7 +332,7 @@ function resetBasicData() {
 }
 
 .controls button:hover, .data-controls button:hover {
-  background: #2980b9;
+  background: #4a8bc2;
 }
 
 .data-controls button.active {
@@ -338,14 +343,21 @@ function resetBasicData() {
   display: block;
   margin: 10px 0;
   font-weight: bold;
-  color: #2c3e50;
+  color: #e0e0e0;
 }
 
 .size-controls select, .ratio-controls input {
   margin-left: 10px;
   padding: 5px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid #6a6a6a;
   border-radius: 4px;
+  background: #4a4a4a;
+  color: #ffffff;
+}
+
+.size-controls select:focus, .ratio-controls input:focus {
+  outline: none;
+  border-color: #5b9bd5;
 }
 
 .ratio-controls input[type="range"] {
@@ -355,14 +367,14 @@ function resetBasicData() {
 .data-info {
   margin-top: 20px;
   padding: 15px;
-  background: #f4f4f4;
+  background: #3a3a3a;
   border-radius: 8px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #5b9bd5;
 }
 
 .data-info h4 {
   margin: 0 0 10px 0;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 .data-info pre {
@@ -378,10 +390,10 @@ function resetBasicData() {
 .responsive-wrapper {
   width: 100%;
   min-height: 400px;
-  border: 2px dashed #bdc3c7;
+  border: 2px dashed #6a6a6a;
   border-radius: 8px;
   padding: 20px;
-  background: #f8f9fa;
+  background: #3a3a3a;
 }
 
 @media (max-width: 768px) {

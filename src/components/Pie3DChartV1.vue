@@ -149,6 +149,7 @@ function getParametricEquation(startRatio, endRatio, isSelected, isHovered, k, h
 
 // 生成模拟 3D 饼图的配置项
 function getPie3D(pieData, internalDiameterRatio) {
+  let linesSeries = []; // line3D模拟label指示线
   let series = [];
   let sumValue = 0;
   let startValue = 0;
@@ -206,8 +207,128 @@ function getPie3D(pieData, internalDiameterRatio) {
 
     startValue = endValue;
 
+
+  // 计算label指示线的起始和终点位置
+    let midRadian = (series[i].pieData.endRatio + series[i].pieData.startRatio) * Math.PI;
+    let posX = Math.cos(midRadian) * (1.2 + Math.cos(Math.PI / 2));
+    let posY = Math.sin(midRadian) * (0.9 + Math.cos(Math.PI / 2));
+    // 改动：将指示线起点的Z坐标提高到饼图上方
+    // let posZ = Math.log(Math.abs(fakeData + 200)) * 0.1; // 原代码
+    
+    // let posZ = 3.5; // 新代码：固定值，确保在饼图上方
+    // 为每个扇形单独设置 posZ 值
+    let posZ;
+    if (pieData[i].name === '达标天数') {
+      posZ = 1.4; // 达标天数的指示线起点高度
+    } else {
+      posZ = 3.4; // 未达标天数的指示线起点高度
+    }
+  
+    //let flag = ((midRadian >= 0 && midRadian <= Math.PI / 2) || (midRadian >= 3 * Math.PI / 2 && midRadian <= Math.PI * 2)) ? 1 : -1;
+    // 改动：根据索引决定方向，偶数索引向右，奇数索引向左
+    let flag = i % 2 === 0 ? -1 : 1; // 偶数向右，奇数向左
+    
+    //分别设置左右指示线的 水平方向长度    1是左边  0.7是右边
+    let flaglevellength = i % 2 === 0 ? 1 : 0.8; // 偶数向右，奇数向左
+    
+    //分别设置左右指示线的 垂直方向长度    1是左边   0.9是右边
+    let flagverticallength = i % 2 === 0 ? 1 : 0.85; // 偶数向右，奇数向左
+    
+    let color = pieData[i].itemStyle.color;
+    
+    // 改动：调整转折点和终点的位置计算
+    let turningPosArr = [posX + (0.3 * flag), posY, (posZ + 8) * flagverticallength]; // 水平转折
+    let endPosArr = [posX + (2.8 * flag * flaglevellength), posY, (posZ + 8) * flagverticallength]; // 终点位置
+    
+    // 改动：调整转折点和终点的Z坐标，确保它们也在饼图上方
+    // let turningPosArr = [posX * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (2)]; // 原代码
+    //let turningPosArr = [posX * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.8) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 2]; // 新代码
+    
+    // let endPosArr = [posX * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ * (6)]; // 原代码
+    //let endPosArr = [posX * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posY * (1.9) + (i * 0.1 * flag) + (flag < 0 ? -0.5 : 0), posZ + 4]; // 新代码
+    
+    // 添加指示线起点的圆点
+    linesSeries.push({
+      type: 'scatter3D',
+      symbol: 'circle',
+      symbolSize: 6,
+      itemStyle: {
+        color: '#fff',
+      },
+      data: [[posX, posY, posZ]]
+    });
+    
+    // 添加指示线
+    linesSeries.push({
+      type: 'line3D',
+      lineStyle: {
+        color: '#fff',
+        width: 2
+      },
+      data: [[posX, posY, posZ], turningPosArr, endPosArr]
+    });
+    
+    // 添加指示线终点的圆点
+    linesSeries.push({
+      type: 'scatter3D',
+      symbol: 'circle',
+      symbolSize: 6,
+      itemStyle: {
+        color: '#fff',
+      },
+      data: [endPosArr]
+    });
+    
+    // 添加标签（去掉背景颜色）
+    linesSeries.push(
+    {
+      type: 'scatter3D',
+      label: {
+          show: true,
+          distance:-10,
+          position:  flag > 0 ? 'left' : 'right',
+          textStyle: {
+              color: '#fff',
+              backgroundColor: 'transparent',  // 去掉背景颜色
+              borderWidth: 0,  // 去掉边框
+              fontSize: 16,
+              padding: [0, 20, 40, 10],
+              borderRadius: 4,
+          },
+          rich: {
+            // 定义数值样式
+            value: {
+              fontSize: 16,
+              color: '#41e2ff' // 使用扇形的颜色
+            },
+            // 定义单位和名称样式
+            unit: {
+              fontSize: 12,
+              color: '#fff',
+              // padding: [0, 0, 0, 4] // 为"天"字添加左边距
+            },
+            name: {
+              fontSize: 12,
+              color: '#fff',
+              lineHeight: 20 // 控制换行后的行高
+            }
+          },
+          // 使用富文本标签格式化内容
+          formatter: function(params) {
+            return `{value|${series[i].pieData.value}}{unit|(天)}\n{name|${series[i].name}}`;
+          },
+        },
+      symbolSize: 0,
+      data: [{ name: series[i].pieData.value + '(天)' + '\n' + series[i].name, value: endPosArr }]
+    });
+
+
+
+
     legendData.push(series[i].name);
   }
+
+  series = series.concat(linesSeries)
 
   // 补充一个透明的圆环，用于支撑高亮功能的近似实现。
   series.push({
@@ -247,6 +368,14 @@ function getPie3D(pieData, internalDiameterRatio) {
   let chartOption = {
     legend: {
       data: legendData,
+      orient: 'vertical',
+      right: '10%',
+      top: 'center',
+      itemGap: 20,
+      textStyle: {
+        fontSize: 14,
+        color: '#EBEAEA'
+      }
     },
     tooltip: {
       formatter: (params) => {
