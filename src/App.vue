@@ -18,7 +18,7 @@
 
         <div class="panel-section province-ranking-section">
           <h3 class="section-title">各省份数据排行TOP10</h3>
-          <ProvinceRanking />
+          <ProvinceRankingEnhanced />
         </div>
         
 
@@ -55,7 +55,7 @@
 
 <script setup>
 import InfoSystemStatus from './components/InfoSystemStatus.vue'
-import ProvinceRanking from './components/ProvinceRanking.vue'
+import ProvinceRankingEnhanced from './components/ProvinceRankingEnhanced.vue'
 import SystemRanking from './components/SystemRanking.vue'
 import China3DMap from './components/China3DMap.vue'
 import SystemLayout from './components/SystemLayout.vue'
