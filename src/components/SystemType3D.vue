@@ -20,7 +20,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import Pie3DChart from './Pie3DChart.vue'
 import Pie3DChartV1 from './Pie3DChartV1.vue'
 
 const chartData = ref([

@@ -61,7 +61,6 @@ import China3DMap from './components/China3DMap.vue'
 import SystemLayout from './components/SystemLayout.vue'
 import ArchitectureDistribution from './components/ArchitectureDistribution.vue'
 import SystemType3D from './components/SystemType3D.vue'
-import SystemType3DNew from './components/SystemType3DNew.vue'
 import InfoCounter from './components/InfoCounter.vue'
 
 
