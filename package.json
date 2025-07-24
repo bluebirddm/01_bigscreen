@@ -4,7 +4,7 @@
   "description": "信息系统智慧可视化大屏",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
