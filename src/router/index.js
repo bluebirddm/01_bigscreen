@@ -5,6 +5,9 @@ import Pie3DChartTest from '../pages/Pie3DChartTest.vue'
 import SimplePie3DTest from '../pages/SimplePie3DTest.vue'
 import StackedBarChartTest from '../components/StackedBarChartTest.vue'
 import Bar3DTest from '../pages/Bar3DTest.vue'
+import TestRisk3D from '../views/TestRisk3D.vue'
+import TestRisk3DEffect from '../views/TestRisk3DEffect.vue'
+import TestRisk3DMonitor from '../views/TestRisk3DMonitor.vue'
 
 const routes = [
   {
@@ -41,6 +44,21 @@ const routes = [
     path: '/test/bar3d',
     name: 'Bar3DTest',
     component: Bar3DTest
+  },
+  {
+    path: '/test/risk3d',
+    name: 'TestRisk3D',
+    component: TestRisk3D
+  },
+  {
+    path: '/test/risk3d-effect',
+    name: 'TestRisk3DEffect',
+    component: TestRisk3DEffect
+  },
+  {
+    path: '/test/risk3d-monitor',
+    name: 'TestRisk3DMonitor',
+    component: TestRisk3DMonitor
   }
 ]
 
