@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Screen1 from '../pages/Screen1.vue'
+import Screen2 from '../pages/Screen2.vue'
 import Pie3DChartTest from '../pages/Pie3DChartTest.vue'
 import SimplePie3DTest from '../pages/SimplePie3DTest.vue'
 import StackedBarChartTest from '../components/StackedBarChartTest.vue'
@@ -14,6 +15,11 @@ const routes = [
     path: '/screen1',
     name: 'Screen1Alias',
     component: Screen1
+  },
+  {
+    path: '/screen2',
+    name: 'Screen2',
+    component: Screen2
   },
   {
     path: '/test/pie3d',
