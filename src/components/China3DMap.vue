@@ -1,5 +1,6 @@
 <template>
   <div class="china-3d-map">
+    <img class="map-background" src="../assets/chianmap_bg.png" alt="地图背景" />
     <v-chart class="chart" :option="option" autoresize />
   </div>
 </template>
@@ -204,7 +205,7 @@ onMounted(async () => {
 
     // 地图加载成功后设置option
     option.value = {
-      // backgroundColor: "#003366",
+      backgroundColor: "transparent",
       title: {
         show: true,
         text: "",
@@ -540,8 +541,22 @@ onMounted(async () => {
   position: relative;
 }
 
+.map-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  z-index: 0;
+  opacity: 0.6;
+}
+
 .chart {
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 </style>
