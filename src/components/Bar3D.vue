@@ -201,6 +201,29 @@ const initChartOption = () => {
           type: 'custom',
           renderItem: function (params, api) {
             const location = api.coord([api.value(0), api.value(1)])
+            
+            const backgroundLeftGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              offset: 0,
+              color: 'rgba(0, 191, 255, 0.15)'
+            }, {
+              offset: 0.5,
+              color: 'rgba(0, 191, 255, 0.08)'
+            }, {
+              offset: 1,
+              color: 'rgba(0, 191, 255, 0)'
+            }])
+            
+            const backgroundRightGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              offset: 0,
+              color: 'rgba(0, 191, 255, 0.12)'
+            }, {
+              offset: 0.5,
+              color: 'rgba(0, 191, 255, 0.06)'
+            }, {
+              offset: 1,
+              color: 'rgba(0, 191, 255, 0)'
+            }])
+            
             return {
               type: 'group',
               children: [{
@@ -212,7 +235,7 @@ const initChartOption = () => {
                   xAxisPoint: api.coord([api.value(0), 0])
                 },
                 style: {
-                  fill: 'rgba(0, 191, 255, 0.1)'
+                  fill: backgroundLeftGradient
                 }
               }, {
                 type: 'CubeRight',
@@ -223,7 +246,7 @@ const initChartOption = () => {
                   xAxisPoint: api.coord([api.value(0), 0])
                 },
                 style: {
-                  fill: 'rgba(0, 191, 255, 0.08)'
+                  fill: backgroundRightGradient
                 }
               }, {
                 type: 'CubeTop',
@@ -254,16 +277,22 @@ const initChartOption = () => {
             offset: 0,
             color: isHighlight ? '#ff6b6b' : '#00bfff'
           }, {
-            offset: 0.8,
+            offset: 0.5,
             color: isHighlight ? '#cc5555' : '#0088cc'
+          }, {
+            offset: 1,
+            color: isHighlight ? 'rgba(255, 107, 107, 0)' : 'rgba(0, 191, 255, 0)'
           }])
           
           const rightGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
             color: isHighlight ? '#ff8888' : '#33ccff'
           }, {
-            offset: 0.8,
+            offset: 0.5,
             color: isHighlight ? '#dd6666' : '#0099dd'
+          }, {
+            offset: 1,
+            color: isHighlight ? 'rgba(255, 136, 136, 0)' : 'rgba(51, 204, 255, 0)'
           }])
           
           const topGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
