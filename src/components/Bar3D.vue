@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { use } from 'echarts/core'
 import { CustomChart } from 'echarts/charts'
 import { 
@@ -51,6 +51,26 @@ const props = defineProps({
   showMaxBars: {
     type: Boolean,
     default: false
+  },
+  // 透明效果相关参数
+  enableTransparency: {
+    type: Boolean,
+    default: true
+  },
+  transparencyOffset: {
+    type: Number,
+    default: 0.5,
+    validator: (value) => value >= 0 && value <= 1
+  },
+  bottomOpacity: {
+    type: Number,
+    default: 0,
+    validator: (value) => value >= 0 && value <= 1
+  },
+  backgroundTransparencyScale: {
+    type: Number,
+    default: 1,
+    validator: (value) => value >= 0 && value <= 1
   }
 })
 
@@ -109,6 +129,56 @@ const initCustomShapes = () => {
   echarts.graphic.registerShape('CubeLeft', CubeLeft)
   echarts.graphic.registerShape('CubeRight', CubeRight)
   echarts.graphic.registerShape('CubeTop', CubeTop)
+}
+
+// 辅助函数：设置颜色的透明度
+const setColorAlpha = (color, alpha) => {
+  // 处理十六进制颜色
+  if (color.startsWith('#')) {
+    const r = parseInt(color.slice(1, 3), 16)
+    const g = parseInt(color.slice(3, 5), 16)
+    const b = parseInt(color.slice(5, 7), 16)
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+  // 处理rgba颜色
+  if (color.startsWith('rgba')) {
+    return color.replace(/[\d.]+\)$/g, `${alpha})`)
+  }
+  // 处理rgb颜色
+  if (color.startsWith('rgb')) {
+    return color.replace('rgb', 'rgba').replace(')', `, ${alpha})`)
+  }
+  return color
+}
+
+// 辅助函数：创建渐变配置
+const createGradient = (topColor, middleColor, isBackground = false) => {
+  if (!props.enableTransparency) {
+    // 不启用透明时返回纯色渐变
+    return new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+      offset: 0,
+      color: topColor
+    }, {
+      offset: 0.8,
+      color: middleColor
+    }])
+  }
+  
+  // 启用透明时的渐变
+  const bottomAlpha = isBackground 
+    ? props.bottomOpacity * props.backgroundTransparencyScale
+    : props.bottomOpacity
+    
+  return new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+    offset: 0,
+    color: topColor
+  }, {
+    offset: props.transparencyOffset,
+    color: middleColor
+  }, {
+    offset: 1,
+    color: setColorAlpha(middleColor, bottomAlpha)
+  }])
 }
 
 // 初始化图表配置
@@ -202,27 +272,17 @@ const initChartOption = () => {
           renderItem: function (params, api) {
             const location = api.coord([api.value(0), api.value(1)])
             
-            const backgroundLeftGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-              offset: 0,
-              color: 'rgba(0, 191, 255, 0.15)'
-            }, {
-              offset: 0.5,
-              color: 'rgba(0, 191, 255, 0.08)'
-            }, {
-              offset: 1,
-              color: 'rgba(0, 191, 255, 0)'
-            }])
+            const backgroundLeftGradient = createGradient(
+              'rgba(0, 191, 255, 0.15)',
+              'rgba(0, 191, 255, 0.08)',
+              true
+            )
             
-            const backgroundRightGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-              offset: 0,
-              color: 'rgba(0, 191, 255, 0.12)'
-            }, {
-              offset: 0.5,
-              color: 'rgba(0, 191, 255, 0.06)'
-            }, {
-              offset: 1,
-              color: 'rgba(0, 191, 255, 0)'
-            }])
+            const backgroundRightGradient = createGradient(
+              'rgba(0, 191, 255, 0.12)',
+              'rgba(0, 191, 255, 0.06)',
+              true
+            )
             
             return {
               type: 'group',
@@ -273,27 +333,17 @@ const initChartOption = () => {
           const location = api.coord([api.value(0), api.value(1)])
           const isHighlight = api.value(1) > maxValue * 0.8
           
-          const leftGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-            offset: 0,
-            color: isHighlight ? '#ff6b6b' : '#00bfff'
-          }, {
-            offset: 0.5,
-            color: isHighlight ? '#cc5555' : '#0088cc'
-          }, {
-            offset: 1,
-            color: isHighlight ? 'rgba(255, 107, 107, 0)' : 'rgba(0, 191, 255, 0)'
-          }])
+          const leftGradient = createGradient(
+            isHighlight ? '#ff6b6b' : '#00bfff',
+            isHighlight ? '#cc5555' : '#0088cc',
+            false
+          )
           
-          const rightGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-            offset: 0,
-            color: isHighlight ? '#ff8888' : '#33ccff'
-          }, {
-            offset: 0.5,
-            color: isHighlight ? '#dd6666' : '#0099dd'
-          }, {
-            offset: 1,
-            color: isHighlight ? 'rgba(255, 136, 136, 0)' : 'rgba(51, 204, 255, 0)'
-          }])
+          const rightGradient = createGradient(
+            isHighlight ? '#ff8888' : '#33ccff',
+            isHighlight ? '#dd6666' : '#0099dd',
+            false
+          )
           
           const topGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
@@ -358,6 +408,21 @@ const initChartOption = () => {
 onMounted(() => {
   initCustomShapes()
   initChartOption()
+})
+
+// 监听透明相关props变化，重新初始化图表
+watchEffect(() => {
+  // 依赖收集这些props
+  props.enableTransparency
+  props.transparencyOffset
+  props.bottomOpacity
+  props.backgroundTransparencyScale
+  props.showMaxBars
+  
+  // 如果图表已初始化，重新配置
+  if (chartOption.value.series) {
+    initChartOption()
+  }
 })
 </script>
 

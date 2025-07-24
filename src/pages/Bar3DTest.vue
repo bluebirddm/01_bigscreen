@@ -72,6 +72,76 @@
           height="250px"
         />
       </div>
+      
+      <!-- 透明参数控制演示 -->
+      <div class="chart-section full-width">
+        <h3>透明参数控制演示</h3>
+        <div class="controls-grid">
+          <div class="control-group">
+            <label class="switch">
+              <input type="checkbox" v-model="transparencyEnabled">
+              <span class="slider"></span>
+            </label>
+            <span class="control-label">启用透明效果</span>
+          </div>
+          
+          <div class="control-group">
+            <label class="range-label">透明转折点: {{ transparencyOffset }}</label>
+            <input 
+              type="range" 
+              v-model.number="transparencyOffset" 
+              min="0" 
+              max="1" 
+              step="0.1"
+              :disabled="!transparencyEnabled"
+              class="range-slider"
+            >
+          </div>
+          
+          <div class="control-group">
+            <label class="range-label">底部透明度: {{ bottomOpacity }}</label>
+            <input 
+              type="range" 
+              v-model.number="bottomOpacity" 
+              min="0" 
+              max="1" 
+              step="0.1"
+              :disabled="!transparencyEnabled"
+              class="range-slider"
+            >
+          </div>
+          
+          <div class="control-group">
+            <label class="range-label">背景柱透明缩放: {{ bgTransparencyScale }}</label>
+            <input 
+              type="range" 
+              v-model.number="bgTransparencyScale" 
+              min="0" 
+              max="1" 
+              step="0.1"
+              :disabled="!transparencyEnabled"
+              class="range-slider"
+            >
+          </div>
+        </div>
+        
+        <div class="demo-charts">
+          <div class="demo-chart">
+            <h4>自定义透明参数效果</h4>
+            <Bar3D 
+              :data="[450, 380, 620, 320, 510, 410]"
+              :max-data="[700, 700, 700, 700, 700, 700]"
+              :categories="['A', 'B', 'C', 'D', 'E', 'F']"
+              :show-max-bars="true"
+              :enable-transparency="transparencyEnabled"
+              :transparency-offset="transparencyOffset"
+              :bottom-opacity="bottomOpacity"
+              :background-transparency-scale="bgTransparencyScale"
+              height="300px"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +162,12 @@ const compactCategories = ref(['Q1', 'Q2', 'Q3', 'Q4'])
 
 // 交互开关
 const showMaxBarsToggle = ref(false)
+
+// 透明参数控制
+const transparencyEnabled = ref(true)
+const transparencyOffset = ref(0.5)
+const bottomOpacity = ref(0)
+const bgTransparencyScale = ref(1)
 </script>
 
 <style scoped>
@@ -206,6 +282,98 @@ input:checked + .slider:before {
 .toggle-label {
   color: #8cc8ff;
   font-size: 14px;
+}
+
+/* 全宽区域 */
+.chart-section.full-width {
+  grid-column: span 2;
+  max-width: none;
+}
+
+/* 控制面板样式 */
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(0, 191, 255, 0.05);
+  border-radius: 8px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-label {
+  color: #8cc8ff;
+  font-size: 14px;
+}
+
+.range-label {
+  color: #8cc8ff;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.range-slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(0, 191, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  transition: opacity 0.3s;
+}
+
+.range-slider:hover {
+  opacity: 1;
+}
+
+.range-slider:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #00bfff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.range-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #00bfff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.demo-charts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.demo-chart {
+  flex: 1;
+  max-width: 800px;
+}
+
+.demo-chart h4 {
+  color: #8cc8ff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 1200px) {
