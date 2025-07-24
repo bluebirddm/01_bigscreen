@@ -1,0 +1,287 @@
+
+       <!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <style>
+        #container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #container > p {
+            color: #00000050;
+            line-height: 50px;
+            margin: 0;
+        }
+
+        #container > p:nth-child(1) {
+            font-size: 50px;
+        }
+
+        #container > p:nth-child(2) {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+    </style>
+    <script src="https://cdn.staticfile.net/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://cdn.staticfile.net/echarts/5.3.2/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="">
+    <p>图表预览区</p>
+    <p>请编辑代码后点击运行按钮预览</p>
+</div>
+
+ <script>
+      
+         var dom = document.getElementById("container");
+         var option = null;
+         var myChart = echarts.init(dom);
+        (function() {
+          let xaxisData = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+let yaxisData = [90, 80, 100, 70, 65, 69, 80]
+const offsetX = 10;
+const offsetY = 5;
+// 绘制左侧面
+const CubeLeft = echarts.graphic.extendShape({
+   shape: {
+      x: 0,
+      y: 0,
+   },
+   buildPath: function (ctx, shape) {
+      // 会canvas的应该都能看得懂，shape是从custom传入的
+      const xAxisPoint = shape.xAxisPoint;
+      const c0 = [shape.x, shape.y];
+      const c1 = [shape.x - offsetX, shape.y - offsetY];
+      const c2 = [xAxisPoint[0] - offsetX, xAxisPoint[1] - offsetY];
+      const c3 = [xAxisPoint[0], xAxisPoint[1]];
+      ctx
+         .moveTo(c0[0], c0[1])
+         .lineTo(c1[0], c1[1])
+         .lineTo(c2[0], c2[1])
+         .lineTo(c3[0], c3[1])
+         .closePath();
+   },
+});
+
+// 绘制右侧面
+const CubeRight = echarts.graphic.extendShape({
+   shape: {
+      x: 0,
+      y: 0,
+   },
+   buildPath: function (ctx, shape) {
+      const xAxisPoint = shape.xAxisPoint;
+      const c1 = [shape.x, shape.y];
+      const c2 = [xAxisPoint[0], xAxisPoint[1]];
+      const c3 = [xAxisPoint[0] + offsetX, xAxisPoint[1] - offsetY];
+      const c4 = [shape.x + offsetX, shape.y - offsetY];
+      ctx
+         .moveTo(c1[0], c1[1])
+         .lineTo(c2[0], c2[1])
+         .lineTo(c3[0], c3[1])
+         .lineTo(c4[0], c4[1])
+         .closePath();
+   },
+});
+
+// 绘制顶面
+const CubeTop = echarts.graphic.extendShape({
+   shape: {
+      x: 0,
+      y: 0,
+   },
+   buildPath: function (ctx, shape) {
+      const c1 = [shape.x, shape.y];
+      const c2 = [shape.x + offsetX, shape.y - offsetY]; //右点
+      const c3 = [shape.x, shape.y - offsetX];
+      const c4 = [shape.x - offsetX, shape.y - offsetY];
+      ctx
+         .moveTo(c1[0], c1[1])
+         .lineTo(c2[0], c2[1])
+         .lineTo(c3[0], c3[1])
+         .lineTo(c4[0], c4[1])
+         .closePath();
+   },
+});
+
+// 注册三个面图形
+echarts.graphic.registerShape("CubeLeft", CubeLeft);
+echarts.graphic.registerShape("CubeRight", CubeRight);
+echarts.graphic.registerShape("CubeTop", CubeTop);
+
+option = {
+   backgroundColor: 'black',
+   tooltip: {
+      trigger: "axis",
+      axisPointer: {
+         type: "shadow",
+      },
+      backgroundColor: "rgba(255,255,255,0.75)",
+      extraCssText: "box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.3);",
+      textStyle: {
+         fontSize: 14,
+         color: "#000",
+      },
+      formatter: (params, ticket, callback) => {
+         const item = params[1];
+         return item.name + " : " + item.value + " 个";
+      },
+   },
+   grid: {
+      left: "1%",
+      right: "0%",
+      top: "16%",
+      bottom: "5%",
+      containLabel: true,
+   },
+   xAxis: {
+      type: 'category',
+      data: xaxisData,
+      axisLine: {
+         show: true,
+         lineStyle: {
+            width: 1,
+            color: '#545454'
+         }
+      },
+      axisTick: {
+         show: false
+      },
+      axisLabel: {
+         fontSize: 20,
+         color: '#FFFFFF'
+      }
+   },
+   yAxis: {
+      type: 'value',
+      nameTextStyle: {
+         color: '#fff',
+         fontWeight: 400,
+         fontSize: 14
+      },
+      axisLine: {
+         show: false,
+         lineStyle: {
+            width: 1,
+            color: '#545454'
+         }
+      },
+      splitLine: {
+         show: false
+      },
+      axisTick: {
+         show: false
+      },
+      axisLabel: {
+         fontSize: 20,
+         color: '#FFFFFF'
+      }
+   },
+   series: [
+      {
+         type: "custom",
+         renderItem: (params, api) => {
+            const location = api.coord([api.value(0), api.value(1)]);
+            return {
+               type: "group",
+               children: [
+                  {
+                     type: "CubeLeft",
+                     shape: {
+                        api,
+                        xValue: api.value(0),
+                        yValue: api.value(1),
+                        x: location[0],
+                        y: location[1],
+                        xAxisPoint: api.coord([api.value(0), 0]),
+                     },
+                     style: {
+                        fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                           {
+                              offset: 0,
+                              color: '#6AFFEB',
+                           },
+                           {
+                              offset: 0.35,
+                              color: '#6AFFEB'
+                           },
+                           {
+                              offset: 1,
+                              color: 'transparent'
+                           }
+                        ]),
+                     },
+                  },
+                  {
+                     type: "CubeRight",
+                     shape: {
+                        api,
+                        xValue: api.value(0),
+                        yValue: api.value(1),
+                        x: location[0],
+                        y: location[1],
+                        xAxisPoint: api.coord([api.value(0), 0]),
+                     },
+                     style: {
+                        fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                           {
+                              offset: 0,
+                              color: '#00BEAA',
+                           },
+                           {
+                              offset: 0.35,
+                              color: '#00BEAA'
+                           },
+                           {
+                              offset: 1,
+                              color: 'transparent'
+                           }
+                        ]),
+                     },
+                  },
+                  {
+                     type: "CubeTop",
+                     shape: {
+                        api,
+                        xValue: api.value(0),
+                        yValue: api.value(1),
+                        x: location[0],
+                        y: location[1],
+                        xAxisPoint: api.coord([api.value(0), 0]),
+                     },
+                     style: {
+                        fill: '#03FFB1'
+                     },
+                  },
+               ],
+            };
+         },
+         data: yaxisData,
+      },
+      {
+         type: "bar",
+         itemStyle: {
+            color: "transparent",
+         },
+         data: yaxisData,
+      },
+   ],
+};
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+        })();
+        
+    </script>
+</body>
+</html>
+    

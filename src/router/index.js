@@ -4,6 +4,7 @@ import Screen2 from '../pages/Screen2.vue'
 import Pie3DChartTest from '../pages/Pie3DChartTest.vue'
 import SimplePie3DTest from '../pages/SimplePie3DTest.vue'
 import StackedBarChartTest from '../components/StackedBarChartTest.vue'
+import Bar3DTest from '../pages/Bar3DTest.vue'
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/test/stacked',
     name: 'StackedBarTest',
     component: StackedBarChartTest
+  },
+  {
+    path: '/test/bar3d',
+    name: 'Bar3DTest',
+    component: Bar3DTest
   }
 ]
 

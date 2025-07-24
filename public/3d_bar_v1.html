@@ -1,0 +1,326 @@
+
+       <!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <style>
+        #container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #container > p {
+            color: #00000050;
+            line-height: 50px;
+            margin: 0;
+        }
+
+        #container > p:nth-child(1) {
+            font-size: 50px;
+        }
+
+        #container > p:nth-child(2) {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+    </style>
+    <script src="https://cdn.staticfile.net/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://cdn.staticfile.net/echarts/5.2.0/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="">
+    <p>图表预览区</p>
+    <p>请编辑代码后点击运行按钮预览</p>
+</div>
+
+ <script>
+      
+         var dom = document.getElementById("container");
+         var option = null;
+         var myChart = echarts.init(dom);
+        (function() {
+          
+const data = [1700, 800, 1700, 600, 800, 1700];
+const data2 = [2600, 1400, 3350, 1400, 1400, 3350];
+const colorArr2 = ["rgba(11, 83, 128, 0.1)", "rgba(2, 143, 224, 1)", "rgba(11, 83, 128, 0.8)"];
+const colorArr = ["rgba(12, 109, 122, 0.1)", "rgba(1, 241, 228, 1)", "rgba(12, 109, 122, 0.8)"];
+var color = {
+    type: "linear",
+    x: 0,
+    x2: 1,
+    y: 0,
+    y2: 0,
+    colorStops: [
+        {
+            offset: 0,
+            color: colorArr[0],
+        },
+        {
+            offset: 0.5,
+            color: colorArr[0],
+        },
+        {
+            offset: 0.5,
+            color: colorArr[1],
+        },
+        {
+            offset: 1,
+            color: colorArr[1],
+        },
+    ],
+};
+var color2 = {
+    type: "linear",
+    x: 0,
+    x2: 1,
+    y: 0,
+    y2: 0,
+    colorStops: [
+        {
+            offset: 0,
+            color: colorArr2[0],
+        },
+        {
+            offset: 0.5,
+            color: colorArr2[0],
+        },
+        {
+            offset: 0.5,
+            color: colorArr2[1],
+        },
+        {
+            offset: 1,
+            color: colorArr2[1],
+        },
+    ],
+};
+var barWidth = 30;
+option = {
+    backgroundColor: '#1b2735',
+    tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+            var str = params[0].name + ":";
+            params.filter(function (item) {
+                if (item.componentSubType == "bar") {
+                    str += "<br/>" + item.seriesName + "：" + item.value;
+                }
+            });
+            return str;
+        },
+    },
+    //图表大小位置限制
+    grid: {
+        x: '10%',
+        x2: '5%',
+        y: '15%',
+        y2: '15%',
+    },
+    xAxis: {
+        data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+        //坐标轴
+        axisLine: {
+            show: true,
+            lineStyle: {
+                width: 1,
+                color: '#214776'
+            },
+            textStyle: {
+                color: '#fff',
+                fontSize: '10'
+            }
+        },
+        type: 'category',
+        axisLabel: {
+            textStyle: {
+                color: '#C5DFFB',
+                fontWeight: 500,
+                fontSize: '14'
+            }
+        },
+        axisTick: {
+            textStyle: {
+                color: '#fff',
+                fontSize: '16'
+            },
+            show: false,
+        },
+        axisLine: {
+            //坐标轴轴线相关设置。数学上的x轴
+            show: true,
+            lineStyle: {
+                type: 'dashed',//线的类型 虚线
+                color: '#DEDEDE',
+            },
+        },
+    },
+    yAxis: {
+        name: '厂屋租凭统计：',
+        nameTextStyle: {
+            color: '#DEDEDE',
+            fontSize: 12,
+            padding: 10,
+        },
+        min: 0,//最小
+        max: 3500,//最大
+        interval: 500,//相差
+        type: 'value',
+        splitLine: {
+            show: true,
+            lineStyle: {
+                type: 'dashed',//线的类型 虚线0
+                opacity: 0.2//透明度
+            },
+        },
+        axisTick: {
+            show: false
+        },
+        axisLine: {
+            show: false,
+        },
+        //坐标值标注
+        axisLabel: {
+            show: true,
+            textStyle: {
+                color: '#C5DFFB',
+            }
+        },
+    },
+    series: [
+        //中
+        {
+            z: 1,
+            name: '绿色',
+            type: "bar",
+            barWidth: barWidth,
+            barGap: "0%",
+            data: data,
+            itemStyle: {
+                normal: {
+                    color: color,
+                    //柱形图上方标题
+                    label: {
+                        show: true,
+                        position: 'top',
+                        textStyle: {
+                            color: 'rgb(1, 255, 250)',
+                            fontSize: 8
+                        }
+                    },
+                }
+            },
+        },
+        //下
+        {
+            z: 2,
+            name: '绿色',
+            type: "pictorialBar",
+            data: data.map(item => item + 90),
+            symbol: "diamond",
+            symbolOffset: ["-75%", "50%"],
+            symbolSize: [barWidth, 10],
+            itemStyle: {
+                normal: {
+                    color: color
+                },
+            },
+            tooltip: {
+                show: false,
+            },
+        },
+        //上
+        {
+            z: 3,
+            name: '绿色',
+            type: "pictorialBar",
+            symbolPosition: "end",
+            data: data,
+            symbol: "diamond",
+            symbolOffset: ["-85%", "-60%"],
+            symbolSize: [barWidth - 4, (10 * (barWidth - 4)) / barWidth],
+            itemStyle: {
+                normal: {
+                    borderWidth: 2,
+                    color: colorArr[2]
+                },
+            },
+            tooltip: {
+                show: false,
+            },
+        },
+        {
+            z: 1,
+            name: '蓝色',
+            type: "bar",
+            barWidth: barWidth,
+            barGap: "50%",
+            data: data2,
+            itemStyle: {
+                normal: {
+                    color: color2,
+                    //柱形图上方标题
+                    label: {
+                        show: true,
+                        position: 'top',
+                        textStyle: {
+                            color: 'rgb(2, 157, 246)',
+                            fontSize: 8
+                        }
+                    },
+                }
+            },
+        },
+        {
+            z: 2,
+            name: '蓝色',
+            type: "pictorialBar",
+            data: data2.map(item => item + 90),
+            symbol: "diamond",
+            symbolOffset: ["75%", "50%"],
+            symbolSize: [barWidth, 10],
+            itemStyle: {
+                normal: {
+                    color: color2
+                },
+            },
+            tooltip: {
+                show: false,
+            },
+        },
+        {
+            z: 3,
+            name: '蓝色',
+            type: "pictorialBar",
+            symbolPosition: "end",
+            data: data2,
+            symbol: "diamond",
+            symbolOffset: ["75%", "-50%"],
+            symbolSize: [barWidth - 4, (10 * (barWidth - 4)) / barWidth],
+            itemStyle: {
+                normal: {
+                    borderWidth: 2,
+                    color: colorArr2[2]
+                },
+            },
+            tooltip: {
+                show: false,
+            },
+        },
+    ],
+}
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+        })();
+        
+    </script>
+</body>
+</html>
+    
