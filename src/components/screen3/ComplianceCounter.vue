@@ -1,7 +1,7 @@
 <template>
-  <div class="security-counter-container">
+  <div class="compliance-counter-container">
     <div class="counter-item">
-      <span class="counter-label">等保测评完成数量(累计)</span>
+      <span class="counter-label">安全合规业务量(累计)</span>
       <span class="counter-number">
         <span
           v-for="(digit, index) in animatedCumulative.toString().split('')"
@@ -10,13 +10,13 @@
         >
           <span class="digit-text">{{ digit }}</span>
         </span>
-        <span class="counter-unit">个</span>
+        <span class="counter-unit">项</span>
       </span>
       
     </div>
     
     <div class="counter-item">
-      <span class="counter-label">等保测评完成数量(本年)</span>
+      <span class="counter-label">安全合规业务量(本年)</span>
       <span class="counter-number">
         <span
           v-for="(digit, index) in animatedYearly.toString().split('')"
@@ -25,12 +25,12 @@
         >
           <span class="digit-text">{{ digit }}</span>
         </span>
-        <span class="counter-unit">个</span>
+        <span class="counter-unit">项</span>
       </span>
     </div>
     
     <div class="counter-item">
-      <span class="counter-label">等保测评覆盖率</span>
+      <span class="counter-label">合规覆盖率</span>
       <span class="counter-number coverage">
         <span
           v-for="(digit, index) in animatedCoverage.toString().split('')"
@@ -48,9 +48,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const cumulativeTotal = ref(2415)
-const yearlyTotal = ref(627)
-const coverageRate = ref('87.3%')
+const cumulativeTotal = ref(3856)
+const yearlyTotal = ref(892)
+const coverageRate = ref('92.6%')
 
 const animatedCumulative = ref(0)
 const animatedYearly = ref(0)
@@ -67,7 +67,7 @@ onMounted(() => {
   
   // 覆盖率动画（更多延迟）
   setTimeout(() => {
-    animatePercentage(87.3, animatedCoverage, 1500)
+    animatePercentage(92.6, animatedCoverage, 1500)
   }, 600)
 })
 
@@ -109,22 +109,17 @@ function animatePercentage(target, ref, duration) {
 <style scoped>
 @font-face {
   font-family: 'DigitalDisplay';
-  src: url('../assets/font/digital display tfb.ttf') format('truetype');
+  src: url('../../assets/font/digital display tfb.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
-.security-counter-container {
+.compliance-counter-container {
   display: flex;
   gap: 40px;
   align-items: center;
   justify-content: center;
-  /* background: rgba(0, 20, 40, 0.7); */
   padding: 15px 25px;
-  /* border-radius: 12px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 191, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.1); */
 }
 
 .counter-item {
@@ -162,7 +157,7 @@ function animatePercentage(target, ref, duration) {
   display: inline-block;
   width: 20px;
   height: 35px;
-  background-image: url('../assets/digit_bg.png');
+  background-image: url('../../assets/digit_bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

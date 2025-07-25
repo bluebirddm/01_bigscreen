@@ -221,6 +221,7 @@ onMounted(() => {
   position: absolute;
   top: -5px;
   left: 50%;
+  width: 114px;
   transform: translateX(-50%);
   color: #8cc8ff;
   font-size: 12px;

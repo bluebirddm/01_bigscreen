@@ -69,7 +69,7 @@ const statusData = ref([
   transition: all 0.3s ease;
   cursor: pointer;
   width: 195px;
-  height: 0px;
+  height: 85px;
   justify-self: center;
 }
 
