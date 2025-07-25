@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Pie3DChartV1 from '../components/Pie3DChartV1.vue'
+import Pie3DChartV1 from '@/components/Pie3DChartV1.vue'
 
 // 测试数据
 const testData = ref([

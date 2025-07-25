@@ -148,7 +148,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Bar3D from '../components/Bar3D.vue'
+import Bar3D from '@/components/Bar3D.vue'
 
 // 年度数据示例
 const yearlyData = ref([1200, 980, 1500, 800, 1800, 1200])

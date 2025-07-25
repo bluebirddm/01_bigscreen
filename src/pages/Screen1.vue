@@ -54,14 +54,13 @@
 </template>
 
 <script setup>
-import InfoSystemStatus from '../components/InfoSystemStatus.vue'
-import ProvinceRankingEnhanced from '../components/ProvinceRankingEnhanced.vue'
-import SystemRanking from '../components/SystemRanking.vue'
+import InfoSystemStatus from '../components/screen1/InfoSystemStatus.vue'
+import ProvinceRankingEnhanced from '../components/screen1/ProvinceRankingEnhanced.vue'
+import SystemRanking from '../components/screen1/SystemRanking.vue'
 import China3DMap from '../components/China3DMap.vue'
-import SystemLayout from '../components/SystemLayout.vue'
-import ArchitectureDistribution from '../components/ArchitectureDistribution.vue'
-import SystemType3D from '../components/SystemType3D.vue'
-import InfoCounter from '../components/InfoCounter.vue'
+import SystemLayout from '../components/screen1/SystemLayout.vue'
+import SystemType3D from '../components/screen1/SystemType3D.vue'
+import InfoCounter from '../components/screen1/InfoCounter.vue'
 
 // 引入通用样式
 import '../styles/dashboard-common.css'
@@ -72,7 +71,7 @@ import '../styles/dashboard-common.css'
 /* Screen1 特有样式 */
 
 .dashboard-main {
-  height: 696px;
+  height: 966px;
   grid-template-columns: 638px 1162px 1fr;
   gap: 30px;
 }

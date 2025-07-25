@@ -65,6 +65,22 @@ const props = defineProps({
   autoFitContainer: {
     type: Boolean,
     default: true
+  },
+  gridTop: {
+    type: String,
+    default: null // 如果不设置，使用legendPosition决定
+  },
+  gridBottom: {
+    type: String,
+    default: null // 如果不设置，使用legendPosition决定
+  },
+  gridLeft: {
+    type: String,
+    default: '10%'
+  },
+  gridRight: {
+    type: String,
+    default: '5%'
   }
 })
 
@@ -267,10 +283,10 @@ onMounted(() => {
       selectedMode: false,
     },
     grid: { 
-      top: '20%', 
-      left: '10%', 
-      right: '5%', 
-      bottom: '20%',
+      top: props.gridTop || (props.legendPosition === 'top' ? '30%' : '15%'),
+      left: props.gridLeft, 
+      right: props.gridRight, 
+      bottom: props.gridBottom || (props.legendPosition === 'top' ? '15%' : '25%'),
       containLabel: true // 确保标签不会溢出
     },
     xAxis: { 

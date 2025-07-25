@@ -12,7 +12,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import StackedBarChart from './StackedBarChart.vue'
+import StackedBarChart from '@/components/StackedBarChart.vue'
 
 // 省份原始数据
 const categories = ['深圳市', '北京市', '上海市', '广州市', '杭州市', '成都市', '苏州市', '南京市', '武汉市', '西安市']

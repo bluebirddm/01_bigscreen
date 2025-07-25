@@ -129,7 +129,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import Pie3DChartV1 from '../components/Pie3DChartV1.vue'
+import Pie3DChartV1 from '@/components/Pie3DChartV1.vue'
 
 // 基础数据
 const basicData = ref([
