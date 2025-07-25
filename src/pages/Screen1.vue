@@ -63,70 +63,30 @@ import ArchitectureDistribution from '../components/ArchitectureDistribution.vue
 import SystemType3D from '../components/SystemType3D.vue'
 import InfoCounter from '../components/InfoCounter.vue'
 
+// 引入通用样式
+import '../styles/dashboard-common.css'
 
 </script>
 
 <style scoped>
-
-
-.dashboard {
-  width: 1920px;
-  height: 1080px;
-  display: flex;
-  flex-direction: column;
-  background: url('../assets/backgroud.png') no-repeat center center;
-  background-size: cover;
-  position: relative;
-  overflow: hidden;
-}
-
-.dashboard-header {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: url('../assets/head_bg.png') no-repeat center center;
-  background-size: cover;
-}
-
-.header-content {
-  height: 40px;
-  max-width: 100%;
-  object-fit: contain;
-  transform: translateY(-17px);
-}
+/* Screen1 特有样式 */
 
 .dashboard-main {
   height: 696px;
-  display: grid;
   grid-template-columns: 638px 1162px 1fr;
   gap: 30px;
-  padding: 0 30px 0;
-}
-
-.left-panel,
-.right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .center-panel {
-  display: flex;
-  flex-direction: column;
   position: relative;
   width: 1162px;
   height: 636px;
+  gap: 0; /* 覆盖通用样式 */
 }
 
 /* InfoCounter 浮动在 China3DMap 上方 */
 .center-panel .info-counter-wrapper {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  top: 20px; /* 覆盖通用样式 */
 }
 
 .center-panel .china-3d-map-wrapper {
@@ -134,27 +94,13 @@ import InfoCounter from '../components/InfoCounter.vue'
   height: 100%;
 }
 
-.panel-section {
-  /* background: rgba(0, 20, 40, 0.6); 
-  border: 1px solid rgba(0, 191, 255, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  flex: 1;
-  min-height: 0;*/
-  padding: 20px;
-  flex: 1;
-  min-height: 0;
-}
-
-/* 信息系统实况情况 */
+/* Screen1 特有的section样式 */
 .system-status-section {
   width: 638px;
   height: 280px;
   flex: none;
 }
 
-/* 各省份数据排行TOP10 - 左边中间 */
 .province-ranking-section {
   width: 500px;
   height: 323px;
@@ -163,14 +109,13 @@ import InfoCounter from '../components/InfoCounter.vue'
   position: relative;
 }
 
-/* 各单位数据排行TOP10 - 左下角 */
 .unit-ranking-section {
   width: 500px;
   height: 323px;
   flex: none;
 }
 
-/* 底部图表区域 */
+/* Screen1 特有的底部图表区域 */
 .bottom-charts {
   height: 322px;
   display: flex;
@@ -184,39 +129,18 @@ import InfoCounter from '../components/InfoCounter.vue'
 }
 
 .chart-section {
-  /* background: rgba(0, 20, 40, 0.6); 
-  border: 1px solid rgba(0, 191, 255, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  backdrop-filter: blur(10px);*/
   padding: 20px;
 }
 
-/* 各板块分布情况 - 底部中间 */
 .layout-distribution-section {
   width: 636px;
   height: 323px;
   margin-left: 30px;
 }
 
-/* 各系统类型分布情况 - 底部右下 */
 .system-type-section {
   width: 636px;
   height: 282px;
-}
-
-.section-title {
-  font-size: 18px;
-  color: #E5F2F9;
-  text-align: left;
-  position: relative;
-  text-indent: 30px;
-  background-image: url('../assets/little_title_bg.png');
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
-  padding: 25px 20px 25px 20px;
-  height: 60px;
 }
 
 </style>

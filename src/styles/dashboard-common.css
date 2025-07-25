@@ -1,0 +1,137 @@
+/* 大屏通用样式 */
+
+/* 主容器 */
+.dashboard {
+  width: 1920px;
+  height: 1080px;
+  display: flex;
+  flex-direction: column;
+  background: url('/src/assets/backgroud.png') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 头部区域 */
+.dashboard-header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: url('/src/assets/head_bg.png') no-repeat center center;
+  background-size: cover;
+}
+
+.header-content {
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+  transform: translateY(-17px);
+}
+
+/* 主要内容区域 */
+.dashboard-main {
+  height: 930px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 0 30px 0;
+}
+
+/* 左右面板通用样式 */
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 中间面板 */
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 40px;
+}
+
+.center-main-area {
+  flex: 2;
+  position: relative;
+  min-height: 0;
+}
+
+.center-charts-area {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  min-height: 0;
+}
+
+/* 面板section通用样式 */
+.panel-section {
+  padding: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Center charts area sections */
+.center-charts-area .panel-section {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Left/Right panel sections - 垂直等分 */
+.security-level-section,
+.security-radar-section,
+.unit-completion-top10-section,
+.unit-completion-section,
+.institution-count-section,
+.institution-quality-section {
+  flex: 1;
+  min-height: 0;
+}
+
+/* 导航按钮浮动在最顶部 */
+.center-main-area .security-nav-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+/* 计数器浮动在导航按钮下方 */
+.center-main-area .security-counter-wrapper,
+.center-main-area .info-counter-wrapper {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.center-main-area .china-3d-map-wrapper {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px);
+}
+
+/* 标题通用样式 */
+.section-title {
+  font-size: 18px;
+  color: #E5F2F9;
+  text-align: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 46px;
+  background-image: url('/src/assets/little_title_bg.png');
+  background-repeat: no-repeat;
+  background-position: 0px -8px;
+  background-size: auto 60px;
+  height: 60px;
+}

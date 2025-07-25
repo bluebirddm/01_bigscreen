@@ -61,12 +61,12 @@ onMounted(() => {
         { name: '金融', max: 100 }
       ],
       shape: 'polygon',
-      radius: '65%',
+      radius: '45%',
       center: ['50%', '50%'],
       name: {
         textStyle: {
           color: '#8cc8ff',
-          fontSize: 10
+          fontSize: 8
         }
       },
       axisLine: {
@@ -139,12 +139,12 @@ onMounted(() => {
         { name: '安全设备', max: 100 }
       ],
       shape: 'polygon',
-      radius: '65%',
+      radius: '45%',
       center: ['50%', '50%'],
       name: {
         textStyle: {
           color: '#8cc8ff',
-          fontSize: 10
+          fontSize: 8
         }
       },
       axisLine: {
@@ -198,9 +198,9 @@ onMounted(() => {
 
 <style scoped>
 .security-radar-charts {
-  height: 100%;
+  height: 280px;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
 }
 
 .radar-container {
@@ -208,7 +208,7 @@ onMounted(() => {
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 15px;
 }
 
 .radar-chart-wrapper {
