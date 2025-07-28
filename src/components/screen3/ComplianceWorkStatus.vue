@@ -142,8 +142,10 @@ onMounted(() => {
 
 <style scoped>
 .compliance-work-status {
-  height: 100%;
+  height: 250px;
+  max-height: 250px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .chart {

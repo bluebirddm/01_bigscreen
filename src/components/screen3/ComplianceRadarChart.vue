@@ -136,8 +136,10 @@ onMounted(() => {
 
 <style scoped>
 .compliance-radar-chart {
-  height: 100%;
+  height: 277px;
+  max-height: 280px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .chart {

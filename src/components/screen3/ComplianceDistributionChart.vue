@@ -100,8 +100,10 @@ onMounted(() => {
 
 <style scoped>
 .compliance-distribution-chart {
-  height: 100%;
+  height: 220px;
+  max-height: 220px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .chart {

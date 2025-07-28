@@ -45,7 +45,7 @@ onMounted(() => {
 <style scoped>
 @font-face {
   font-family: 'DigitalDisplay';
-  src: url('../assets/font/digital display tfb.ttf') format('truetype');
+  src: url('src/assets/font/digital display tfb.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -79,7 +79,7 @@ onMounted(() => {
   display: inline-block;
   width: 60px;
   height: 70px;
-  background-image: url('src/../assets/digit_bg.png');
+  background-image: url('src/assets/digit_bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

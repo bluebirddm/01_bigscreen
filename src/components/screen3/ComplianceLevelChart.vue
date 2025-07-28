@@ -36,9 +36,9 @@ const complianceChartData = computed(() => ({
 
 <style scoped>
 .compliance-level-chart {
-  height: 100%;
+  height: 220px;
+  max-height: 220px;
   width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
+  margin: 0 auto;
 }
 </style>
