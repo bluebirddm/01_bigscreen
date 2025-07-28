@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle3DBar 组件测试</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-echarts@6.6.1/dist/index.umd.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            font-family: Arial, sans-serif;
+        }
+        .test-container {
+            width: 800px;
+            height: 500px;
+            margin: 20px auto;
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+            border: 2px solid rgba(0, 191, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .title {
+            color: #00bfff;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .controls {
+            color: #8cc8ff;
+            margin-bottom: 20px;
+        }
+        .controls button {
+            background: rgba(0, 191, 255, 0.2);
+            border: 1px solid #00bfff;
+            color: #00bfff;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background: rgba(0, 191, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="title">Circle3DBar 组件测试</div>
+        
+        <div class="controls">
+            <button @click="updateData">更新数据</button>
+            <button @click="toggleLabels">{{showLabels ? '隐藏' : '显示'}}标签</button>
+            <button @click="changeBarWidth">调整宽度</button>
+        </div>
+        
+        <div class="test-container">
+            <circle3d-bar 
+                :data="chartData" 
+                :show-labels="showLabels"
+                :bar-width="barWidth"
+                height="450px"
+            />
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+        
+        // Circle3DBar 组件定义
+        const Circle3DBar = {
+            name: 'Circle3DBar',
+            props: {
+                data: {
+                    type: Array,
+                    default: () => [
+                        { name: '系列一', value: 73, max: 100 },
+                        { name: '系列二', value: 18, max: 100 },
+                        { name: '系列三', value: 43, max: 100 },
+                        { name: '系列四', value: 28, max: 100 },
+                        { name: '系列五', value: 56, max: 100 }
+                    ]
+                },
+                title: {
+                    type: String,
+                    default: ''
+                },
+                barWidth: {
+                    type: Number,
+                    default: 120
+                },
+                symbolHeight: {
+                    type: Number,
+                    default: 45
+                },
+                showLabels: {
+                    type: Boolean,
+                    default: true
+                },
+                height: {
+                    type: String,
+                    default: '400px'
+                }
+            },
+            template: `
+                <div :style="{width: '100%', height: height}">
+                    <v-chart 
+                        :style="{width: '100%', height: '100%'}"
+                        :option="chartOption" 
+                        autoresize
+                    />
+                </div>
+            `,
+            setup(props) {
+                const chartOption = ref({});
+                
+                const chartData = Vue.computed(() => {
+                    const topData = props.data.map((item) => {
+                        return { name: '', value: item.max, symbolPosition: 'end' }
+                    });
+                    
+                    const bottomBar = props.data.map((item) => {
+                        return { value: item.value }
+                    });
+                    
+                    const bottomCircle = props.data.map((item) => {
+                        return { name: '', value: item.max }
+                    });
+                    
+                    const middleCircle = props.data.map((item) => {
+                        return { name: '', value: item.value, symbolPosition: 'end' }
+                    });
+                    
+                    const upBar = props.data.map((item) => {
+                        return { name: item.name, value: item.max - item.value }
+                    });
+                    
+                    return {
+                        topData,
+                        bottomBar,
+                        bottomCircle,
+                        middleCircle,
+                        upBar
+                    };
+                });
+                
+                const categories = Vue.computed(() => {
+                    return props.data.map(item => item.name);
+                });
+                
+                const initChartOption = () => {
+                    const data = chartData.value;
+                    
+                    chartOption.value = {
+                        backgroundColor: 'transparent',
+                        tooltip: {
+                            trigger: 'item',
+                            backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                            borderColor: '#00bfff',
+                            borderWidth: 2,
+                            padding: 5,
+                            textStyle: {
+                                color: '#00bfff',
+                                fontSize: 18,
+                                width: 300,
+                                height: 40
+                            },
+                            formatter: '{c}' + '%',
+                            extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);'
+                        },
+                        grid: {
+                            bottom: '10%',
+                            top: '35%',
+                            right: '0%',
+                            left: '0%'
+                        },
+                        xAxis: {
+                            data: categories.value,
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                show: true,
+                                textStyle: {
+                                    color: '#8cc8ff'
+                                },
+                                margin: 30
+                            }
+                        },
+                        yAxis: {
+                            splitLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                show: false
+                            }
+                        },
+                        series: [
+                            // 头部椭圆
+                            {
+                                name: '',
+                                type: 'pictorialBar',
+                                symbolSize: [props.barWidth, props.symbolHeight],
+                                symbolOffset: [0, -20],
+                                z: 12,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                { offset: 0, color: '#00bfff' },
+                                                { offset: 1, color: '#0088cc' }
+                                            ],
+                                            false
+                                        )
+                                    }
+                                },
+                                data: data.topData
+                            },
+                            // 底部立体柱
+                            {
+                                stack: '1',
+                                type: 'bar',
+                                silent: true,
+                                barWidth: props.barWidth,
+                                data: data.bottomBar,
+                                itemStyle: {
+                                    normal: {
+                                        color: {
+                                            x: 0, y: 0, x2: 0, y2: 1,
+                                            type: 'linear',
+                                            global: false,
+                                            colorStops: [
+                                                { offset: 0, color: 'rgba(0, 191, 255, 0.8)' },
+                                                { offset: 1, color: '#00bfff' }
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            // 最底下的圆片
+                            {
+                                name: '',
+                                type: 'pictorialBar',
+                                symbolSize: [props.barWidth, 30],
+                                symbolOffset: [0, 16],
+                                z: 12,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                            { offset: 0, color: '#00bfff' },
+                                            { offset: 1, color: '#4ecdc4' }
+                                        ])
+                                    }
+                                },
+                                data: data.bottomCircle
+                            },
+                            // 中间圆片
+                            {
+                                name: '',
+                                type: 'pictorialBar',
+                                symbolSize: [props.barWidth, 42],
+                                symbolOffset: [0, -20],
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                { offset: 0, color: '#00bfff' },
+                                                { offset: 1, color: '#4ecdc4' }
+                                            ],
+                                            false
+                                        )
+                                    }
+                                },
+                                z: 12,
+                                data: data.middleCircle
+                            },
+                            // 上部立体柱
+                            {
+                                stack: '1',
+                                type: 'bar',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgba(0, 191, 255, 0.3)',
+                                        opacity: 0.7
+                                    }
+                                },
+                                label: props.showLabels ? {
+                                    show: true,
+                                    position: 'top',
+                                    distance: 20,
+                                    color: '#00bfff',
+                                    fontSize: 16,
+                                    formatter: function (item) {
+                                        const originalData = props.data[item.dataIndex];
+                                        return originalData ? originalData.value + '%' : '';
+                                    }
+                                } : { show: false },
+                                silent: true,
+                                barWidth: props.barWidth,
+                                data: data.upBar
+                            }
+                        ]
+                    };
+                };
+                
+                Vue.onMounted(() => {
+                    initChartOption();
+                });
+                
+                Vue.watch(() => [props.data, props.barWidth, props.symbolHeight, props.showLabels], () => {
+                    initChartOption();
+                }, { deep: true });
+                
+                return {
+                    chartOption
+                };
+            }
+        };
+        
+        // 应用实例
+        createApp({
+            components: {
+                'circle3d-bar': Circle3DBar,
+                'v-chart': VueECharts
+            },
+            setup() {
+                const chartData = ref([
+                    { name: '系列一', value: 73, max: 100 },
+                    { name: '系列二', value: 18, max: 100 },
+                    { name: '系列三', value: 43, max: 100 },
+                    { name: '系列四', value: 28, max: 100 },
+                    { name: '系列五', value: 56, max: 100 }
+                ]);
+                
+                const showLabels = ref(true);
+                const barWidth = ref(120);
+                
+                const updateData = () => {
+                    chartData.value = chartData.value.map(item => ({
+                        ...item,
+                        value: Math.floor(Math.random() * 100)
+                    }));
+                };
+                
+                const toggleLabels = () => {
+                    showLabels.value = !showLabels.value;
+                };
+                
+                const changeBarWidth = () => {
+                    barWidth.value = barWidth.value === 120 ? 80 : 120;
+                };
+                
+                return {
+                    chartData,
+                    showLabels,
+                    barWidth,
+                    updateData,
+                    toggleLabels,
+                    changeBarWidth
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

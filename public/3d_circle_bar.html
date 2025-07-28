@@ -1,0 +1,285 @@
+
+       <!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <style>
+        #container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #container > p {
+            color: #00000050;
+            line-height: 50px;
+            margin: 0;
+        }
+
+        #container > p:nth-child(1) {
+            font-size: 50px;
+        }
+
+        #container > p:nth-child(2) {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+    </style>
+    <script src="https://cdn.staticfile.net/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://cdn.staticfile.net/echarts/5.2.0/echarts.min.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="">
+    <p>图表预览区</p>
+    <p>请编辑代码后点击运行按钮预览</p>
+</div>
+
+ <script>
+      
+         var dom = document.getElementById("container");
+         var option = null;
+         var myChart = echarts.init(dom);
+        (function() {
+          var dataList = [
+  { name: '系列一', value: 73, max: 100 },
+  { name: '系列二', value: 18, max: 100 },
+  { name: '系列三', value: 43, max: 100 },
+  { name: '系列四', value: 28, max: 100 },
+  { name: '系列五', value: 56, max: 100 }
+];
+// 头部数据
+let topData = dataList.map((item) => {
+  return { name: '', value: item.max, symbolPosition: 'end' };
+});
+// 底部立体柱子
+let bottomBar = dataList.map((item) => {
+  return {
+    value: item.value
+  };
+});
+// 底下圆片
+let bottomCircle = dataList.map((item) => {
+  return { name: '', value: item.max };
+});
+// 中间圆片
+let middleCircle = dataList.map((item) => {
+  return { name: '', value: item.value, symbolPosition: 'end' };
+});
+// 上边的柱子
+let upBar = dataList.map((item) => {
+  return { name: item.name, value: item.max - item.value };
+});
+
+option = {
+   backgroundColor: '#333333',
+  tooltip: {
+    trigger: 'item',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'rgba(89,211,255,1)',
+    borderWidth: 2,
+    padding: 5,
+    textStyle: {
+      color: 'rgba(89,211,255,1)',
+      fontSize: 18,
+      width: 300,
+      height: 40
+    },
+    formatter: '{c}' + '%',
+    extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);'
+    // 自定义的 CSS 样式
+  },
+  grid: {
+    bottom: '10%',
+    top: '35%',
+    right: '0%',
+    left: '0%'
+  },
+  xAxis: {
+    data: ['系列一', '系列二', '系列三', '系列四', '系列五'],
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: '#fff'
+      },
+      margin: 30 //刻度标签与轴线之间的距离。
+    }
+  },
+  yAxis: {
+    splitLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    axisLabel: {
+      show: false
+    }
+  },
+  series: [
+    // 头
+    {
+      name: '',
+      type: 'pictorialBar',
+      symbolSize: [120, 45],
+      symbolOffset: [0, -20],
+      z: 12,
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(
+            0,
+            0,
+            0,
+            1,
+            [
+              {
+                offset: 0,
+                color: 'rgba(54,127,223,1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(94,162,254,1)'
+              }
+            ],
+            false
+          )
+        }
+      },
+      data: topData
+    },
+    //底部立体柱
+    {
+      stack: '1',
+      type: 'bar',
+      silent: true,
+      barWidth: 120,
+      data: bottomBar,
+      itemStyle: {
+        normal: {
+          color: {
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            type: 'linear',
+            global: false,
+            colorStops: [
+              {
+                //第一节下面
+                offset: 0,
+                color: 'rgba(0,255,245,0.5)'
+              },
+              {
+                offset: 1,
+                color: '#43bafe'
+              }
+            ]
+          }
+        }
+      }
+    },
+    //最底下的圆片
+    {
+      name: '',
+      type: 'pictorialBar',
+      symbolSize: [120, 30],
+      symbolOffset: [0, 16],
+      z: 12,
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgba(89,211,255,1)'
+            },
+            {
+              offset: 1,
+              color: 'rgba(23,237,194,1)'
+            }
+          ])
+        }
+      },
+      data: bottomCircle
+    },
+    // 中间圆片
+    {
+      name: '',
+      type: 'pictorialBar',
+      symbolSize: [120, 42],
+      symbolOffset: [0, -20],
+      itemStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(
+            0,
+            0,
+            0,
+            1,
+            [
+              {
+                offset: 0,
+                color: 'rgba(89,211,255,1)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(23,237,194,1)'
+              }
+            ],
+            false
+          )
+        }
+      },
+      z: 12,
+      data: middleCircle
+    },
+    //上部立体柱
+    {
+      //上部立体柱
+      stack: '1',
+      type: 'bar',
+      itemStyle: {
+        normal: {
+          color: '#3E8BE6',
+          opacity: 0.7
+        }
+      },
+      label: {
+        show: true,
+        position: 'top', //top / left / right / bottom / inside / insideLeft / insideRight / insideTop / insideBottom / insideTopLeft / insideBottomLeft / insideTopRight / insideBottomRight
+        distance: 20,
+        color: '#FFFE00',
+        fontSize: 30,
+        formatter: function (item) {
+          var a = 100;
+          return a - item.value + '%';
+        }
+      },
+      silent: true,
+      barWidth: 120,
+      //barGap: '-100%', // Make series be overlap
+      data: upBar
+    }
+  ]
+};
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+        })();
+        
+    </script>
+</body>
+</html>
+    

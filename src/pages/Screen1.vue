@@ -86,6 +86,7 @@ import '../styles/dashboard-common.css'
 /* InfoCounter 浮动在 China3DMap 上方 */
 .center-panel .info-counter-wrapper {
   top: 20px; /* 覆盖通用样式 */
+  transform: translateY(48px);
 }
 
 .center-panel .china-3d-map-wrapper {

@@ -162,7 +162,7 @@ function animatePercentage(target, ref, duration) {
   display: inline-block;
   width: 20px;
   height: 35px;
-  background-image: url('../assets/digit_bg.png');
+  background-image: url('src/assets/digit_bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

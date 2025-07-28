@@ -97,7 +97,7 @@ const statusData = ref([
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background: url('../assets/sys_icon.png') no-repeat center center;
+  background: url('src/assets/sys_icon.png') no-repeat center center;
   background-size: contain;
   display: flex;
   align-items: center;

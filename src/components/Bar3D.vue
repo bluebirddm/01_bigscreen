@@ -71,13 +71,60 @@ const props = defineProps({
     type: Number,
     default: 1,
     validator: (value) => value >= 0 && value <= 1
+  },
+  // 柱子宽度参数
+  barWidth: {
+    type: Number,
+    default: 30,
+    validator: (value) => value > 0 && value <= 100
+  },
+  // 颜色方案
+  colorScheme: {
+    type: String,
+    default: 'blue',
+    validator: (value) => ['blue', 'red', 'green', 'orange', 'purple'].includes(value)
   }
 })
 
 const chartOption = ref({})
 
+// 颜色方案配置
+const colorSchemes = {
+  blue: {
+    left: ['#00bfff', '#0088cc'],
+    right: ['#33ccff', '#0099dd'], 
+    top: '#66d9ff'
+  },
+  red: {
+    left: ['#ff6b6b', '#cc5555'],
+    right: ['#ff8888', '#dd6666'],
+    top: '#ffaaaa'
+  },
+  green: {
+    left: ['#00ff88', '#00cc66'],
+    right: ['#33ffaa', '#00dd77'],
+    top: '#66ffcc'
+  },
+  orange: {
+    left: ['#ff9933', '#cc7722'],
+    right: ['#ffaa55', '#dd8833'],
+    top: '#ffcc88'
+  },
+  purple: {
+    left: ['#aa66ff', '#8844cc'],
+    right: ['#bb88ff', '#9955dd'],
+    top: '#ccaaff'
+  }
+}
+
 // 3D立体图形定义
-const initCustomShapes = () => {
+const initCustomShapes = (width = 30) => {
+  // 基于宽度计算偏移值
+  const leftOffset = width * 0.4  // 左侧偏移
+  const rightOffset = width * 0.6  // 右侧偏移
+  const topOffset = width * 0.73   // 顶部偏移
+  const sideOffset = width * 0.3   // 侧面偏移
+  const cornerOffset = width * 0.17 // 角落偏移
   // 绘制左侧面
   const CubeLeft = echarts.graphic.extendShape({
     shape: {
@@ -87,8 +134,8 @@ const initCustomShapes = () => {
     buildPath: function (ctx, shape) {
       const xAxisPoint = shape.xAxisPoint
       const c0 = [shape.x, shape.y]
-      const c1 = [shape.x - 13, shape.y - 13]
-      const c2 = [xAxisPoint[0] - 13, xAxisPoint[1] - 13]
+      const c1 = [shape.x - leftOffset, shape.y - leftOffset]
+      const c2 = [xAxisPoint[0] - leftOffset, xAxisPoint[1] - leftOffset]
       const c3 = [xAxisPoint[0], xAxisPoint[1]]
       ctx.moveTo(c0[0], c0[1]).lineTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).closePath()
     }
@@ -104,8 +151,8 @@ const initCustomShapes = () => {
       const xAxisPoint = shape.xAxisPoint
       const c1 = [shape.x, shape.y]
       const c2 = [xAxisPoint[0], xAxisPoint[1]]
-      const c3 = [xAxisPoint[0] + 18, xAxisPoint[1] - 9]
-      const c4 = [shape.x + 18, shape.y - 9]
+      const c3 = [xAxisPoint[0] + rightOffset, xAxisPoint[1] - sideOffset]
+      const c4 = [shape.x + rightOffset, shape.y - sideOffset]
       ctx.moveTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).lineTo(c4[0], c4[1]).closePath()
     }
   })
@@ -118,9 +165,9 @@ const initCustomShapes = () => {
     },
     buildPath: function (ctx, shape) {
       const c1 = [shape.x, shape.y]
-      const c2 = [shape.x + 18, shape.y - 9]
-      const c3 = [shape.x + 5, shape.y - 22]
-      const c4 = [shape.x - 13, shape.y - 13]
+      const c2 = [shape.x + rightOffset, shape.y - sideOffset]
+      const c3 = [shape.x + cornerOffset, shape.y - topOffset]
+      const c4 = [shape.x - leftOffset, shape.y - leftOffset]
       ctx.moveTo(c1[0], c1[1]).lineTo(c2[0], c2[1]).lineTo(c3[0], c3[1]).lineTo(c4[0], c4[1]).closePath()
     }
   })
@@ -181,9 +228,33 @@ const createGradient = (topColor, middleColor, isBackground = false) => {
   }])
 }
 
+// 辅助函数：智能计算Y轴配置（自动5段分割）
+const calculateAxisConfig = (maxValue) => {
+  if (maxValue <= 0) {
+    return { max: 100, interval: 20 }
+  }
+  
+  // 计算数量级
+  const magnitude = Math.pow(10, Math.floor(Math.log10(maxValue)))
+  const normalized = maxValue / magnitude
+  
+  // 选择合适的上限值
+  let niceMax
+  if (normalized <= 1) niceMax = 1
+  else if (normalized <= 2) niceMax = 2
+  else if (normalized <= 5) niceMax = 5
+  else niceMax = 10
+  
+  const actualMax = niceMax * magnitude
+  const interval = actualMax / 5
+  
+  return { max: actualMax, interval }
+}
+
 // 初始化图表配置
 const initChartOption = () => {
   const maxValue = Math.max(...props.maxData)
+  const { max, interval } = calculateAxisConfig(maxValue)
   
   chartOption.value = {
     backgroundColor: 'transparent',
@@ -219,7 +290,7 @@ const initChartOption = () => {
           color: '#00bfff'
         }
       },
-      offset: 25,
+      offset: 0,
       axisTick: {
         show: false,
         length: 9,
@@ -231,13 +302,19 @@ const initChartOption = () => {
       axisLabel: {
         show: true,
         fontSize: 12,
-        color: '#8cc8ff'
+        color: '#8cc8ff',
+        formatter: function(value) {
+          if (value.length > 2) {
+            return value.substring(0, 2) + '\n' + value.substring(2);
+          }
+          return value;
+        }
       },
     },
     yAxis: {
       min: 0,
-      max: Math.ceil(maxValue / 200) * 200,
-      interval: Math.ceil(maxValue / 1000) * 200,
+      max: max,
+      interval: interval,
       type: 'value',
       axisLine: {
         show: false,
@@ -331,26 +408,26 @@ const initChartOption = () => {
         type: 'custom',
         renderItem: (params, api) => {
           const location = api.coord([api.value(0), api.value(1)])
-          const isHighlight = api.value(1) > maxValue * 0.8
+          const colors = colorSchemes[props.colorScheme]
           
           const leftGradient = createGradient(
-            isHighlight ? '#ff6b6b' : '#00bfff',
-            isHighlight ? '#cc5555' : '#0088cc',
+            colors.left[0],
+            colors.left[1],
             false
           )
           
           const rightGradient = createGradient(
-            isHighlight ? '#ff8888' : '#33ccff',
-            isHighlight ? '#dd6666' : '#0099dd',
+            colors.right[0],
+            colors.right[1],
             false
           )
           
           const topGradient = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: isHighlight ? '#ffaaaa' : '#66d9ff'
+            color: colors.top
           }, {
             offset: 1,
-            color: isHighlight ? '#ffaaaa' : '#66d9ff'
+            color: colors.top
           }])
 
           return {
@@ -406,7 +483,7 @@ const initChartOption = () => {
 }
 
 onMounted(() => {
-  initCustomShapes()
+  initCustomShapes(props.barWidth)
   initChartOption()
 })
 
@@ -418,9 +495,11 @@ watchEffect(() => {
   props.bottomOpacity
   props.backgroundTransparencyScale
   props.showMaxBars
+  props.barWidth
   
   // 如果图表已初始化，重新配置
   if (chartOption.value.series) {
+    initCustomShapes(props.barWidth)
     initChartOption()
   }
 })
@@ -430,11 +509,11 @@ watchEffect(() => {
 .bar-3d-container {
   width: 100%;
   height: v-bind(height);
-  background: linear-gradient(180deg, rgba(0, 191, 255, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+  /* background: linear-gradient(180deg, rgba(0, 191, 255, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
   border: 1px solid rgba(0, 191, 255, 0.3);
   border-radius: 8px;
   padding: 10px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); */
 }
 
 .chart {

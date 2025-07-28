@@ -79,7 +79,7 @@ onMounted(() => {
   display: inline-block;
   width: 60px;
   height: 70px;
-  background-image: url('../../assets/digit_bg.png');
+  background-image: url('src/../assets/digit_bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

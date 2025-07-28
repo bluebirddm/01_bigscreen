@@ -6,9 +6,11 @@ import Pie3DChartTest from '../pages/test/Pie3DChartTest.vue'
 import SimplePie3DTest from '../pages/test/SimplePie3DTest.vue'
 import StackedBarChartTest from '../components/StackedBarChartTest.vue'
 import Bar3DTest from '../pages/test/Bar3DTest.vue'
+import Circle3DBarTest from '../pages/test/Circle3DBarTest.vue'
 import TestRisk3D from '../views/TestRisk3D.vue'
 import TestRisk3DEffect from '../views/TestRisk3DEffect.vue'
 import TestRisk3DMonitor from '../views/TestRisk3DMonitor.vue'
+import PieSunburstTest from '../pages/test/PieSunburstTest.vue'
 
 const routes = [
   {
@@ -52,6 +54,11 @@ const routes = [
     component: Bar3DTest
   },
   {
+    path: '/test/circle3d',
+    name: 'Circle3DBarTest',
+    component: Circle3DBarTest
+  },
+  {
     path: '/test/risk3d',
     name: 'TestRisk3D',
     component: TestRisk3D
@@ -65,6 +72,11 @@ const routes = [
     path: '/test/risk3d-monitor',
     name: 'TestRisk3DMonitor',
     component: TestRisk3DMonitor
+  },
+  {
+    path: '/test/pie-sunburst',
+    name: 'PieSunburstTest',
+    component: PieSunburstTest
   }
 ]
 

@@ -1,0 +1,17 @@
+
+> bigscreen-dashboard@1.0.0 dev
+> vite --host
+
+Port 3000 is in use, trying another one...
+
+  VITE v5.4.19  ready in 780 ms
+
+  ➜  Local:   http://localhost:3001/
+  ➜  Network: http://192.168.0.212:3001/
+15:03:16 [vite] hmr update /src/pages/Screen1.vue?vue&type=style&index=0&scoped=e9dc80bf&lang.css
+15:03:23 [vite] hmr update /src/pages/Screen1.vue?vue&type=style&index=0&scoped=e9dc80bf&lang.css
+15:03:35 [vite] hmr update /src/pages/Screen1.vue?vue&type=style&index=0&scoped=e9dc80bf&lang.css
+15:06:44 [vite] hmr update /src/pages/Screen1.vue?vue&type=style&index=0&scoped=e9dc80bf&lang.css
+15:07:35 [vite] hmr update /src/components/screen1/InfoCounter.vue?vue&type=style&index=0&scoped=623f9c63&lang.css
+15:07:51 [vite] hmr update /src/components/screen2/SecurityCounter.vue?vue&type=style&index=0&scoped=6f89f580&lang.css
+15:07:57 [vite] hmr update /src/components/screen3/ComplianceCounter.vue?vue&type=style&index=0&scoped=50715130&lang.css
