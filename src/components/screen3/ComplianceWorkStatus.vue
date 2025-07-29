@@ -142,8 +142,8 @@ onMounted(() => {
 
 <style scoped>
 .compliance-work-status {
-  height: 250px;
-  max-height: 250px;
+  height: 263px;
+  max-height: 263px;
   width: 100%;
   margin: 0 auto;
 }

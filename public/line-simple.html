@@ -1,0 +1,233 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=line-simple&code=PYBwLglsB2AEC8sDeAoW6OTAGwKYC5k0MSxcAPMQgckHVlQQDlAeC0BQdQaudAHF0D-1agGmJPQBnAK4AjMpRoMWHbnwEZyNAMa5oZAE7V-GAL7yBYYMGyQQhVAvRgNEAOZ3cGmhDIBbXjpIAzYBrcAhmCahABESAG6sAA8ohoA9AB8SKJRFspRABRIACa6AKQAlKFesPqleI7QORal6Eqw1KrqTp5WsACeNKLAwcAeBgo5QQGEANrUGsCCuACMvI1TMwBMC5PTuADMa0u4ACw7GwCshzMAbKe4AOyXABzUALql5QpGJj0NllaCABbAAO6EGzCXCDATeXBBYQaAhEdroQIaADWtXhGF-AKBGhBdT0YKGIwAahBcIC4WjYBiycDQbiSDCAjkAPLQbBdWDeALYGZ0sr4gSBOwQZQAFQ6IFhXzRVKxIP5r3FsImIBJa28wmg0Fw2EevJe8JhgiMMNRFJlsBpevl6ICADdcABBQQASUFkt5Qj-1OxuD1uN0z35yi5ymE2ACojwstpChmtlwgnGUoERoCyhRjQCbSsYEVNBVuGzCg0jIgwkTsDGZwADDxYJtq9WHtbdmKJTQAgyiwJw6JtQAZCBa03taB-QLYEfw7BD3AAZVzUfJFNg_wgOTAP0IRw9fN3eGgdk3hFms2rftg_utwzAo0ryYUtq5IJPtd50ACblh6xm8yvuIfAQn2wF9YCOa10A_L8aF2VZ_3aQCSGA0DZnA99P2_XZtngqxEIwZDYWWNC0SgzCNgOHCFDw9ACMIZY3xIjCYOObR2n1KjeVo-tiPhUjmPOVirHYgRqNgLiGwg2A-MWDYbkokTOOfWE9gY3imJkmZ7n9XEngUfRlxTW90w7btSDzRoC1MjASxyMsKyrWtYCIpsWw2Ntv07SErPQXsB1nKcFDHfwuQCqwZy1BcOiXUSSDXDctzA3dhPaA8jwSs9zzRAM2OvEYk0UkDYSuVTR3Un85mrQS9OtUSuNuEqrGk8r6KqgRkowWqlMIABOBrArKrDKvkkhOsK18-oEJrdhU1qSHa9BRpQs9JKm44hpygCCpQ-iVoGjYa1mvFNrRLjZgk9DoI0651qEmqtthWYVN2y7yvqw70GyqxdLaus8NTYzM28i1zOoSyW1LctxhrOtnObXFWxBzys2tXzsEHYcDMC8cQsxsLZ0i6Ld3QOLj0Sld5p7NQ0pPeiL1u3EbzvMZFoextnrI38_w2hD7pPI4eNKl7YK5-meZOrrYCuVD2f4rYReq474S45YzgFxq9pmPZ5Z-xX2i4vYnoujncCObW5ru8WxvrTY1f6oX9rNo6xaViWjmho3Zal9692dvWJb2d3GPtzTHY-nTnm-j6gA
+	⚠ Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+      title: {
+        text: '南丁格尔玫瑰图',
+        subtext: '南丁格尔玫瑰图',
+        x: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        x: 'center',
+        y: 'bottom',
+        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: {
+            show: true
+          },
+          dataView: {
+            show: true,
+            readOnly: false
+          },
+          magicType: {
+            show: true,
+            type: ['pie', 'funnel']
+          },
+          restore: {
+            show: true
+          },
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
+      calculable: true,
+      series: [{
+        stack: 'a',
+        type: 'pie',
+        radius: [60, 300],
+        roseType: 'area',
+        labelLine: {
+          normal: {
+            lineStyle: {
+              width: 5
+            },
+            length: 110
+          }
+ 
+        },
+        data: [{
+          value: 10,
+          name: 'rose1'
+        },
+        {
+          value: 5,
+          name: 'rose2'
+        },
+        {
+          value: 15,
+          name: 'rose3'
+        },
+        {
+          value: 25,
+          name: 'rose4'
+        },
+        {
+          value: 20,
+          name: 'rose5'
+        },
+        {
+          value: 35,
+          name: 'rose6'
+        },
+        {
+          value: 30,
+          name: 'rose7'
+        },
+        {
+          value: 40,
+          name: 'rose8'
+        }
+        ]
+      }, {
+        stack: 'a',
+        type: 'pie',
+        radius: [60, 250],
+        roseType: 'area',
+        labelLine: {
+          normal: {
+            lineStyle: {
+              width: 5
+            },
+            length: 100
+          }
+        },
+        data: [{
+          value: 70,
+          name: 'rose10'
+        },
+        {
+          value: 80,
+          name: 'rose20'
+        },
+        {
+          value: 90,
+          name: 'rose30'
+        },
+        {
+          value: 100,
+          name: 'rose40'
+        },
+        {
+          value: 110,
+          name: 'rose50'
+        },
+        {
+          value: 120,
+          name: 'rose60'
+        },
+        {
+          value: 130,
+          name: 'rose70'
+        },
+        {
+          value: 140,
+          name: 'rose80'
+        }
+        ]
+      }, {
+        stack: 'a',
+        type: 'pie',
+        radius: [60, 250],
+        roseType: 'area',
+        labelLine: {
+          normal: {
+            lineStyle: {
+              width: 5
+            },
+            length: 120
+          }
+        },
+        data: [{
+          value: 100,
+          name: 'rose11'
+        },
+        {
+          value: 155,
+          name: 'rose21'
+        },
+        {
+          value: 715,
+          name: 'rose31'
+        },
+        {
+          value: 265,
+          name: 'rose41'
+        },
+        {
+          value: 440,
+          name: 'rose51'
+        },
+        {
+          value: 335,
+          name: 'rose61'
+        },
+        {
+          value: 560,
+          name: 'rose71'
+        },
+        {
+          value: 460,
+          name: 'rose81'
+        }
+        ]
+      }]
+    }
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

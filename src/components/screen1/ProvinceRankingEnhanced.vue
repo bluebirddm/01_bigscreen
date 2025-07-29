@@ -38,7 +38,7 @@ const provinceChartData = computed(() => ({
 
 <style scoped>
 .province-ranking-enhanced {
-  height: 100%;
+  height: 263px;
   width: 100%;
   /* max-height: 260px; */
   /* 323px容器高度 - 80px顶部间距 = 243px 确保完全包含 */

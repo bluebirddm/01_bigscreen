@@ -9,6 +9,7 @@
       :enableTransparency="true"
       :transparencyOffset="0.6"
       :bottomOpacity="0.1"
+      :barWidth="20"
       colorScheme="green"
     />
   </div>
@@ -40,7 +41,7 @@ const maxData = ref([100, 100, 100, 100, 100, 100, 100, 100, 100])
 
 <style scoped>
 .institution-quality-ranking {
-  height: 100%;
+  height: 263px;
   width: 100%;
   padding: 10px;
 }

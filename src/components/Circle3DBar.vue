@@ -62,6 +62,22 @@ const props = defineProps({
   height: {
     type: String,
     default: '400px'
+  },
+  barGap: {
+    type: [String, Number],
+    default: '30%'
+  },
+  barCategoryGap: {
+    type: [String, Number],
+    default: '90%'
+  },
+  showLegend: {
+    type: Boolean,
+    default: true
+  },
+  showYAxisLabel: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -114,6 +130,20 @@ const initChartOption = () => {
   
   chartOption.value = {
     backgroundColor: 'transparent',
+    legend: props.showLegend ? {
+      show: true,
+      data: ['实际值', '目标值'],
+      orient: 'horizontal',
+      left: 'center',
+      top: '5%',
+      textStyle: {
+        color: '#8cc8ff',
+        fontSize: 14
+      },
+      itemWidth: 20,
+      itemHeight: 14,
+      itemGap: 20
+    } : { show: false },
     tooltip: {
       trigger: 'item',
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
@@ -131,7 +161,7 @@ const initChartOption = () => {
     },
     grid: {
       bottom: '10%',
-      top: '35%',
+      top: '10%',
       right: '0%',
       left: '0%'
     },
@@ -141,14 +171,14 @@ const initChartOption = () => {
         show: false
       },
       axisLine: {
-        show: false
+        show: true
       },
       axisLabel: {
         show: true,
         textStyle: {
           color: '#8cc8ff'
         },
-        margin: 30
+        // margin: 30
       }
     },
     yAxis: {
@@ -159,10 +189,18 @@ const initChartOption = () => {
         show: false
       },
       axisLine: {
-        show: false
+        show: true
       },
       axisLabel: {
-        show: false
+        show: props.showYAxisLabel,
+        textStyle: {
+          color: '#8cc8ff',
+          fontSize: 12
+        },
+        margin: 8,
+        formatter: function(value) {
+          return value + '%'
+        }
       }
     },
     series: [
@@ -171,7 +209,7 @@ const initChartOption = () => {
         name: '',
         type: 'pictorialBar',
         symbolSize: [props.barWidth, props.symbolHeight],
-        symbolOffset: [0, -20],
+        symbolOffset: [0, -5],
         z: 12,
         itemStyle: {
           normal: {
@@ -183,11 +221,11 @@ const initChartOption = () => {
               [
                 {
                   offset: 0,
-                  color: '#00bfff'
+                  color: '#6B4057'
                 },
                 {
                   offset: 1,
-                  color: '#0088cc'
+                  color: '#DB7093'
                 }
               ],
               false
@@ -198,6 +236,7 @@ const initChartOption = () => {
       },
       // 底部立体柱
       {
+        name: '实际值',
         stack: '1',
         type: 'bar',
         silent: true,
@@ -215,11 +254,11 @@ const initChartOption = () => {
               colorStops: [
                 {
                   offset: 0,
-                  color: 'rgba(0, 191, 255, 0.8)'
+                  color: 'rgba(74, 222, 128, 0.8)'
                 },
                 {
                   offset: 1,
-                  color: '#00bfff'
+                  color: '#22c55e'
                 }
               ]
             }
@@ -230,19 +269,19 @@ const initChartOption = () => {
       {
         name: '',
         type: 'pictorialBar',
-        symbolSize: [props.barWidth, 30],
-        symbolOffset: [0, 16],
+        symbolSize: [props.barWidth, props.symbolHeight],
+        symbolOffset: [0, 5],
         z: 12,
         itemStyle: {
           normal: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#00bfff'
+                color: '#4ade80'
               },
               {
                 offset: 1,
-                color: '#4ecdc4'
+                color: '#16a34a'
               }
             ])
           }
@@ -253,8 +292,8 @@ const initChartOption = () => {
       {
         name: '',
         type: 'pictorialBar',
-        symbolSize: [props.barWidth, 42],
-        symbolOffset: [0, -20],
+        symbolSize: [props.barWidth, props.symbolHeight],
+        symbolOffset: [0, -5],
         itemStyle: {
           normal: {
             color: new echarts.graphic.LinearGradient(
@@ -265,11 +304,11 @@ const initChartOption = () => {
               [
                 {
                   offset: 0,
-                  color: '#00bfff'
+                  color: '#4ade80'
                 },
                 {
                   offset: 1,
-                  color: '#4ecdc4'
+                  color: '#16a34a'
                 }
               ],
               false
@@ -278,14 +317,16 @@ const initChartOption = () => {
         },
         z: 12,
         data: data.middleCircle
+
       },
       // 上部立体柱
       {
+        name: '目标值',
         stack: '1',
         type: 'bar',
         itemStyle: {
           normal: {
-            color: 'rgba(0, 191, 255, 0.3)',
+            color: 'rgba(248, 113, 113, 0.6)',
             opacity: 0.7
           }
         },
@@ -293,7 +334,7 @@ const initChartOption = () => {
           show: true,
           position: 'top',
           distance: 20,
-          color: '#00bfff',
+          color: '#22c55e',
           fontSize: 16,
           formatter: function (item) {
             const originalData = props.data[item.dataIndex]
@@ -313,7 +354,7 @@ onMounted(() => {
 })
 
 // 监听props变化，重新初始化图表
-watch(() => [props.data, props.barWidth, props.symbolHeight, props.showLabels], () => {
+watch(() => [props.data, props.barWidth, props.symbolHeight, props.showLabels, props.barGap, props.barCategoryGap, props.showLegend, props.showYAxisLabel], () => {
   initChartOption()
 }, { deep: true })
 </script>
@@ -321,7 +362,8 @@ watch(() => [props.data, props.barWidth, props.symbolHeight, props.showLabels], 
 <style scoped>
 .circle-3d-bar-container {
   width: 100%;
-  height: v-bind(height);
+  height: 100%;
+  margin: 0 auto;
 }
 
 .chart {

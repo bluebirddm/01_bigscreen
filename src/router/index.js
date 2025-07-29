@@ -11,6 +11,7 @@ import TestRisk3D from '../views/TestRisk3D.vue'
 import TestRisk3DEffect from '../views/TestRisk3DEffect.vue'
 import TestRisk3DMonitor from '../views/TestRisk3DMonitor.vue'
 import PieSunburstTest from '../pages/test/PieSunburstTest.vue'
+import StackedCircle3DTest from '../pages/test/StackedCircle3DTest.vue'
 
 const routes = [
   {
@@ -77,6 +78,11 @@ const routes = [
     path: '/test/pie-sunburst',
     name: 'PieSunburstTest',
     component: PieSunburstTest
+  },
+  {
+    path: '/test/stacked-circle3d',
+    name: 'StackedCircle3DTest',
+    component: StackedCircle3DTest
   }
 ]
 

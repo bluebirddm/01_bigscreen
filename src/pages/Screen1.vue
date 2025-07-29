@@ -102,7 +102,7 @@ import '../styles/dashboard-common.css'
 }
 
 .province-ranking-section {
-  width: 500px;
+  width: 100%;
   height: 323px;
   flex: none;
   z-index: 5;
@@ -110,7 +110,7 @@ import '../styles/dashboard-common.css'
 }
 
 .unit-ranking-section {
-  width: 500px;
+  width: 100%;
   height: 323px;
   flex: none;
 }
@@ -123,7 +123,7 @@ import '../styles/dashboard-common.css'
   padding: 0px 30px 30px 30px;
   justify-content: flex-start;
   position: absolute;
-  top: 744px;
+  top: 673px;
   left: 586px;
   right: 0;
 }

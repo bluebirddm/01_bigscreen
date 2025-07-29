@@ -46,7 +46,7 @@ const statusData = ref([
 
 <style scoped>
 .security-level-status {
-  height: 100%;
+  height: 265px;
   padding: 25px;
 }
 

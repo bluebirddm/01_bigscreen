@@ -51,7 +51,7 @@
         
         <div class="panel-section institution-count-section">
           <h3 class="section-title">各省份合规情况</h3>
-          <ProvinceComplianceChart />
+          <ProvinceComplianceStackedChart />
         </div>
         
         <div class="panel-section institution-quality-section">
@@ -70,7 +70,7 @@ import ComplianceLevelChart from '../components/screen3/ComplianceLevelChart.vue
 import ComplianceCounter from '../components/screen3/ComplianceCounter.vue'
 import ComplianceIssuesChart from '../components/screen3/ComplianceIssuesChart.vue'
 import UnitComplianceChart from '../components/screen3/UnitComplianceChart.vue'
-import ProvinceComplianceChart from '../components/screen3/ProvinceComplianceChart.vue'
+import ProvinceComplianceStackedChart from '../components/screen3/ProvinceComplianceStackedChart.vue'
 import ComplianceDistributionChart from '../components/screen3/ComplianceDistributionChart.vue'
 import China3DMap from '../components/China3DMap.vue'
 import SecurityNavButtons from '../components/screen2/SecurityNavButtons.vue'

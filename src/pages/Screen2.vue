@@ -38,7 +38,7 @@
         <div class="center-charts-area">
           <div class="panel-section security-issues-section">
             <h3 class="section-title">安全问题统计分布</h3>
-            <SecurityIssuesDistribution />
+            <SecurityRiskDistribution />
           </div>
           
           <div class="panel-section security-rectify-section">
@@ -76,7 +76,7 @@ import SecurityCounter from '../components/screen2/SecurityCounter.vue'
 import UnitCompletionChart from '../components/screen2/UnitCompletionChart.vue'
 import InstitutionReviewCountRanking from '../components/screen2/InstitutionReviewCountRanking.vue'
 import UnitCompletionTOP10 from '../components/screen2/UnitCompletionTOP10.vue'
-import SecurityIssuesDistribution from '../components/screen2/SecurityIssuesDistribution.vue'
+import SecurityRiskDistribution from '../components/screen2/SecurityRiskDistribution.vue'
 import SecurityIssuesRectify from '../components/screen2/SecurityIssuesRectify.vue'
 import InstitutionReviewQualityRatingRanking from '../components/screen2/InstitutionReviewQualityRatingRanking.vue'
 import China3DMap from '../components/China3DMap.vue'

@@ -11,7 +11,8 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { BarChart } from 'echarts/charts'
 import { 
   GridComponent,
-  TooltipComponent
+  TooltipComponent,
+  LegendComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
 
@@ -19,13 +20,33 @@ use([
   CanvasRenderer,
   BarChart,
   GridComponent,
-  TooltipComponent
+  TooltipComponent,
+  LegendComponent
 ])
 
 const chartOption = ref({})
 
 const categories = ['国电集团', '华能集团', '大唐集团', '华电集团', '中电投', '神华集团', '中核集团', '中广核', '三峡集团', '国家电网']
-const seriesData = [94.2, 91.8, 89.5, 87.3, 85.6, 83.2, 81.7, 79.4, 76.8, 74.5]
+const originalData = [94.2, 91.8, 89.5, 87.3, 85.6, 83.2, 81.7, 79.4, 76.8, 74.5]
+
+// 将单一合规率拆分为多个堆叠类别
+const seriesData = [
+  { 
+    name: '核心合规', 
+    data: originalData.map(val => Math.round(val * 0.4)), // 40%的核心合规
+    color: '#00bfff' 
+  },
+  { 
+    name: '基础合规', 
+    data: originalData.map(val => Math.round(val * 0.35)), // 35%的基础合规
+    color: '#4ecdc4' 
+  },
+  { 
+    name: '优化合规', 
+    data: originalData.map(val => Math.round(val * 0.25)), // 25%的优化合规
+    color: '#45b7d1' 
+  }
+]
 
 onMounted(() => {
   chartOption.value = {
@@ -39,17 +60,53 @@ onMounted(() => {
         color: '#fff'
       },
       formatter: function(params) {
-        return `${params[0].name}<br/>${params[0].seriesName}: ${params[0].value}%`
+        let result = `${params[0].name}<br/>`
+        let total = 0
+        params.forEach(param => {
+          result += `${param.seriesName}: ${param.value}%<br/>`
+          total += param.value
+        })
+        result += `<strong>总计: ${total}%</strong>`
+        return result
       }
     },
+    legend: {
+      data: seriesData.map(item => item.name),
+      textStyle: {
+        color: '#8cc8ff',
+        fontSize: 10
+      },
+      top: 5,
+      left: 'center',
+      itemGap: 15,
+      selectedMode: false
+    },
     grid: {
-      left: '15%',
-      right: '8%',
-      bottom: '8%',
-      top: '8%',
+      left: '8%',
+      right: '5%',
+      bottom: '15%',
+      top: '25%',
       containLabel: true
     },
     xAxis: {
+      type: 'category',
+      data: categories,
+      axisLabel: {
+        color: '#8cc8ff',
+        fontSize: 10,
+        rotate: 45,
+        interval: 0
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#00bfff'
+        }
+      },
+      axisTick: {
+        show: false
+      }
+    },
+    yAxis: {
       type: 'value',
       max: 100,
       axisLabel: {
@@ -70,57 +127,34 @@ onMounted(() => {
         }
       }
     },
-    yAxis: {
-      type: 'category',
-      data: categories,
-      axisLabel: {
-        color: '#8cc8ff',
-        fontSize: 10
+    series: seriesData.map((item, index) => ({
+      name: item.name,
+      type: 'bar',
+      stack: 'total',
+      data: item.data,
+      barWidth: '60%',
+      itemStyle: {
+        color: item.color
       },
-      axisLine: {
-        lineStyle: {
-          color: '#00bfff'
-        }
-      },
-      axisTick: {
-        show: false
-      }
-    },
-    series: [
-      {
-        name: '合规完成率',
-        type: 'bar',
-        data: seriesData.map((value, index) => ({
-          value: value,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 1,
-              y2: 0,
-              colorStops: [
-                { offset: 0, color: '#00bfff' },
-                { offset: 0.5, color: '#4ecdc4' },
-                { offset: 1, color: '#45b7d1' }
-              ]
-            }
-          }
-        })),
-        barWidth: '60%',
-        label: {
-          show: true,
-          position: 'right',
-          formatter: '{c}%',
-          color: '#fff',
-          fontSize: 10,
-          fontWeight: 'bold'
+      label: {
+        show: index === seriesData.length - 1,
+        position: 'top',
+        formatter: function(params) {
+          // 计算总和
+          let total = 0;
+          seriesData.forEach(series => {
+            total += series.data[params.dataIndex] || 0;
+          });
+          return `${total}%`;
         },
-        animationDelay: function(idx) {
-          return idx * 100
-        }
+        color: '#fff',
+        fontSize: 10,
+        fontWeight: 'bold'
+      },
+      animationDelay: function(idx) {
+        return idx * 100 + index * 50
       }
-    ],
+    })),
     animationEasing: 'elasticOut'
   }
 })
@@ -128,8 +162,8 @@ onMounted(() => {
 
 <style scoped>
 .unit-compliance-chart {
-  height: 250px;
-  max-height: 250px;
+  height: 263px;
+  max-height: 263px;
   width: 100%;
   margin: 0 auto;
 }

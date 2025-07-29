@@ -1,7 +1,7 @@
 <template>
   <div 
     ref="chartContainer" 
-    class="pie-sunburst-chart" 
+    class="pie-rose-chart" 
     :style="{ width, height }"
   ></div>
 </template>
@@ -10,7 +10,7 @@
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
-import { PieChart, SunburstChart } from 'echarts/charts'
+import { PieChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
@@ -22,7 +22,6 @@ import * as echarts from 'echarts/core'
 use([
   CanvasRenderer,
   PieChart,
-  SunburstChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent
@@ -30,29 +29,34 @@ use([
 
 // Props定义
 const props = defineProps({
-  // 饼图数据
+  // 外圈饼图数据
   pieData: {
     type: Array,
     default: () => [
-      { value: 14.7, name: 'Apple' },
-      { value: 10.4, name: 'Huawei' },
-      { value: 6.3, name: 'Xiaomi' },
-      { value: 21.6, name: 'Samsung' },
-      { value: 7.6, name: 'Oppo' },
-      { value: 39.4, name: 'Others' }
+      { value: 16.8, name: '高风险' },
+      { value: 35.2, name: '中风险' },
+      { value: 48.0, name: '低风险' }
     ]
   },
-  // 旭日图数据
-  sunburstData: {
+  // 内圈玫瑰图数据
+  roseData: {
     type: Array,
-    default: () => []
+    default: () => [
+      { value: 15.2, name: '物理环境' },
+      { value: 18.7, name: '建设管理' },
+      { value: 22.1, name: '计算环境' },
+      { value: 13.5, name: '区域边界' },
+      { value: 11.8, name: '管理机构' },
+      { value: 9.4, name: '管理人员' },
+      { value: 9.3, name: '管理制度' }
+    ]
   },
   // 图表标题
   title: {
     type: Object,
     default: () => ({
       text: '数据分布图',
-      subtext: '饼图+旭日图组合',
+      subtext: '饼图+玫瑰图组合',
       left: 'center'
     })
   },
@@ -81,51 +85,11 @@ const props = defineProps({
 const chartContainer = ref(null)
 let chartInstance = null
 
-// 生成默认的旭日图数据
-const generateDefaultSunburstData = () => {
-  const brands = ['Apple', 'Huawei', 'Xiaomi', 'Samsung', 'Oppo', 'Others']
-  const subBrands = [
-    ['iPhone 14', 'iPhone 13'],
-    ['Mate 50', 'P50'],
-    ['小米13', '小米12'],
-    ['Galaxy S23', 'Galaxy A54'],
-    ['Find X5', 'Reno 8'],
-    ['其他品牌1', '其他品牌2']
-  ]
-  const colors = [
-    ['#FF6B6B', '#FF8E8E'],
-    ['#4ECDC4', '#6EDDD8'],
-    ['#45B7D1', '#6BC5D8'],
-    ['#96CEB4', '#A8D5C0'],
-    ['#FECA57', '#FED670'],
-    ['#A0A0A0', '#B8B8B8']
-  ]
-
-  return brands.map((brand, index) => ({
-    name: brand,
-    value: props.pieData[index]?.value || 10,
-    itemStyle: {
-      color: colors[index][0]
-    },
-    children: subBrands[index].map((subBrand, subIndex) => ({
-      name: subBrand,
-      value: (props.pieData[index]?.value || 10) / 2,
-      itemStyle: {
-        color: colors[index][subIndex]
-      }
-    }))
-  }))
-}
-
 // 初始化图表
 const initChart = () => {
   if (!chartContainer.value) return
 
   chartInstance = echarts.init(chartContainer.value)
-  
-  const sunburstData = props.sunburstData.length > 0 
-    ? props.sunburstData 
-    : generateDefaultSunburstData()
 
   const option = {
     title: {
@@ -166,9 +130,63 @@ const initChart = () => {
       }))
     },
     series: [
+      // 内圈南丁格尔玫瑰图
       {
         type: 'pie',
-        radius: ['12%', '30%'],
+        name: '详细分布',
+        radius: [0, '45%'],
+        center: ['50%', '50%'],
+        roseType: 'area',
+        zlevel: 1,
+        legendHoverLink: false,
+        tooltip: {
+          show: props.enableTooltip,
+          formatter: '{b}: {c}%',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderColor: '#00bfff',
+          textStyle: {
+            color: '#ffffff'
+          }
+        },
+        label: {
+          show: true,
+          color: '#ffffff',
+          fontSize: 10,
+          position: 'inside',
+          formatter: '{b}\n{c}%'
+        },
+        labelLine: {
+          show: false
+        },
+        itemStyle: {
+          borderWidth: 1,
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+          shadowBlur: 5,
+          shadowColor: 'rgba(0, 191, 255, 0.3)'
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 191, 255, 0.5)'
+          }
+        },
+        data: props.roseData.map(item => ({
+          ...item,
+          itemStyle: {
+            color: item.itemStyle?.color || `hsl(${Math.random() * 360}, 70%, 60%)`,
+            borderWidth: 1,
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+            shadowBlur: 5,
+            shadowColor: 'rgba(0, 191, 255, 0.3)'
+          }
+        }))
+      },
+      // 外圈环状饼图
+      {
+        type: 'pie',
+        name: '主要分类',
+        radius: ['50%', '75%'],
         center: ['50%', '50%'],
         zlevel: 2,
         tooltip: {
@@ -181,10 +199,17 @@ const initChart = () => {
           }
         },
         label: {
-          show: false
+          show: true,
+          color: '#ffffff',
+          fontSize: 12,
+          position: 'outside',
+          formatter: '{b}\n{c}%'
         },
         labelLine: {
-          show: false
+          show: true,
+          lineStyle: {
+            color: 'rgba(255, 255, 255, 0.5)'
+          }
         },
         itemStyle: {
           borderWidth: 2,
@@ -209,62 +234,6 @@ const initChart = () => {
             shadowColor: 'rgba(0, 191, 255, 0.2)'
           }
         }))
-      },
-      {
-        type: 'sunburst',
-        center: ['50%', '50%'],
-        nodeClick: false,
-        sort: null,
-        levels: [
-          {},
-          {
-            r0: '32%',
-            r: '55%',
-            label: {
-              color: '#ffffff',
-              fontSize: 11,
-              fontWeight: 'bold',
-              position: 'outside',
-              distance: 8
-            },
-            itemStyle: {
-              borderWidth: 2,
-              borderColor: 'rgba(0, 191, 255, 0.3)',
-              opacity: 0.85,
-              shadowBlur: 8,
-              shadowColor: 'rgba(0, 191, 255, 0.2)'
-            }
-          },
-          {
-            r0: '55%',
-            r: '70%',
-            label: {
-              color: '#ffffff',
-              fontSize: 9,
-              position: 'inside',
-              rotate: 'tangential'
-            },
-            itemStyle: {
-              borderWidth: 1,
-              borderColor: 'rgba(255, 255, 255, 0.2)',
-              opacity: 0.9,
-              shadowBlur: 5,
-              shadowColor: 'rgba(0, 0, 0, 0.3)'
-            }
-          }
-        ],
-        data: sunburstData,
-        tooltip: {
-          show: props.enableTooltip,
-          formatter: function(params) {
-            return `${params.name}: ${params.value}%`
-          },
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          borderColor: '#00bfff',
-          textStyle: {
-            color: '#ffffff'
-          }
-        }
       }
     ]
   }
@@ -280,7 +249,7 @@ const resizeChart = () => {
 }
 
 // 监听数据变化
-watch(() => [props.pieData, props.sunburstData, props.title], () => {
+watch(() => [props.pieData, props.roseData, props.title], () => {
   if (chartInstance) {
     initChart()
   }
@@ -310,7 +279,7 @@ defineExpose({
 </script>
 
 <style scoped>
-.pie-sunburst-chart {
+.pie-rose-chart {
   background: transparent;
   border-radius: 8px;
 }

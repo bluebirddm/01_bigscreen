@@ -198,7 +198,7 @@ onMounted(() => {
 
 <style scoped>
 .security-radar-charts {
-  height: 280px;
+  height: 263px;
   width: 100%;
   padding: 8px;
 }
@@ -221,7 +221,7 @@ onMounted(() => {
   position: absolute;
   top: -5px;
   left: 50%;
-  width: 114px;
+  width: 115px;
   transform: translateX(-50%);
   color: #8cc8ff;
   font-size: 12px;

@@ -138,8 +138,8 @@ onMounted(() => {
 
 <style scoped>
 .compliance-issues-chart {
-  height: 220px;
-  max-height: 220px;
+  height: 263px;
+  max-height: 263px;
   width: 100%;
   margin: 0 auto;
 }

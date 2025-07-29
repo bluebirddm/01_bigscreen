@@ -138,7 +138,7 @@ onMounted(() => {
 
 <style scoped>
 .system-ranking {
-  height: 100%;
+  height: 263px;
   width: 100%;
 }
 

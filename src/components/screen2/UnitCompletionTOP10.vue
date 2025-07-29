@@ -134,7 +134,7 @@ onMounted(() => {
 
 <style scoped>
 .unit-completion-top10 {
-  height: 100%;
+  height: 263px;
   width: 100%;
   padding: 10px;
 }

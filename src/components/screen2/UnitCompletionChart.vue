@@ -127,7 +127,7 @@ onMounted(() => {
 
 <style scoped>
 .unit-completion-chart {
-  height: 100%;
+  height: 250px;
   width: 100%;
   padding: 10px;
 }

@@ -133,7 +133,7 @@ onMounted(() => {
 
 <style scoped>
 .security-issues-rectify {
-  height: 100%;
+  height: 263px;
   width: 100%;
   padding: 10px;
 }
