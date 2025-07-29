@@ -373,7 +373,7 @@ onMounted(() => {
       selectedMode: false,
     },
     grid: { 
-      top: props.gridTop || (props.legendPosition === 'top' ? '30%' : '15%'),
+      top: props.gridTop || (props.legendPosition === 'top' ? '40%' : '15%'),
       left: props.gridLeft, 
       right: props.gridRight, 
       bottom: props.gridBottom || (props.legendPosition === 'top' ? '15%' : '25%'),

@@ -79,15 +79,63 @@ onMounted(() => {
         type: 'pictorialBar',
         barCategoryGap: '-130%',
         symbol: 'path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z',
-        itemStyle: {
-          color: 'rgba(0, 191, 255, 0.1)'
-        },
-        emphasis: {
-          itemStyle: {
-            color: 'rgba(0, 191, 255, 0.2)'
+        data: [
+          {
+            value: 200,
+            itemStyle: {
+              color: 'rgba(0, 191, 255, 0.3)'  // 亮蓝色
+            },
+            emphasis: {
+              itemStyle: {
+                color: 'rgba(0, 191, 255, 0.5)'
+              }
+            }
+          },
+          {
+            value: 150,
+            itemStyle: {
+              color: 'rgba(0, 255, 255, 0.3)'  // 亮青色
+            },
+            emphasis: {
+              itemStyle: {
+                color: 'rgba(0, 255, 255, 0.5)'
+              }
+            }
+          },
+          {
+            value: 120,
+            itemStyle: {
+              color: 'rgba(0, 255, 128, 0.3)'  // 亮绿色
+            },
+            emphasis: {
+              itemStyle: {
+                color: 'rgba(0, 255, 128, 0.5)'
+              }
+            }
+          },
+          {
+            value: 80,
+            itemStyle: {
+              color: 'rgba(255, 215, 0, 0.3)'  // 亮黄色
+            },
+            emphasis: {
+              itemStyle: {
+                color: 'rgba(255, 215, 0, 0.5)'
+              }
+            }
+          },
+          {
+            value: 100,
+            itemStyle: {
+              color: 'rgba(255, 105, 180, 0.3)'  // 亮粉色
+            },
+            emphasis: {
+              itemStyle: {
+                color: 'rgba(255, 105, 180, 0.5)'
+              }
+            }
           }
-        },
-        data: [200, 150, 120, 80, 100],
+        ],
         z: 5
       },
       {
@@ -95,37 +143,37 @@ onMounted(() => {
         type: 'pictorialBar',
         barGap: '-100%',
         symbolPosition: 'end',
-        symbolSize: 30,
+        symbolSize: 22,
         symbolOffset: [0, '-150%'],
         data: [
           {
             value: 156,
             symbol: pathSymbols.security,
-            symbolSize: [35, 35],
+            symbolSize: [26, 26],
             itemStyle: { color: '#00bfff' }
           },
           {
             value: 128,
             symbol: pathSymbols.audit,
-            symbolSize: [32, 32],
+            symbolSize: [24, 24],
             itemStyle: { color: '#4ecdc4' }
           },
           {
             value: 98,
             symbol: pathSymbols.assessment,
-            symbolSize: [30, 30],
+            symbolSize: [22, 22],
             itemStyle: { color: '#45b7d1' }
           },
           {
             value: 64,
             symbol: pathSymbols.crypto,
-            symbolSize: [28, 28],
+            symbolSize: [20, 20],
             itemStyle: { color: '#ffd700' }
           },
           {
             value: 89,
             symbol: pathSymbols.monitor,
-            symbolSize: [30, 30],
+            symbolSize: [22, 22],
             itemStyle: { color: '#ff6b6b' }
           }
         ],

@@ -5,7 +5,11 @@
       legend-position="top"
       :bar-width="20"
       :diamond-height="12"
+      :colors="brightColors"
       :auto-fit-container="true"
+      legendPosition="top-right"
+      grid-top="20%"
+      grid-bottom="13%"
     />
   </div>
 </template>
@@ -32,6 +36,42 @@ const complianceChartData = computed(() => ({
     data: item.data
   }))
 }))
+
+// 明亮的颜色方案
+const brightColors = [
+  [
+    { offset: 0, color: "#FFD700" },  // 金色
+    { offset: 0.5, color: "#FFA500" }, // 橙色
+    { offset: 1, color: "#FF8C00" }   // 深橙色
+  ],
+  [
+    { offset: 0, color: "#00FF7F" },  // 春绿色
+    { offset: 0.5, color: "#32CD32" }, // 酸橙绿
+    { offset: 1, color: "#228B22" }   // 森林绿
+  ],
+  [
+    { offset: 0, color: "#FF69B4" },  // 热粉红
+    { offset: 0.5, color: "#FF1493" }, // 深粉红
+    { offset: 1, color: "#C71585" }   // 中紫红
+  ],
+  [
+    { offset: 0, color: "#00BFFF" },  // 深天蓝
+    { offset: 0.5, color: "#1E90FF" }, // 道奇蓝
+    { offset: 1, color: "#4169E1" }   // 皇家蓝
+  ],
+  [
+    { offset: 0, color: "#FFE4B5" },  // 鹿皮色
+    { offset: 0.5, color: "#FFDAB9" }, // 桃色
+    { offset: 1, color: "#FFB6C1" }   // 浅粉红
+  ],
+  [
+    { offset: 0, color: "#DDA0DD" },  // 梅红色
+    { offset: 0.5, color: "#DA70D6" }, // 兰花紫
+    { offset: 1, color: "#BA55D3" }   // 中兰花紫
+  ]
+]
+
+
 </script>
 
 <style scoped>
