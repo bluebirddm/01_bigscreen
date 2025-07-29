@@ -15,6 +15,7 @@ import {
   LegendComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
+import * as echarts from 'echarts'
 
 use([
   CanvasRenderer,
@@ -48,7 +49,7 @@ const props = defineProps({
   legendPosition: {
     type: String,
     default: 'bottom', // 'top' | 'bottom'
-    validator: (value) => ['top', 'bottom'].includes(value)
+    validator: (value) => ['top', 'bottom', 'top-right', 'top-left', 'bottom-right', 'bottom-left'].includes(value)
   },
   barWidth: {
     type: Number,
@@ -81,20 +82,64 @@ const props = defineProps({
   gridRight: {
     type: String,
     default: '5%'
+  },
+  colors: {
+    type: Array,
+    default: null,
+    validator: (value) => {
+      if (!value) return true
+      // 验证颜色格式
+      return value.every(colorSet => 
+        Array.isArray(colorSet) && 
+        colorSet.length === 3 &&
+        colorSet.every(item => 
+          typeof item === 'object' && 
+          item.offset !== undefined && 
+          item.color
+        )
+      )
+    }
   }
 })
 
 const chartOption = ref({})
 
-// 项目主题色彩方案（cyber-blue风格）
-const color = [
-  [{ offset: 0, color: "#00bfff" }, { offset: 0.5, color: "#00bfff" }, { offset: 0.5, color: "#0080cc" }, { offset: 1, color: "#0080cc" }],
-  [{ offset: 0, color: "#4ecdc4" }, { offset: 0.5, color: "#4ecdc4" }, { offset: 0.5, color: "#3ba199" }, { offset: 1, color: "#3ba199" }],
-  [{ offset: 0, color: "#45b7d1" }, { offset: 0.5, color: "#45b7d1" }, { offset: 0.5, color: "#3691a8" }, { offset: 1, color: "#3691a8" }],
-  [{ offset: 0, color: "#8cc8ff" }, { offset: 0.5, color: "#8cc8ff" }, { offset: 0.5, color: "#6bb3ff" }, { offset: 1, color: "#6bb3ff" }],
-  [{ offset: 0, color: "#5dade2" }, { offset: 0.5, color: "#5dade2" }, { offset: 0.5, color: "#4896d1" }, { offset: 1, color: "#4896d1" }],
-  [{ offset: 0, color: "#74c7ec" }, { offset: 0.5, color: "#74c7ec" }, { offset: 0.5, color: "#5fb8e0" }, { offset: 1, color: "#5fb8e0" }],
+// 默认主题色彩方案（cyber-blue风格）- 适配3D效果
+const defaultColors = [
+  [
+    { offset: 0, color: "#00bfff" }, 
+    { offset: 0.5, color: "#0080cc" }, 
+    { offset: 1, color: "#004d80" }
+  ],
+  [
+    { offset: 0, color: "#4ecdc4" }, 
+    { offset: 0.5, color: "#3ba199" }, 
+    { offset: 1, color: "#2a7a72" }
+  ],
+  [
+    { offset: 0, color: "#45b7d1" }, 
+    { offset: 0.5, color: "#3691a8" }, 
+    { offset: 1, color: "#2a6b7f" }
+  ],
+  [
+    { offset: 0, color: "#8cc8ff" }, 
+    { offset: 0.5, color: "#6bb3ff" }, 
+    { offset: 1, color: "#4a9eff" }
+  ],
+  [
+    { offset: 0, color: "#5dade2" }, 
+    { offset: 0.5, color: "#4896d1" }, 
+    { offset: 1, color: "#337fc0" }
+  ],
+  [
+    { offset: 0, color: "#74c7ec" }, 
+    { offset: 0.5, color: "#5fb8e0" }, 
+    { offset: 1, color: "#4aa9d4" }
+  ]
 ]
+
+// 计算使用的颜色方案
+const color = computed(() => props.colors || defaultColors)
 
 // 计算堆叠数据
 const diamondData = computed(() => {
@@ -156,14 +201,23 @@ const series = computed(() => {
       ...(i === 0 ? { barWidth: BAR_WIDTH.value } : {}), // 只在第一个系列设置宽度
       data: item.data,
       itemStyle: { 
-        color: { 
-          type: 'linear', 
-          x: 0, 
-          x2: 1, 
-          y: 0, 
-          y2: 0, 
-          colorStops: color[i % color.length] 
-        } 
+        color: new echarts.graphic.LinearGradient(
+          0, 0, 0, 1,
+          color.value[i % color.value.length],
+          false
+        ),
+        borderRadius: [0, 0, 0, 0],
+        shadowColor: 'rgba(0, 191, 255, 0.2)',
+        shadowBlur: 6,
+        shadowOffsetY: 2
+      },
+      emphasis: {
+        itemStyle: {
+          shadowColor: 'rgba(0, 191, 255, 0.4)',
+          shadowBlur: 12,
+          shadowOffsetY: 4,
+          brightness: 1.2
+        }
       },
     })
     
@@ -177,14 +231,28 @@ const series = computed(() => {
       symbolSize: DIAMOND_SIZE.value,
       data: diamondData.value[i],
       itemStyle: { 
-        color: { 
-          type: 'linear', 
-          x: 0, 
-          x2: 1, 
-          y: 0, 
-          y2: 0, 
-          colorStops: color[i % color.length] 
-        } 
+        color: new echarts.graphic.LinearGradient(
+          0, 0, 0, 1,
+          [
+            { offset: 0, color: color.value[i % color.value.length][0].color },
+            { offset: 0.3, color: color.value[i % color.value.length][1].color },
+            { offset: 1, color: color.value[i % color.value.length][2].color }
+          ],
+          false
+        ),
+        shadowColor: 'rgba(0, 191, 255, 0.4)',
+        shadowBlur: 12,
+        shadowOffsetY: 4,
+        opacity: 0.95
+      },
+      emphasis: {
+        itemStyle: {
+          shadowColor: 'rgba(0, 191, 255, 0.7)',
+          shadowBlur: 20,
+          shadowOffsetY: 6,
+          opacity: 1,
+          scale: 1.1
+        }
       },
       tooltip: { show: false },
     })
@@ -201,14 +269,28 @@ const series = computed(() => {
       symbolOffset: ["0%", "50%"],
       symbolSize: DIAMOND_SIZE.value,
       itemStyle: { 
-        color: { 
-          type: 'linear', 
-          x: 0, 
-          x2: 1, 
-          y: 0, 
-          y2: 0, 
-          colorStops: color[0]
-        } 
+        color: new echarts.graphic.LinearGradient(
+          0, 0, 0, 1,
+          [
+            { offset: 0, color: color.value[0][2].color },
+            { offset: 0.4, color: color.value[0][1].color },
+            { offset: 1, color: color.value[0][0].color }
+          ],
+          false
+        ),
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowBlur: 15,
+        shadowOffsetY: 8,
+        opacity: 0.9
+      },
+      emphasis: {
+        itemStyle: {
+          shadowColor: 'rgba(0, 191, 255, 0.6)',
+          shadowBlur: 25,
+          shadowOffsetY: 10,
+          opacity: 1,
+          scale: 1.05
+        }
       },
       tooltip: { show: false },
     })
@@ -277,7 +359,15 @@ onMounted(() => {
       itemHeight: 15,
       itemGap: 15,
       ...(props.legendPosition === 'top' 
-        ? { top: '5%', left: 'center' } 
+        ? { top: '5%', left: 'center' }
+        : props.legendPosition === 'top-right'
+        ? { top: '5%', right: '5%' }
+        : props.legendPosition === 'top-left'
+        ? { top: '5%', left: '5%' }
+        : props.legendPosition === 'bottom-right'
+        ? { bottom: '5%', right: '5%' }
+        : props.legendPosition === 'bottom-left'
+        ? { bottom: '5%', left: '5%' }
         : { bottom: '5%' }
       ),
       selectedMode: false,
