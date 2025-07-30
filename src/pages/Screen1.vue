@@ -71,7 +71,7 @@ import '../styles/dashboard-common.css'
 /* Screen1 特有样式 */
 
 .dashboard-main {
-  height: 966px;
+  height: 1010px;
   grid-template-columns: 638px 1162px 1fr;
   gap: 30px;
 }
@@ -96,23 +96,20 @@ import '../styles/dashboard-common.css'
 
 /* Screen1 特有的section样式 */
 .system-status-section {
-  width: 638px;
-  height: 280px;
-  flex: none;
+  flex: 1;
+  min-height: 0;
 }
 
 .province-ranking-section {
-  width: 100%;
-  height: 323px;
-  flex: none;
+  flex: 1;
+  min-height: 0;
   z-index: 5;
   position: relative;
 }
 
 .unit-ranking-section {
-  width: 100%;
-  height: 323px;
-  flex: none;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Screen1 特有的底部图表区域 */
@@ -123,9 +120,10 @@ import '../styles/dashboard-common.css'
   padding: 0px 30px 30px 30px;
   justify-content: flex-start;
   position: absolute;
-  top: 673px;
+  top: 717px;
   left: 586px;
   right: 0;
+  z-index: 10;
 }
 
 .chart-section {

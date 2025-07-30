@@ -56,7 +56,7 @@ const statusData = ref([
 
 <style scoped>
 .info-system-status {
-  height: 220px;
+  height: 263px;
   padding: 25px;
 }
 

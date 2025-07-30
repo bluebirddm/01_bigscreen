@@ -6,7 +6,9 @@
       :bar-width="20"
       :diamond-height="12"
       grid-top="15%"
-      grid-bottom="10%"
+      grid-bottom="19%"
+      grid-left="8%"
+      grid-right="5%"
       :auto-fit-container="true"
     />
   </div>
