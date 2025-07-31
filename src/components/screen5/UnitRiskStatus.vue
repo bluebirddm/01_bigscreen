@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { BarChart } from 'echarts/charts'
@@ -26,7 +26,11 @@ use([
 
 const chartOption = ref({})
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
+  
+  // 延迟初始化确保DOM完全渲染
+  setTimeout(() => {
   chartOption.value = {
     backgroundColor: 'transparent',
     tooltip: {
@@ -129,6 +133,7 @@ onMounted(() => {
     animationDuration: 2000,
     animationEasing: 'cubicOut'
   }
+  }, 100) // 延迟100ms初始化
 })
 </script>
 

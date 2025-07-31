@@ -42,7 +42,7 @@ const maxData = ref([1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
 
 <style scoped>
 .risk-agency-count-ranking {
-  height: 100%;
+  height: 263px;
   width: 100%;
   padding: 10px;
 }

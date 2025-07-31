@@ -25,13 +25,13 @@
       <div class="center-panel">
         <div class="center-main-area">
           <div class="security-nav-wrapper">
-            <RiskNavButtons />
+            <SecurityNavButtons />
           </div>
           <div class="risk-counter-wrapper">
             <RiskAssessmentCounter />
           </div>
           <div class="china-3d-map-wrapper">
-            <China3DMap />
+            <!-- <China3DMap /> -->
           </div>
         </div>
         
@@ -79,6 +79,7 @@ import UnitRiskStatus from '../components/screen5/UnitRiskStatus.vue'
 import UnitIssueRectification from '../components/screen5/UnitIssueRectification.vue'
 import RiskAgencyQualityRanking from '../components/screen5/RiskAgencyQualityRanking.vue'
 import China3DMap from '../components/China3DMap.vue'
+import SecurityNavButtons from '../components/screen2/SecurityNavButtons.vue'
 
 // 引入通用样式
 import '../styles/dashboard-common.css'

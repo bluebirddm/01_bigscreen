@@ -330,8 +330,8 @@ const createDataCardTexture = () => {
   const colors = getThemeColors()
   
   // 设置Canvas尺寸
-  canvas.width = 512
-  canvas.height = 256
+  canvas.width = 768
+  canvas.height = 384
   
   // 绘制背景
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
@@ -342,49 +342,30 @@ const createDataCardTexture = () => {
   
   // 绘制边框
   ctx.strokeStyle = colors.border
-  ctx.lineWidth = 4
-  ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4)
+  ctx.lineWidth = 3
+  ctx.strokeRect(1.5, 1.5, canvas.width - 3, canvas.height - 3)
   
   // 设置文本样式
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   
   // 绘制标签
-  ctx.font = 'bold 36px sans-serif'
+  ctx.font = 'bold 54px sans-serif'
   ctx.fillStyle = colors.textLight
   ctx.fillText(props.label, canvas.width * 0.25, canvas.height * 0.5)
   
   // 绘制数值
-  ctx.font = 'bold 64px sans-serif'
+  ctx.font = 'bold 96px sans-serif'
   ctx.fillStyle = colors.text
   ctx.shadowColor = colors.textShadow
   ctx.shadowBlur = 10
-  ctx.fillText(props.value.toString(), canvas.width * 0.5, canvas.height * 0.5)
+  ctx.fillText(props.value.toString(), canvas.width * 0.55, canvas.height * 0.5)
   ctx.shadowBlur = 0
   
-  // 绘制趋势箭头
-  ctx.save()
-  ctx.translate(canvas.width * 0.7, canvas.height * 0.5)
-  if (props.trend === 'down') {
-    ctx.rotate(Math.PI)
-  }
-  ctx.fillStyle = props.trend === 'up' ? '#ff6b6b' : '#4ecdc4'
-  ctx.beginPath()
-  ctx.moveTo(0, -20)
-  ctx.lineTo(10, 0)
-  ctx.lineTo(5, 0)
-  ctx.lineTo(5, 20)
-  ctx.lineTo(-5, 20)
-  ctx.lineTo(-5, 0)
-  ctx.lineTo(-10, 0)
-  ctx.closePath()
-  ctx.fill()
-  ctx.restore()
-  
   // 绘制单位
-  ctx.font = 'bold 32px sans-serif'
+  ctx.font = 'bold 48px sans-serif'
   ctx.fillStyle = colors.textLight
-  ctx.fillText(props.unit, canvas.width * 0.85, canvas.height * 0.5)
+  ctx.fillText(props.unit, canvas.width * 0.75, canvas.height * 0.5)
   
   return canvas
 }
@@ -401,7 +382,7 @@ const createDataCardSprite = () => {
   })
   
   dataCardSprite = new THREE.Sprite(spriteMaterial)
-  dataCardSprite.scale.set(4, 2, 1) // 调整大小
+  dataCardSprite.scale.set(6, 3, 1) // 调整大小
   dataCardSprite.position.set(0, 3.5, 0) // 放置在金字塔上方
   
   scene.add(dataCardSprite)
@@ -427,12 +408,12 @@ onUnmounted(() => {
   width: 300px;
   height: 400px;
   position: relative;
-  background: radial-gradient(ellipse at center bottom, 
+  /* background: radial-gradient(ellipse at center bottom, 
     rgba(0, 191, 255, 0.1) 0%, 
     rgba(0, 31, 78, 0.9) 50%, 
-    rgba(0, 15, 40, 1) 100%);
-  border-radius: 12px;
-  padding: 20px;
+    rgba(0, 15, 40, 1) 100%); */
+  /* border-radius: 12px; */
+  padding: 0px;
   overflow: hidden;
 }
 
@@ -449,7 +430,7 @@ onUnmounted(() => {
 }
 
 /* 添加整体发光效果 */
-.risk-3d-effect::before {
+/* .risk-3d-effect::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -462,5 +443,5 @@ onUnmounted(() => {
     transparent 70%);
   filter: blur(40px);
   z-index: 0;
-}
+} */
 </style>

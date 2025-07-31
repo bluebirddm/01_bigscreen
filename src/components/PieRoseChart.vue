@@ -88,6 +88,13 @@ let chartInstance = null
 // 初始化图表
 const initChart = () => {
   if (!chartContainer.value) return
+  
+  // 检查容器尺寸，确保DOM完全渲染
+  const containerRect = chartContainer.value.getBoundingClientRect()
+  if (containerRect.width === 0 || containerRect.height === 0) {
+    console.warn('PieRoseChart: 容器尺寸为0，跳过初始化')
+    return
+  }
 
   chartInstance = echarts.init(chartContainer.value)
 
@@ -258,7 +265,29 @@ watch(() => [props.pieData, props.roseData, props.title], () => {
 // 组件挂载
 onMounted(async () => {
   await nextTick()
-  initChart()
+  
+  // 重试初始化逻辑，确保DOM完全准备就绪
+  const tryInitChart = () => {
+    if (!chartContainer.value) return false
+    
+    const containerRect = chartContainer.value.getBoundingClientRect()
+    if (containerRect.width > 0 && containerRect.height > 0) {
+      initChart()
+      return true
+    }
+    return false
+  }
+  
+  // 立即尝试初始化
+  if (!tryInitChart()) {
+    // 如果失败，延迟100ms再试
+    setTimeout(() => {
+      if (!tryInitChart()) {
+        console.warn('PieRoseChart: 初始化失败，容器可能尚未准备就绪')
+      }
+    }, 100)
+  }
+  
   window.addEventListener('resize', resizeChart)
 })
 

@@ -4,6 +4,7 @@ import Screen2 from '../pages/Screen2.vue'
 import Screen3 from '../pages/Screen3.vue'
 import Screen4 from '../pages/Screen4.vue'
 import Screen5 from '../pages/Screen5.vue'
+import Screen6 from '../pages/Screen6.vue'
 import Pie3DChartTest from '../pages/test/Pie3DChartTest.vue'
 import SimplePie3DTest from '../pages/test/SimplePie3DTest.vue'
 import StackedBarChartTest from '../components/StackedBarChartTest.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: '/screen5',
     name: 'Screen5',
     component: Screen5
+  },
+  {
+    path: '/screen6',
+    name: 'Screen6',
+    component: Screen6
   },
   {
     path: '/test/pie3d',

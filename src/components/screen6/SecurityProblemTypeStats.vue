@@ -1,13 +1,13 @@
 <template>
-  <div class="security-category-issues-radar">
+  <div class="security-problem-type-stats">
     <PieRoseChart
-      :pie-data="categoryData"
-      :rose-data="detailData"
+      :pie-data="problemData"
+      :rose-data="detailProblemData"
       :title="chartTitle"
       :show-legend="true"
       :enable-tooltip="true"
       width="100%"
-      height="240px"
+      height="100%"
     />
   </div>
 </template>
@@ -23,94 +23,87 @@ const chartTitle = ref({
   left: 'center'
 })
 
-// 主要分类数据（内圈饼图）
-const categoryData = ref([
+// 主要问题分布数据（内圈饼图）
+const problemData = ref([
   {
-    value: 213,
-    name: '高危',
+    value: 25.2,
+    name: '已整改',
     itemStyle: {
-      color: '#ff5252'
+      color: '#66bb6a'
     }
   },
   {
-    value: 165,
-    name: '中危', 
+    value: 45.8,
+    name: '整改中', 
     itemStyle: {
       color: '#ffa726'
     }
   },
   {
-    value: 132,
-    name: '低危',
+    value: 29.0,
+    name: '未整改',
     itemStyle: {
-      color: '#ffd54f'
-    }
-  },
-  {
-    value: 56,
-    name: '合规',
-    itemStyle: {
-      color: '#66bb6a'
+      color: '#ff4757'
     }
   }
 ])
 
-// 详细分类数据（外圈玫瑰图）
-const detailData = ref([
+// 详细问题分布数据（外圈玫瑰图）
+const detailProblemData = ref([
   {
-    name: '物理安全',
-    value: 143,
+    name: '密钥管理',
+    value: 18.5,
     itemStyle: {
       color: '#ff6b6b'
     }
   },
   {
-    name: '网络安全',
-    value: 125,
+    name: '算法合规',
+    value: 15.3,
     itemStyle: {
       color: '#4ecdc4'
     }
   },
   {
-    name: '数据安全',
-    value: 98,
+    name: '产品认证',
+    value: 22.7,
     itemStyle: {
       color: '#45b7d1'
     }
   },
   {
-    name: '应用安全',
-    value: 81,
+    name: '密码应用',
+    value: 13.2,
     itemStyle: {
       color: '#96ceb4'
     }
   },
   {
     name: '管理制度',
-    value: 63,
+    value: 11.6,
     itemStyle: {
       color: '#feca57'
     }
   },
   {
-    name: '访问控制',
-    value: 37,
+    name: '人员管理',
+    value: 9.8,
     itemStyle: {
-      color: '#dfe6e9'
+      color: '#a0a0a0'
     }
   },
   {
-    name: '应急管理',
-    value: 19,
+    name: '应急响应',
+    value: 8.9,
     itemStyle: {
-      color: '#a29bfe'
+      color: '#ab47bc'
     }
   }
 ])
 </script>
 
 <style scoped>
-.security-category-issues-radar {
+.security-problem-type-stats {
   height: 263px;
   width: 100%;
   padding: 10px;

@@ -5,13 +5,21 @@
            v-for="(item, index) in conclusionData" 
            :key="index">
         <div class="card-icon">
-          <div class="icon-circle" :style="{ backgroundColor: item.color }">
+          <div class="icon-circle">
             <i :class="item.icon"></i>
           </div>
         </div>
         <div class="card-content">
           <div class="card-label">{{ item.label }}</div>
-          <div class="card-value">{{ item.value }}</div>
+          <div class="card-value">
+            <template v-if="item.number">
+              <span :style="{ color: item.color }">{{ item.number }}</span>
+              <span>{{ item.unit }}</span>
+            </template>
+            <template v-else>
+              <span :style="{ color: item.color }">{{ item.value }}</span>
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -24,19 +32,22 @@ import { ref } from 'vue'
 const conclusionData = ref([
   {
     label: '符合',
-    value: '1245个',
+    number: '1245',
+    unit: '个',
     icon: 'check-icon',
     color: '#66bb6a'
   },
   {
     label: '基本符合',
-    value: '485个',
+    number: '485',
+    unit: '个',
     icon: 'partial-icon',
     color: '#ffa726'
   },
   {
     label: '不符合',
-    value: '42个',
+    number: '42',
+    unit: '个',
     icon: 'cross-icon',
     color: '#ff5252'
   },
@@ -67,13 +78,15 @@ const conclusionData = ref([
 .conclusion-card {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 12px;
   background: rgba(0, 191, 255, 0.05);
   border: 1px solid rgba(0, 191, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
-  backdrop-filter: blur(5px);
+  width: 173px;
+  height: 77px;
+  justify-self: center;
 }
 
 .conclusion-card:hover {
@@ -84,19 +97,20 @@ const conclusionData = ref([
 }
 
 .card-icon {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .icon-circle {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
+  background: url('src/assets/sys_icon.png') no-repeat center center;
+  background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .icon-circle::before {
@@ -135,16 +149,16 @@ const conclusionData = ref([
 }
 
 .card-value {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   color: #E5F2F9;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   line-height: 1;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .card-label {
-  font-size: 13px;
+  font-size: 11px;
   color: #9EA6C0;
   line-height: 1;
 }

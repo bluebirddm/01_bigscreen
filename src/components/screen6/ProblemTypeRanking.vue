@@ -1,5 +1,5 @@
 <template>
-  <div class="security-category-improvement">
+  <div class="problem-type-ranking">
     <v-chart class="chart" :option="chartOption" autoresize />
   </div>
 </template>
@@ -39,7 +39,7 @@ onMounted(() => {
       borderWidth: 1,
       textStyle: {
         color: '#fff',
-        fontSize: 11
+        fontSize: 10
       }
     },
     legend: {
@@ -47,21 +47,21 @@ onMounted(() => {
       top: '5%',
       textStyle: {
         color: '#8cc8ff',
-        fontSize: 10
+        fontSize: 9
       },
-      itemWidth: 10,
-      itemHeight: 10
+      itemWidth: 8,
+      itemHeight: 8
     },
     grid: {
-      left: '10%',
-      right: '5%',
+      left: '15%',
+      right: '10%',
       top: '20%',
       bottom: '15%',
       containLabel: true
     },
     xAxis: {
       type: 'category',
-      data: ['物理安全', '网络安全', '应用安全', '数据安全', '设备安全', '计算安全', '管理安全', '应急安全'],
+      data: ['密钥管理', '算法合规', '产品认证', '密码应用', '管理制度', '人员管理', '应急响应'],
       axisLine: {
         lineStyle: {
           color: 'rgba(0, 191, 255, 0.3)'
@@ -72,9 +72,9 @@ onMounted(() => {
       },
       axisLabel: {
         color: '#8cc8ff',
-        fontSize: 9,
+        fontSize: 8,
         interval: 0,
-        rotate: 30
+        rotate: 45
       }
     },
     yAxis: {
@@ -87,7 +87,7 @@ onMounted(() => {
       },
       axisLabel: {
         color: '#8cc8ff',
-        fontSize: 10
+        fontSize: 9
       },
       splitLine: {
         lineStyle: {
@@ -100,9 +100,9 @@ onMounted(() => {
       {
         name: '已整改',
         type: 'bar',
-        stack: 'improvement',
-        data: [143, 125, 98, 61, 53, 37, 31, 30],
-        barWidth: '50%',
+        stack: 'problem',
+        data: [143, 126, 98, 61, 53, 37, 31],
+        barWidth: '60%',
         itemStyle: {
           color: '#66bb6a'
         }
@@ -110,8 +110,8 @@ onMounted(() => {
       {
         name: '整改中',
         type: 'bar',
-        stack: 'improvement',
-        data: [36, 32, 28, 24, 20, 16, 12, 8],
+        stack: 'problem',
+        data: [186, 153, 137, 96, 78, 55, 42],
         itemStyle: {
           color: '#ffa726'
         }
@@ -119,10 +119,10 @@ onMounted(() => {
       {
         name: '未整改',
         type: 'bar',
-        stack: 'improvement',
-        data: [8, 7, 6, 5, 4, 3, 2, 1],
+        stack: 'problem',
+        data: [98, 76, 65, 42, 35, 28, 20],
         itemStyle: {
-          color: '#ff5252'
+          color: '#ff4757'
         }
       }
     ],
@@ -133,7 +133,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.security-category-improvement {
+.problem-type-ranking {
   height: 263px;
   width: 100%;
   padding: 10px;
