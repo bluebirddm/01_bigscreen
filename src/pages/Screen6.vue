@@ -27,11 +27,17 @@
           <div class="security-nav-wrapper">
             <SecurityNavButtons />
           </div>
+          <div class="risk-counters-wrapper">
+            <RiskCounters />
+          </div>
           <div class="security-shield-wrapper">
             <SecurityShield />
           </div>
           <div class="risk-level-wrapper">
             <SystemRiskLevel />
+          </div>
+          <div class="level-counters-wrapper">
+            <LevelCounters />
           </div>
         </div>
         
@@ -73,6 +79,8 @@ import UnitCompletionRanking from '../components/screen6/UnitCompletionRanking.v
 import UnitSecurityAverageRanking from '../components/screen6/UnitSecurityAverageRanking.vue'
 import BlockCompletionStats from '../components/screen6/BlockCompletionStats.vue'
 import PasswordNavButtons from '../components/screen6/PasswordNavButtons.vue'
+import RiskCounters from '../components/screen6/RiskCounters.vue'
+import LevelCounters from '../components/screen6/LevelCounters.vue'
 import SecurityShield from '../components/screen6/SecurityShield.vue'
 import SystemRiskLevel from '../components/screen6/SystemRiskLevel.vue'
 import EvaluationCountRanking from '../components/screen6/EvaluationCountRanking.vue'
@@ -98,14 +106,28 @@ import '../styles/dashboard-common.css'
   height: 400px;
 }
 
+.risk-counters-wrapper {
+  position: absolute;
+  top: 150px;
+  left: 100px;
+  z-index: 5;
+}
+
 .risk-level-wrapper {
   position: absolute;
-  top: 419px;
+  top: 411px;
   z-index: 10;
   width: 100%;
   display: flex;
   justify-content: center;
   gap: 30px;
+}
+
+.level-counters-wrapper{
+  position: absolute;
+  top: 150px;
+  right: 100px;
+  z-index: 5;
 }
 
 /* 调整center面板布局以适应Shield和RiskLevel */

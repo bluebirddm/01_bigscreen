@@ -1,5 +1,26 @@
 <template>
   <div class="security-problem-type-stats">
+    <!-- 风险等级统计栏 -->
+    <div class="risk-stats-bar">
+      <div class="stat-item total">
+        <span class="label">总计:</span>
+        <span class="value">{{ riskStats.total }}</span>
+      </div>
+      <div class="stat-item high-risk">
+        <span class="label">高危:</span>
+        <span class="value">{{ riskStats.high }}个</span>
+      </div>
+      <div class="stat-item medium-risk">
+        <span class="label">中危:</span>
+        <span class="value">{{ riskStats.medium }}个</span>
+      </div>
+      <div class="stat-item low-risk">
+        <span class="label">低危:</span>
+        <span class="value">{{ riskStats.low }}个</span>
+      </div>
+    </div>
+    
+    <!-- 原有的饼图组件 -->
     <PieRoseChart
       :pie-data="problemData"
       :rose-data="detailProblemData"
@@ -15,6 +36,14 @@
 <script setup>
 import { ref } from 'vue'
 import PieRoseChart from '../PieRoseChart.vue'
+
+// 风险等级统计数据
+const riskStats = ref({
+  total: 213,
+  high: 12,
+  medium: 56,
+  low: 132
+})
 
 // 图表标题配置
 const chartTitle = ref({
@@ -107,5 +136,54 @@ const detailProblemData = ref([
   height: 263px;
   width: 100%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.risk-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); */
+  padding: 8px 20px;
+  /* border-radius: 4px; */
+  height: 32px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-item .label {
+  color: #E5F2F9;
+  letter-spacing: 0.5px;
+}
+
+.stat-item .value {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.stat-item.total .value {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.stat-item.high-risk .value {
+  color: #ff4757;
+}
+
+.stat-item.medium-risk .value {
+  color: #ffa726;
+}
+
+.stat-item.low-risk .value {
+  color: #66bb6a;
 }
 </style>

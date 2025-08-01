@@ -1,16 +1,6 @@
 <template>
   <div class="security-shield">
     <div ref="threeContainer" class="three-container"></div>
-    <div class="shield-info">
-      <div class="info-card left-card">
-        <div class="card-title">风险评估总数（累计）</div>
-        <div class="card-value">8052<span class="unit">个</span></div>
-      </div>
-      <div class="info-card right-card">
-        <div class="card-title">风险评估总数（本年）</div>
-        <div class="card-value">2349<span class="unit">个</span></div>
-      </div>
-    </div>
   </div>
 </template>
 

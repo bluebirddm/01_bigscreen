@@ -51,7 +51,7 @@ const initThreeScene = () => {
   scene = new THREE.Scene()
   
   // 创建相机 - 45度斜视角
-  const aspect = 260 / 200 // 容器宽高比
+  const aspect = 260 / 250 // 容器宽高比
   camera = new THREE.PerspectiveCamera(65, aspect, 0.1, 1000)
   camera.position.set(5, 5, 5) // 45度角位置 (x=z，y为高度)
   camera.lookAt(0, 0, 0) // 看向原点中心
@@ -61,7 +61,7 @@ const initThreeScene = () => {
     antialias: true, 
     alpha: true // 透明背景
   })
-  renderer.setSize(260, 200)
+  renderer.setSize(260, 250)
   renderer.setClearColor(0x000000, 0) // 完全透明
   
   // 将渲染器添加到DOM
@@ -331,7 +331,7 @@ const createDataCardTexture = () => {
   
   // 设置Canvas尺寸
   canvas.width = 768
-  canvas.height = 384
+  canvas.height = 256
   
   // 绘制背景
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
@@ -382,8 +382,8 @@ const createDataCardSprite = () => {
   })
   
   dataCardSprite = new THREE.Sprite(spriteMaterial)
-  dataCardSprite.scale.set(6, 3, 1) // 调整大小
-  dataCardSprite.position.set(0, 3.5, 0) // 放置在金字塔上方
+  dataCardSprite.scale.set(5, 1.67, 1) // 调整大小以匹配新的Canvas比例
+  dataCardSprite.position.set(0, 3.6, 0) // 放置在金字塔上方
   
   scene.add(dataCardSprite)
 }
