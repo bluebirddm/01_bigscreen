@@ -1,38 +1,34 @@
 <template>
   <div class="tech-supervision-counter">
     <div class="counter-item">
-      <div class="counter-icon">
-        <!-- 累计图标 -->
-      </div>
-      <div class="counter-content">
-        <div class="counter-label">技术监督总数（累计）</div>
-        <div class="counter-number">
+      <span class="counter-label">技术监督总数（累计）</span>
+      <div class="counter-number-wrapper">
+        <span class="counter-number">
           <span
-            v-for="(digit, index) in totalCount.toString().split('')"
+            v-for="(digit, index) in animatedTotal.toString().split('')"
             :key="'total-' + index"
             class="digit-wrapper"
           >
             <span class="digit-text">{{ digit }}</span>
           </span>
-        </div>
+        </span>
+        <span class="counter-unit">个</span>
       </div>
     </div>
     
     <div class="counter-item">
-      <div class="counter-icon">
-        <!-- 本年图标 -->
-      </div>
-      <div class="counter-content">
-        <div class="counter-label">技术监督总数（本年）</div>
-        <div class="counter-number">
+      <span class="counter-label">技术监督总数（本年）</span>
+      <div class="counter-number-wrapper">
+        <span class="counter-number">
           <span
-            v-for="(digit, index) in yearCount.toString().split('')"
-            :key="'year-' + index"
+            v-for="(digit, index) in animatedYearly.toString().split('')"
+            :key="'yearly-' + index"
             class="digit-wrapper"
           >
             <span class="digit-text">{{ digit }}</span>
           </span>
-        </div>
+        </span>
+        <span class="counter-unit">个</span>
       </div>
     </div>
   </div>
@@ -41,33 +37,32 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const totalCount = ref(0)
-const yearCount = ref(0)
-const targetTotal = 3172
-const targetYear = 535
+const totalSupervisions = ref(3172)
+const yearlySupervisions = ref(535)
+const animatedTotal = ref(0)
+const animatedYearly = ref(0)
 
 onMounted(() => {
   // 数字滚动动画
   const duration = 2000
   const stepTime = 50
   const steps = duration / stepTime
+  const incrementTotal = totalSupervisions.value / steps
+  const incrementYearly = yearlySupervisions.value / steps
   
   let currentTotal = 0
-  let currentYear = 0
-  const incrementTotal = targetTotal / steps
-  const incrementYear = targetYear / steps
-  
+  let currentYearly = 0
   const timer = setInterval(() => {
     currentTotal += incrementTotal
-    currentYear += incrementYear
+    currentYearly += incrementYearly
     
-    if (currentTotal >= targetTotal) {
-      totalCount.value = targetTotal
-      yearCount.value = targetYear
+    if (currentTotal >= totalSupervisions.value) {
+      animatedTotal.value = totalSupervisions.value
+      animatedYearly.value = yearlySupervisions.value
       clearInterval(timer)
     } else {
-      totalCount.value = Math.floor(currentTotal)
-      yearCount.value = Math.floor(currentYear)
+      animatedTotal.value = Math.floor(currentTotal)
+      animatedYearly.value = Math.floor(currentYearly)
     }
   }, stepTime)
 })
@@ -76,74 +71,79 @@ onMounted(() => {
 <style scoped>
 @font-face {
   font-family: 'DigitalDisplay';
-  src: url('src/assets/font/digital display tfb.ttf') format('truetype');
+  src: url('../../assets/font/digital display tfb.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 .tech-supervision-counter {
   display: flex;
-  gap: 40px;
+  flex-direction: row;
+  gap: 60px;
   align-items: center;
   justify-content: center;
-  padding: 20px;
 }
 
 .counter-item {
   display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.counter-icon {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle, rgba(0, 191, 255, 0.2), transparent);
-  border: 2px solid rgba(0, 191, 255, 0.5);
-  border-radius: 50%;
-}
-
-.counter-content {
-  display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 10px;
 }
 
 .counter-label {
   font-size: 14px;
-  color: #8cc8ff;
+  color: #E5F2F9;
+  font-weight: 500;
+  letter-spacing: 1px;
   white-space: nowrap;
 }
 
-.counter-number {
-  font-size: 36px;
-  font-weight: bold;
-  font-family: 'DigitalDisplay', 'Courier New', monospace;
+.counter-number-wrapper {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 10px;
+}
+
+.counter-number {
+  font-size: 32px;
+  font-weight: bold;
+  font-family: 'DigitalDisplay', 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .digit-wrapper {
   display: inline-block;
-  width: 24px;
-  height: 36px;
+  width: 40px;
+  height: 50px;
+  background-image: url('../../assets/digit_bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: transparent;
+  background-clip: padding-box;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.digit-text {
-  background: linear-gradient(to bottom, #ffffff 0%, #00bfff 50%, #0080ff 100%);
+.digit-wrapper .digit-text {
+  background: linear-gradient(to bottom, #DEEFFC 0%, #8DBDED 50%, #5DB2F8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
   position: relative;
   z-index: 1;
+}
+
+.counter-unit {
+  font-size: 14px;
+  color: #E5F2F9;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 </style>

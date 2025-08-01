@@ -1,8 +1,8 @@
 <template>
   <div class="risk-assessment-counter">
-    <div class="counter-wrapper">
-      <div class="counter-item">
-        <span class="counter-label">风险评估总数(累计)</span>
+    <div class="counter-item">
+      <span class="counter-label">风险评估总数（累计）</span>
+      <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
             v-for="(digit, index) in animatedTotal.toString().split('')"
@@ -14,11 +14,11 @@
         </span>
         <span class="counter-unit">个</span>
       </div>
-      
-      <div class="counter-divider"></div>
-      
-      <div class="counter-item">
-        <span class="counter-label">风险评估总数(本年)</span>
+    </div>
+    
+    <div class="counter-item">
+      <span class="counter-label">风险评估总数（本年）</span>
+      <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
             v-for="(digit, index) in animatedYearly.toString().split('')"
@@ -71,28 +71,17 @@ onMounted(() => {
 <style scoped>
 @font-face {
   font-family: 'DigitalDisplay';
-  src: url('src/assets/font/digital display tfb.ttf') format('truetype');
+  src: url('../../assets/font/digital display tfb.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 .risk-assessment-counter {
   display: flex;
+  flex-direction: row;
+  gap: 60px;
   align-items: center;
   justify-content: center;
-  height: 120px;
-  background: rgba(0, 20, 40, 0.6);
-  border: 1px solid rgba(0, 191, 255, 0.3);
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
-}
-
-.counter-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
 }
 
 .counter-item {
@@ -102,27 +91,22 @@ onMounted(() => {
   gap: 10px;
 }
 
-.counter-divider {
-  width: 1px;
-  height: 80px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(0, 191, 255, 0.5),
-    transparent
-  );
-}
-
 .counter-label {
   font-size: 14px;
-  color: #8cc8ff;
+  color: #E5F2F9;
   font-weight: 500;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
+.counter-number-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .counter-number {
-  font-size: 42px;
+  font-size: 32px;
   font-weight: bold;
   font-family: 'DigitalDisplay', 'Courier New', 'Monaco', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
   line-height: 1;
@@ -133,12 +117,14 @@ onMounted(() => {
 
 .digit-wrapper {
   display: inline-block;
-  width: 28px;
-  height: 42px;
-  background-image: url('src/assets/digit_bg.png');
+  width: 40px;
+  height: 50px;
+  background-image: url('../../assets/digit_bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;
+  color: transparent;
+  background-clip: padding-box;
   position: relative;
   display: flex;
   align-items: center;
@@ -146,26 +132,18 @@ onMounted(() => {
 }
 
 .digit-wrapper .digit-text {
-  background: linear-gradient(to bottom, #ffffff 0%, #4ecdc4 50%, #00bfff 100%);
+  background: linear-gradient(to bottom, #DEEFFC 0%, #8DBDED 50%, #5DB2F8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
   position: relative;
   z-index: 1;
-  font-size: 38px;
 }
 
 .counter-unit {
-  font-size: 16px;
+  font-size: 14px;
   color: #E5F2F9;
   font-weight: 500;
-  margin-left: 5px;
-}
-
-/* 添加悬浮效果 */
-.counter-item:hover .counter-number {
-  filter: brightness(1.2);
-  text-shadow: 0 0 20px rgba(78, 205, 196, 1);
+  letter-spacing: 1px;
 }
 </style>

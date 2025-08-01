@@ -108,7 +108,14 @@ onMounted(async () => {
         data: [86, 76, 65, 57, 49, 42, 36, 31],
         barWidth: '60%',
         itemStyle: {
-          color: '#ff5252'
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: '#06F8CD' },
+              { offset: 1, color: '#000000' }
+            ]
+          }
         }
       },
       {
@@ -117,7 +124,14 @@ onMounted(async () => {
         stack: 'risk',
         data: [126, 112, 96, 84, 72, 62, 53, 45],
         itemStyle: {
-          color: '#ffa726'
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: '#FAB302' },
+              { offset: 1, color: '#000000' }
+            ]
+          }
         }
       },
       {
@@ -126,7 +140,14 @@ onMounted(async () => {
         stack: 'risk',
         data: [68, 60, 52, 45, 39, 33, 28, 24],
         itemStyle: {
-          color: '#66bb6a'
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: '#F1061F' },
+              { offset: 1, color: '#000000' }
+            ]
+          }
         }
       }
     ],

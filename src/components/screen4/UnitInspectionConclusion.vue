@@ -28,9 +28,9 @@ const chartOption = ref({})
 
 const categories = ['龙源电力', '国华', '国电', '宁夏', '国神', '湖北', '江苏', '广东', '山西']
 const seriesData = [
-  { name: '符合', data: [320, 300, 280, 260, 240, 220, 200, 180, 160], color: '#66bb6a' },
-  { name: '部分符合', data: [120, 110, 100, 90, 80, 70, 60, 50, 40], color: '#ffa726' },
-  { name: '不符合', data: [30, 25, 20, 15, 12, 10, 8, 6, 5], color: '#ff5252' }
+  { name: '符合', data: [320, 300, 280, 260, 240, 220, 200, 180, 160], color: '#06F8CD' },
+  { name: '部分符合', data: [120, 110, 100, 90, 80, 70, 60, 50, 40], color: '#FAB302' },
+  { name: '不符合', data: [30, 25, 20, 15, 12, 10, 8, 6, 5], color: '#F1061F' }
 ]
 
 onMounted(() => {
@@ -107,8 +107,14 @@ onMounted(() => {
       barGap: '20%',
       data: item.data,
       itemStyle: {
-        color: item.color,
-        borderRadius: [4, 4, 0, 0]
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [
+            { offset: 0, color: item.color },
+            { offset: 1, color: '#000000' }
+          ]
+        }
       },
       emphasis: {
         itemStyle: {

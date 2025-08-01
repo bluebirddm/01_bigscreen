@@ -28,8 +28,8 @@ const chartOption = ref({})
 
 const years = ['2020', '2021', '2022', '2023', '2024', '2025']
 const seriesData = [
-  { name: '规划数', data: [220, 250, 280, 310, 350, 380], color: '#00bfff' },
-  { name: '检查数', data: [180, 210, 240, 265, 290, 315], color: '#66bb6a' }
+  { name: '规划数', data: [220, 250, 280, 310, 350, 380], color: '#06F8CD' },
+  { name: '检查数', data: [180, 210, 240, 265, 290, 315], color: '#FAB302' }
 ]
 
 onMounted(() => {
@@ -49,13 +49,13 @@ onMounted(() => {
     },
     legend: {
       data: seriesData.map(item => item.name),
+      top: '5%',
       textStyle: {
         color: '#8cc8ff',
-        fontSize: 12
+        fontSize: 10
       },
-      top: 10,
-      right: 20,
-      itemGap: 15
+      itemWidth: 10,
+      itemHeight: 10
     },
     grid: {
       left: '10%',
@@ -98,14 +98,21 @@ onMounted(() => {
         }
       }
     },
-    series: seriesData.map(item => ({
+    series: seriesData.map((item, index) => ({
       name: item.name,
       type: 'bar',
-      barWidth: '30%',
+      stack: 'inspection',
+      barWidth: index === 0 ? '60%' : undefined,
       data: item.data,
       itemStyle: {
-        color: item.color,
-        borderRadius: [4, 4, 0, 0]
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [
+            { offset: 0, color: item.color },
+            { offset: 1, color: '#000000' }
+          ]
+        }
       },
       emphasis: {
         itemStyle: {
