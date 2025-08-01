@@ -104,7 +104,7 @@ const detailImprovementData = ref([
 
 <style scoped>
 .security-category-improvement {
-  height: 263px;
+  height: 177px;
   width: 100%;
   padding: 10px;
 }

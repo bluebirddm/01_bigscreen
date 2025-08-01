@@ -53,7 +53,7 @@ onMounted(() => {
       itemHeight: 8
     },
     grid: {
-      left: '15%',
+      left: '15x1x%',
       right: '10%',
       top: '20%',
       bottom: '15%',
@@ -134,9 +134,9 @@ onMounted(() => {
 
 <style scoped>
 .unit-improvement-ranking {
-  height: 263px;
+  height: 177px;
   width: 100%;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .chart {

@@ -55,7 +55,7 @@
       
       <div class="right-panel">
         <div class="panel-section unit-improvement-ranking-section">
-          <h3 class="section-title">各单位问题整改排名</h3>
+          <h3 class="section-title">各单位问题情况排名</h3>
           <UnitImprovementRanking />
         </div>
         
@@ -65,7 +65,7 @@
         </div>
         
         <div class="panel-section province-improvement-ranking-section">
-          <h3 class="section-title">各省份问题整改排名</h3>
+          <h3 class="section-title">各省份问题情况排名</h3>
           <ProvinceImprovementRanking />
         </div>
         

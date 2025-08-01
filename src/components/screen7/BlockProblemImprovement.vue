@@ -104,7 +104,7 @@ const detailBlockData = ref([
 
 <style scoped>
 .block-problem-improvement {
-  height: 263px;
+  height: 177px;
   width: 100%;
   padding: 10px;
 }

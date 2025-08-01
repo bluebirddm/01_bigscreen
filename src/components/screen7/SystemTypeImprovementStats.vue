@@ -90,8 +90,8 @@ const detailSystemTypeData = ref([
 
 <style scoped>
 .system-type-improvement-stats {
-  height: 263px;
+  height: 177px;
   width: 100%;
-  padding: 10px;
+  /* padding: 10px; */
 }
 </style>

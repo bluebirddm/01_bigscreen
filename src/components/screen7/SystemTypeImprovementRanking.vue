@@ -134,9 +134,9 @@ onMounted(() => {
 
 <style scoped>
 .system-type-improvement-ranking {
-  height: 263px;
+  height: 177px;
   width: 100%;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .chart {

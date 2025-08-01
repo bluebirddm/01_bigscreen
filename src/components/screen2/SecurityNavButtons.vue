@@ -13,8 +13,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
 const activeButton = ref('all')
 
 const navButtons = ref([
@@ -25,10 +28,60 @@ const navButtons = ref([
   { key: 'crypto-assessment', label: '密码评估' }
 ])
 
+// 路由映射关系
+const routeMapping = {
+  'security-assessment': '/screen2',
+  'tech-supervision': '/screen3',
+  'risk-assessment': '/screen4',
+  'crypto-assessment': '/screen5'
+}
+
+// 根据当前路由设置初始高亮状态
+const initActiveButton = () => {
+  const currentPath = route.path
+  const tabQuery = route.query.tab
+  
+  if (tabQuery && routeMapping[tabQuery] === currentPath) {
+    activeButton.value = tabQuery
+  } else {
+    // 根据当前路径推断高亮状态
+    switch (currentPath) {
+      case '/screen2':
+        activeButton.value = 'security-assessment'
+        break
+      case '/screen3':
+        activeButton.value = 'tech-supervision'
+        break
+      case '/screen4':
+        activeButton.value = 'risk-assessment'
+        break
+      case '/screen5':
+        activeButton.value = 'crypto-assessment'
+        break
+      default:
+        activeButton.value = 'all'
+    }
+  }
+}
+
 const handleButtonClick = (key) => {
   activeButton.value = key
-  // 这里可以添加切换逻辑，比如发送事件给父组件
+  
+  if (key === 'all') {
+    // 点击"全部"按钮，保持当前页面，移除query参数
+    router.push({ path: route.path })
+  } else if (routeMapping[key]) {
+    // 跳转到对应页面并设置tab参数
+    router.push({ 
+      path: routeMapping[key],
+      query: { tab: key }
+    })
+  }
 }
+
+onMounted(() => {
+  initActiveButton()
+})
 </script>
 
 <style scoped>

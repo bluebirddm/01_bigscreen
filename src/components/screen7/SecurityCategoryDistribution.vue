@@ -134,7 +134,7 @@ onMounted(() => {
 
 <style scoped>
 .security-category-distribution {
-  height: 263px;
+  height: 177px;
   width: 100%;
   padding: 10px;
 }

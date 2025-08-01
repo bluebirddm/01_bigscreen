@@ -134,7 +134,7 @@ onMounted(() => {
 
 <style scoped>
 .province-improvement-ranking {
-  height: 263px;
+  height: 177px;
   width: 100%;
   padding: 10px;
 }

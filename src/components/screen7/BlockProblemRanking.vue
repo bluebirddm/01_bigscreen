@@ -133,7 +133,7 @@ onMounted(() => {
 
 <style scoped>
 .block-problem-ranking {
-  height: 263px;
+  height: 177px;
   width: 100%;
   padding: 10px;
 }
