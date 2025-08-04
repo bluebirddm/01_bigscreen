@@ -1,5 +1,5 @@
 <template>
-  <div class="unit-completion-top10">
+  <div class="chart-container">
     <v-chart class="chart" :option="chartOption" autoresize />
   </div>
 </template>
@@ -15,6 +15,7 @@ import {
   GridComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
+import { commonGridConfig, commonTooltipConfig, commonLegendConfig, commonXAxisConfig, commonYAxisConfig, commonAnimationConfig } from '@/config/chartConfig'
 
 use([
   CanvasRenderer,
@@ -29,73 +30,17 @@ const chartOption = ref({})
 onMounted(() => {
   chartOption.value = {
     backgroundColor: 'transparent',
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      },
-      backgroundColor: 'rgba(0, 20, 40, 0.9)',
-      borderColor: '#00bfff',
-      borderWidth: 1,
-      textStyle: {
-        color: '#fff',
-        fontSize: 10
-      }
-    },
+    tooltip: commonTooltipConfig,
     legend: {
-      data: ['已完成', '进行中', '未开始'],
-      top: '5%',
-      textStyle: {
-        color: '#8cc8ff',
-        fontSize: 9
-      },
-      itemWidth: 8,
-      itemHeight: 8
+      ...commonLegendConfig,
+      data: ['已完成', '进行中', '未开始']
     },
-    grid: {
-      left: '15%',
-      right: '10%',
-      top: '20%',
-      bottom: '15%',
-      containLabel: true
-    },
+    grid: commonGridConfig,
     xAxis: {
-      type: 'category',
-      data: ['深圳市', '北京市', '上海市', '广州市', '杭州市', '成都市', '苏州市', '南京市', '武汉市', '西安市'],
-      axisLine: {
-        lineStyle: {
-          color: 'rgba(0, 191, 255, 0.3)'
-        }
-      },
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        color: '#8cc8ff',
-        fontSize: 8,
-        interval: 0,
-        rotate: 45
-      }
+      ...commonXAxisConfig,
+      data: ['深圳市', '北京市', '上海市', '广州市', '杭州市', '成都市', '苏州市', '南京市', '武汉市', '西安市']
     },
-    yAxis: {
-      type: 'value',
-      axisLine: {
-        show: false
-      },
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        color: '#8cc8ff',
-        fontSize: 9
-      },
-      splitLine: {
-        lineStyle: {
-          color: 'rgba(0, 191, 255, 0.1)',
-          type: 'dashed'
-        }
-      }
-    },
+    yAxis: commonYAxisConfig,
     series: [
       {
         name: '已完成',
@@ -126,21 +71,11 @@ onMounted(() => {
         }
       }
     ],
-    animationDuration: 2000,
-    animationEasing: 'cubicOut'
+    ...commonAnimationConfig
   }
 })
 </script>
 
 <style scoped>
-.unit-completion-top10 {
-  height: 263px;
-  width: 100%;
-  padding: 10px;
-}
-
-.chart {
-  height: 100%;
-  width: 100%;
-}
+/* 使用通用的 chart-container 类，无需额外样式 */
 </style>

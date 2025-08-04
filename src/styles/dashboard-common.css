@@ -1,5 +1,45 @@
 /* 大屏通用样式 */
 
+/* CSS 变量定义 */
+:root {
+  /* 图表尺寸 */
+  --chart-height: 263px;
+  --chart-height-sm: 200px;
+  --chart-height-lg: 300px;
+  --chart-padding: 10px;
+  
+  /* 颜色主题 */
+  --color-primary: #00bfff;
+  --color-secondary: #8cc8ff;
+  --color-success: #4CAF50;
+  --color-warning: #ff9800;
+  --color-danger: #ff6b6b;
+  --color-info: #2196F3;
+  
+  /* 背景色 */
+  --bg-transparent: transparent;
+  --bg-panel: rgba(0, 20, 40, 0.9);
+  
+  /* 边框 */
+  --border-primary: 1px solid var(--color-primary);
+  --border-secondary: 1px solid rgba(0, 191, 255, 0.3);
+  
+  /* 字体大小 */
+  --font-size-xs: 8px;
+  --font-size-sm: 9px;
+  --font-size-base: 10px;
+  --font-size-lg: 12px;
+  --font-size-xl: 14px;
+  --font-size-title: 18px;
+  
+  /* 间距 */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-base: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+}
+
 /* 主容器 */
 .dashboard {
   width: 1920px;
@@ -141,4 +181,31 @@
   background-position: 0px -8px;
   background-size: auto 60px;
   height: 60px;
+}
+
+/* 通用图表容器样式 */
+.chart-container {
+  height: var(--chart-height);
+  width: 100%;
+  padding: var(--chart-padding);
+}
+
+.chart-container-sm {
+  height: var(--chart-height-sm);
+  width: 100%;
+  padding: var(--chart-padding);
+}
+
+.chart-container-lg {
+  height: var(--chart-height-lg);
+  width: 100%;
+  padding: var(--chart-padding);
+}
+
+/* 图表内部样式 */
+.chart-container .chart,
+.chart-container-sm .chart,
+.chart-container-lg .chart {
+  height: 100%;
+  width: 100%;
 }
