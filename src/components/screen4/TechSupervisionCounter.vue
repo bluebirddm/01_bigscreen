@@ -1,7 +1,7 @@
 <template>
   <div class="tech-supervision-counter">
     <div class="counter-item">
-      <span class="counter-label">技术监督总数（累计）</span>
+
       <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
@@ -14,10 +14,10 @@
         </span>
         <span class="counter-unit">个</span>
       </div>
+      <span class="counter-label">技术监督总数（累计）</span>
     </div>
     
     <div class="counter-item">
-      <span class="counter-label">技术监督总数（本年）</span>
       <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
@@ -30,6 +30,7 @@
         </span>
         <span class="counter-unit">个</span>
       </div>
+      <span class="counter-label">技术监督总数（本年）</span>
     </div>
   </div>
 </template>
@@ -79,7 +80,7 @@ onMounted(() => {
 .tech-supervision-counter {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 450px;
   align-items: center;
   justify-content: center;
 }

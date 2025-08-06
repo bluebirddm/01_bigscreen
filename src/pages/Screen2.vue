@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="dashboard-header">
-      <img src="../assets/head_content.png" alt="等保测评智慧可视化大屏" class="header-content" />
+      <img src="../assets/screen2_head_content.png" alt="等保测评智慧可视化大屏" class="header-content" />
     </header>
     
     <main class="dashboard-main">

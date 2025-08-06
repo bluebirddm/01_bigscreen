@@ -144,11 +144,11 @@ onMounted(() => {
 }
 
 .digit-wrapper .digit-text {
-  background: linear-gradient(to bottom, #ffffff 0%, #00bfff 50%, #0080ff 100%);
+  background: linear-gradient(to bottom, #DEEFFC 0%, #8DBDED 50%, #5DB2F8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+  /* text-shadow: 0 0 10px rgba(0, 191, 255, 0.8); */
   position: relative;
   z-index: 1;
 }

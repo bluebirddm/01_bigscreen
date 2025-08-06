@@ -30,8 +30,8 @@
           <div class="risk-counters-wrapper">
             <RiskCounters />
           </div>
-          <div class="security-shield-wrapper">
-            <SecurityShield />
+          <div class="bg-wrapper">
+            <div class="mid-bg-container"></div>
           </div>
           <div class="risk-level-wrapper">
             <SystemRiskLevel />
@@ -115,7 +115,7 @@ import '../styles/dashboard-common.css'
 
 .risk-level-wrapper {
   position: absolute;
-  top: 411px;
+  top: 353px;
   z-index: 10;
   width: 100%;
   display: flex;
@@ -135,4 +135,26 @@ import '../styles/dashboard-common.css'
   position: relative;
   height: 100%;
 }
+
+
+
+/* 中间背景图片容器样式 */
+.mid-bg-container {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/screen6_mid_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.bg-wrapper {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px);
+}
+
 </style>

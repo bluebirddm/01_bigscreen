@@ -1,7 +1,6 @@
 <template>
   <div class="risk-assessment-counter">
     <div class="counter-item">
-      <span class="counter-label">风险评估总数（累计）</span>
       <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
@@ -14,10 +13,10 @@
         </span>
         <span class="counter-unit">个</span>
       </div>
+      <span class="counter-label">风险评估总数（累计）</span>
     </div>
     
     <div class="counter-item">
-      <span class="counter-label">风险评估总数（本年）</span>
       <div class="counter-number-wrapper">
         <span class="counter-number">
           <span
@@ -30,6 +29,7 @@
         </span>
         <span class="counter-unit">个</span>
       </div>
+      <span class="counter-label">风险评估总数（本年）</span>
     </div>
   </div>
 </template>
@@ -79,7 +79,7 @@ onMounted(() => {
 .risk-assessment-counter {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 434px;
   align-items: center;
   justify-content: center;
 }

@@ -270,9 +270,9 @@ const animate = () => {
       ring.scale.setScalar(scale)
       
       // 透明度动画（从不透明到透明）
-      const baseOpacity = 0.9 - index * 0.15
-      const opacity = Math.max(0, baseOpacity * (1 - progress))
-      ring.material.opacity = opacity
+      // const baseOpacity = 0.9 - index * 0.15
+      // const opacity = Math.max(0, baseOpacity * (1 - progress))
+      // ring.material.opacity = opacity
       
       // 发光强度动画
       const emissiveIntensity = 0.6 * (1 - progress * 0.7) // 发光逐渐减弱
@@ -329,43 +329,61 @@ const createDataCardTexture = () => {
   const ctx = canvas.getContext('2d')
   const colors = getThemeColors()
   
-  // 设置Canvas尺寸
-  canvas.width = 768
-  canvas.height = 256
+  // 提高分辨率以解决模糊问题
+  const scale = 2 // 使用4倍分辨率以获得更清晰的效果
+  const width = 768
+  const height = 256
   
-  // 绘制背景
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+  // 设置Canvas尺寸（物理像素）
+  canvas.width = width * scale
+  canvas.height = height * scale
+  
+  // 设置Canvas样式尺寸（CSS像素）
+  canvas.style.width = width + 'px'
+  canvas.style.height = height + 'px'
+  
+  // 缩放上下文以匹配设备像素比
+  ctx.scale(scale, scale)
+  
+  // 先绘制不透明的深色背景
+  ctx.fillStyle = 'rgba(10, 20, 40, 1)' // 深蓝色不透明背景
+  ctx.fillRect(0, 0, width, height)
+  
+  // 再绘制半透明的渐变装饰层
+  const gradient = ctx.createLinearGradient(0, 0, width, height)
   gradient.addColorStop(0, colors.gradient1)
   gradient.addColorStop(1, colors.gradient2)
   ctx.fillStyle = gradient
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillRect(0, 0, width, height)
   
   // 绘制边框
   ctx.strokeStyle = colors.border
   ctx.lineWidth = 3
-  ctx.strokeRect(1.5, 1.5, canvas.width - 3, canvas.height - 3)
+  ctx.strokeRect(1.5, 1.5, width - 3, height - 3)
   
-  // 设置文本样式
+  // 设置文本样式和抗锯齿
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
+  ctx.imageSmoothingEnabled = true
+  ctx.imageSmoothingQuality = 'high'
   
-  // 绘制标签
-  ctx.font = 'bold 54px sans-serif'
+  // 绘制标签 - 使用系统字体以获得更好的渲染
+  ctx.font = 'bold 54px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
   ctx.fillStyle = colors.textLight
-  ctx.fillText(props.label, canvas.width * 0.25, canvas.height * 0.5)
+  ctx.fillText(props.label, width * 0.25, height * 0.5)
   
-  // 绘制数值
-  ctx.font = 'bold 96px sans-serif'
+  // 绘制数值 - 使用更清晰的字体
+  ctx.font = 'bold 96px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
   ctx.fillStyle = colors.text
   ctx.shadowColor = colors.textShadow
   ctx.shadowBlur = 10
-  ctx.fillText(props.value.toString(), canvas.width * 0.55, canvas.height * 0.5)
+  ctx.fillText(props.value.toString(), width * 0.55, height * 0.5)
   ctx.shadowBlur = 0
   
   // 绘制单位
-  ctx.font = 'bold 48px sans-serif'
+  ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
   ctx.fillStyle = colors.textLight
-  ctx.fillText(props.unit, canvas.width * 0.75, canvas.height * 0.5)
+  ctx.fillText(props.unit, width * 0.75, height * 0.5)
   
   return canvas
 }
@@ -376,13 +394,20 @@ const createDataCardSprite = () => {
   const texture = new THREE.CanvasTexture(canvas)
   texture.needsUpdate = true
   
+  // 设置纹理过滤以获得更清晰的效果
+  // texture.minFilter = THREE.LinearFilter
+  // texture.magFilter = THREE.LinearFilter
+  texture.generateMipmaps = false
+  
   const spriteMaterial = new THREE.SpriteMaterial({
     map: texture,
-    transparent: true
+    transparent: true,
+    sizeAttenuation: false // 保持恒定大小
   })
   
   dataCardSprite = new THREE.Sprite(spriteMaterial)
-  dataCardSprite.scale.set(5, 1.67, 1) // 调整大小以匹配新的Canvas比例
+  // 因为Canvas分辨率提高了4倍，所以缩放也要相应调整
+  dataCardSprite.scale.set(5 / 6, 1.67 / 6, 1) // 原来是2倍时的尺寸，现在4倍需要减半
   dataCardSprite.position.set(0, 3.6, 0) // 放置在金字塔上方
   
   scene.add(dataCardSprite)

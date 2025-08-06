@@ -23,6 +23,7 @@ const activeButton = ref('all')
 const navButtons = ref([
   { key: 'all', label: '全部' },
   { key: 'security-assessment', label: '等保测评' },
+  { key: 'security-compliance', label: '安全合规' },
   { key: 'tech-supervision', label: '技术监督' },
   { key: 'risk-assessment', label: '风险评估' },
   { key: 'crypto-assessment', label: '密码评估' }
@@ -31,9 +32,10 @@ const navButtons = ref([
 // 路由映射关系
 const routeMapping = {
   'security-assessment': '/screen2',
-  'tech-supervision': '/screen3',
-  'risk-assessment': '/screen4',
-  'crypto-assessment': '/screen5'
+  'security-compliance': '/screen3',
+  'tech-supervision': '/screen4',
+  'risk-assessment': '/screen5',
+  'crypto-assessment': '/screen6'
 }
 
 // 根据当前路由设置初始高亮状态
@@ -50,12 +52,15 @@ const initActiveButton = () => {
         activeButton.value = 'security-assessment'
         break
       case '/screen3':
-        activeButton.value = 'tech-supervision'
+        activeButton.value = 'security-compliance'
         break
       case '/screen4':
-        activeButton.value = 'risk-assessment'
+        activeButton.value = 'tech-supervision'
         break
       case '/screen5':
+        activeButton.value = 'risk-assessment'
+        break
+      case '/screen6':
         activeButton.value = 'crypto-assessment'
         break
       default:
@@ -87,16 +92,12 @@ onMounted(() => {
 <style scoped>
 .security-nav-buttons {
   display: flex;
-  gap: 8px;
-  background: rgba(0, 20, 40, 0.7);
+  gap: 30px;
   padding: 4px;
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 191, 255, 0.2);
 }
 
 .nav-button {
-  padding: 8px 16px;
+  padding: 8px 24px;
   border-radius: 6px;
   color: #8cc8ff;
   font-size: 12px;
@@ -105,29 +106,34 @@ onMounted(() => {
   transition: all 0.3s ease;
   white-space: nowrap;
   user-select: none;
-  background: transparent;
-  border: 1px solid transparent;
-  min-width: 70px;
+  background-image: url('@/assets/nav_button.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: 100px;
   text-align: center;
+  border: none;
 }
 
 .nav-button:hover {
-  background: rgba(0, 191, 255, 0.1);
-  border-color: rgba(0, 191, 255, 0.3);
-  color: #00bfff;
+  color: #00e6ff;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 191, 255, 0.2);
+  filter: brightness(1.2);
+  /* box-shadow: 0 4px 12px rgba(0, 191, 255, 0.4); */
 }
 
 .nav-button.active {
-  background: linear-gradient(135deg, rgba(0, 191, 255, 0.3), rgba(0, 191, 255, 0.2));
-  border-color: rgba(0, 191, 255, 0.5);
-  color: #fff;
-  box-shadow: 0 2px 12px rgba(0, 191, 255, 0.3);
+  background-image: url('@/assets/nav_button_sel.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #ffffff;
+  /* box-shadow: 0 4px 16px rgba(0, 191, 255, 0.5); */
 }
 
 .nav-button.active:hover {
-  background: linear-gradient(135deg, rgba(0, 191, 255, 0.4), rgba(0, 191, 255, 0.3));
   transform: translateY(-1px);
+  filter: brightness(1.1);
+  /* box-shadow: 0 6px 20px rgba(0, 191, 255, 0.6); */
 }
 </style>

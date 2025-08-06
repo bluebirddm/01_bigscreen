@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="dashboard-header">
-      <img src="../assets/head_content.png" alt="技术监督智慧可视化大屏" class="header-content" />
+      <img src="../assets/screen4_head_content.png" alt="技术监督智慧可视化大屏" class="header-content" />
     </header>
     
     <main class="dashboard-main">
@@ -30,8 +30,8 @@
           <div class="tech-counter-wrapper">
             <TechSupervisionCounter />
           </div>
-          <div class="china-3d-map-wrapper">
-            <!-- <China3DMap /> -->
+          <div class="bg-wrapper">
+            <div class="mid-bg-container"></div>
           </div>
         </div>
         
@@ -86,9 +86,28 @@ import '../styles/dashboard-common.css'
 /* 调整技术监督计数器位置 */
 .center-main-area .tech-counter-wrapper {
   position: absolute;
-  top: 75px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+}
+
+/* 中间背景图片容器样式 */
+.mid-bg-container {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/screen4_mid_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.bg-wrapper {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px);
 }
 </style>
