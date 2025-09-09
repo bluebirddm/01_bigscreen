@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="dashboard-header">
-      <img src="../assets/head_content.png" alt="问题整改质量监测智慧可视化大屏" class="header-content" />
+      <img src="../assets/screen7_head_content.png" alt="问题整改质量监测智慧可视化大屏" class="header-content" />
     </header>
     
     <main class="dashboard-main">
@@ -34,6 +34,9 @@
           </div>
           <div class="problem-total-counters-wrapper">
             <ProblemTotalCounters />
+          </div>
+          <div class="bg-wrapper">
+            <div class="mid-bg-container"></div>
           </div>
           <div class="risk-level-counters-wrapper">
             <RiskLevelCounters />
@@ -110,7 +113,7 @@ import '../styles/dashboard-common.css'
 .problem-total-counters-wrapper {
   position: absolute;
   top: 150px;
-  left: 50%;
+  left: 52%;
   transform: translateX(-50%);
   z-index: 9;
 }
@@ -127,5 +130,25 @@ import '../styles/dashboard-common.css'
 .center-main-area {
   position: relative;
   height: 100%;
+}
+
+
+/* 中间背景图片容器样式 */
+.mid-bg-container {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/screen7_mid_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.bg-wrapper {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px);
 }
 </style>

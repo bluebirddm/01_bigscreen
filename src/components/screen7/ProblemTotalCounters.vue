@@ -92,7 +92,7 @@ onMounted(() => {
 .problem-total-counters {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 300px;
   align-items: center;
   justify-content: center;
 }

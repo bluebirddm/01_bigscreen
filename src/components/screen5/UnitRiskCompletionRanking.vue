@@ -15,6 +15,7 @@ import {
   LegendComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
+import { commonGridConfig } from '@/config/chartConfig'
 
 use([
   CanvasRenderer,
@@ -61,13 +62,7 @@ onMounted(() => {
       itemWidth: 12,
       itemHeight: 12
     },
-    grid: {
-      left: '10%',
-      right: '5%',
-      bottom: '12%',
-      top: '20%',
-      containLabel: true
-    },
+    grid: commonGridConfig,
     xAxis: {
       type: 'category',
       data: categories,

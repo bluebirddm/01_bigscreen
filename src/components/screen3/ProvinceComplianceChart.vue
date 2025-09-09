@@ -14,6 +14,7 @@ import {
   TooltipComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
+import { commonGridConfig } from '@/config/chartConfig'
 
 use([
   CanvasRenderer,
@@ -42,13 +43,7 @@ onMounted(() => {
         return `${params[0].name}<br/>${params[0].seriesName}: ${params[0].value}%`
       }
     },
-    grid: {
-      left: '8%',
-      right: '5%',
-      bottom: '15%',
-      top: '8%',
-      containLabel: true
-    },
+    grid: commonGridConfig,
     xAxis: {
       type: 'category',
       data: categories,

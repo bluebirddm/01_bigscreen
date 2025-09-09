@@ -15,6 +15,7 @@ import {
   GridComponent
 } from 'echarts/components'
 import VChart from 'vue-echarts'
+import { commonGridConfig } from '@/config/chartConfig'
 
 use([
   CanvasRenderer,
@@ -56,13 +57,7 @@ onMounted(async () => {
       itemWidth: 10,
       itemHeight: 10
     },
-    grid: {
-      left: '15%',
-      right: '10%',
-      top: '20%',
-      bottom: '12%',
-      containLabel: true
-    },
+    grid: commonGridConfig,
     xAxis: {
       type: 'category',
       data: ['北京电力', '国华', '国电', '宁夏', '国神', '湖北', '江苏', '山西'],
